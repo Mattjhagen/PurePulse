@@ -19,7 +19,18 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
-
+<!-- Splash Screen — place splash.mp4 in the same folder to activate -->
+<div id="splash" class="splash" aria-hidden="true" role="presentation">
+    <video id="splashVideo" class="splash-video" autoplay muted playsinline webkit-playsinline preload="auto">
+        <source src="splash.mp4" type="video/mp4">
+    </video>
+    <div class="splash-vignette"></div>
+    <div class="splash-brand">
+        <div class="splash-wordmark">PurePulse</div>
+        <div class="splash-tagline">Web Design &amp; Development</div>
+    </div>
+    <button class="splash-skip" id="splashSkip" type="button">Skip ›</button>
+</div>
     <div class="ambient-bg"></div>
 
     <!-- Header -->
