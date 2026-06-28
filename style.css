@@ -610,6 +610,15 @@ p {
 
 /* ── FAQ ─────────────────────────────────────────────────────────────────── */
 
+.pricing-note-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(255, 255, 255, 0.3);
+    transition: text-decoration-color 0.2s ease;
+}
+.pricing-note-link:hover { text-decoration-color: rgba(255, 255, 255, 0.8); }
+
 .faq-list {
     margin-top: 3rem;
     max-width: 720px;
