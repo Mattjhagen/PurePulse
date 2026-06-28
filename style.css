@@ -608,8 +608,6 @@ p {
 
 .pricing-note strong { color: var(--text); font-weight: 500; }
 
-/* ── FAQ ─────────────────────────────────────────────────────────────────── */
-
 .pricing-note-link {
     color: inherit;
     text-decoration: underline;
@@ -618,6 +616,8 @@ p {
     transition: text-decoration-color 0.2s ease;
 }
 .pricing-note-link:hover { text-decoration-color: rgba(255, 255, 255, 0.8); }
+
+/* ── FAQ ─────────────────────────────────────────────────────────────────── */
 
 .faq-list {
     margin-top: 3rem;
