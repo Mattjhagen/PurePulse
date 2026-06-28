@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>12-Month Service Agreement — PurePulse</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        .contract-wrap {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 120px 24px 80px;
+        }
+
+        .contract-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+            transition: color 0.2s ease;
+        }
+        .contract-back:hover { color: var(--text); }
+
+        .contract-eyebrow {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .contract-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .contract-meta {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .contract-parties {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 48px;
+        }
+
+        @media (max-width: 600px) {
+            .contract-parties { grid-template-columns: 1fr; }
+        }
+
+        .party-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+        }
+
+        .party-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .party-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .party-detail {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .contract-section {
+            margin-bottom: 44px;
+        }
+
+        .contract-section-num {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .contract-section h2 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 14px;
+        }
+
+        .contract-section p {
+            font-size: 0.9375rem;
+            color: rgba(255, 255, 255, 0.72);
+            line-height: 1.75;
+            margin-bottom: 12px;
+        }
+
+        .contract-section p:last-child { margin-bottom: 0; }
+
+        .contract-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 12px;
+        }
+
+        .contract-section ul li {
+            font-size: 0.9375rem;
+            color: rgba(255, 255, 255, 0.72);
+            line-height: 1.75;
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .contract-section ul li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        .contract-section ul li strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .contract-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 44px 0;
+        }
+
+        .plan-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 0;
+            font-size: 0.875rem;
+        }
+
+        .plan-table th {
+            text-align: left;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .plan-table td {
+            padding: 12px 14px;
+            color: rgba(255, 255, 255, 0.72);
+            border-bottom: 1px solid var(--border);
+            line-height: 1.5;
+            vertical-align: top;
+        }
+
+        .plan-table tr:last-child td { border-bottom: none; }
+
+        .plan-table td:first-child {
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        .contract-highlight {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-left: 3px solid rgba(255, 255, 255, 0.25);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 18px 20px;
+            margin: 16px 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.7;
+        }
+
+        .contract-highlight strong { color: var(--text); font-weight: 500; }
+
+        .sig-block {
+            margin-top: 56px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .sig-block { grid-template-columns: 1fr; }
+        }
+
+        .sig-party { }
+
+        .sig-party-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .sig-line {
+            border-bottom: 1px solid var(--border-strong);
+            margin-bottom: 8px;
+            height: 44px;
+        }
+
+        .sig-field-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .contract-cta {
+            margin-top: 56px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            text-align: center;
+        }
+
+        .contract-cta p {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .contract-cta .btn-primary {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg"></div>
+
+    <header class="header">
+        <div class="logo">PurePulse</div>
+        <nav class="nav-links">
+            <a href="home.html#portfolio">Work</a>
+            <a href="home.html#how-it-works">Process</a>
+            <a href="home.html#pricing">Pricing</a>
+            <a href="home.html#faq">FAQ</a>
+        </nav>
+        <a href="home.html#consult" class="btn-ghost">Book a Call</a>
+    </header>
+
+    <div class="contract-wrap">
+
+        <a href="home.html#pricing" class="contract-back">← Back to Pricing</a>
+
+        <div class="contract-eyebrow">Legal Agreement</div>
+        <h1 class="contract-title">12-Month Web Services Agreement</h1>
+        <p class="contract-meta">Effective upon receipt of the $150 deposit and countersignature by PurePulse · Version 1.0 · 2026</p>
+
+        <!-- Parties -->
+        <div class="contract-parties">
+            <div class="party-card">
+                <div class="party-label">Service Provider</div>
+                <div class="party-name">PurePulse</div>
+                <div class="party-detail">
+                    Web Design &amp; Development<br>
+                    Austin, TX<br>
+                    contact@purepulse.one<br>
+                    purepulse.one
+                </div>
+            </div>
+            <div class="party-card">
+                <div class="party-label">Client</div>
+                <div class="party-name">You (the undersigned)</div>
+                <div class="party-detail">
+                    Name, business name, address, and contact information to be completed at time of engagement.
+                </div>
+            </div>
+        </div>
+
+        <hr class="contract-divider">
+
+        <!-- 1. Overview -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 1</div>
+            <h2>Overview &amp; Purpose</h2>
+            <p>This Web Services Agreement ("Agreement") is entered into between PurePulse ("Service Provider") and the individual or business named above ("Client"). This Agreement governs the design, development, and ongoing maintenance of a website on behalf of the Client.</p>
+            <p>By paying the $150 deposit, the Client acknowledges that they have read, understood, and agree to all terms of this Agreement. Work begins only after the deposit is received and this Agreement is countersigned by PurePulse.</p>
+        </div>
+
+        <!-- 2. Term -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 2</div>
+            <h2>Term of Agreement</h2>
+            <p>This Agreement begins on the date the $150 deposit is received ("Start Date") and continues for a period of <strong>twelve (12) months</strong> ("Term").</p>
+            <p>At the end of the Term, this Agreement automatically transitions to a month-to-month arrangement at the same plan rate unless either party provides written notice of termination at least 30 days before the Term's end. The Client may also choose to renew for another 12-month Term at the then-current rates.</p>
+        </div>
+
+        <!-- 3. Services -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 3</div>
+            <h2>Services Included</h2>
+            <p>PurePulse agrees to provide the following services based on the plan selected by the Client:</p>
+
+            <table class="plan-table">
+                <thead>
+                    <tr>
+                        <th>Plan</th>
+                        <th>Monthly Rate</th>
+                        <th>Services Included</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Starter</td>
+                        <td>$20 / mo</td>
+                        <td>Secure hosting &amp; uptime monitoring, up to 2 content updates/month, bug fixes, security patches, email support</td>
+                    </tr>
+                    <tr>
+                        <td>Growth</td>
+                        <td>$50 / mo</td>
+                        <td>Everything in Starter, plus: unlimited content updates, priority email support (24h response), basic SEO optimization, Google Analytics setup, monthly performance report</td>
+                    </tr>
+                    <tr>
+                        <td>Premium</td>
+                        <td>$75 / mo</td>
+                        <td>Everything in Growth, plus: custom feature development, advanced SEO &amp; keyword tracking, phone &amp; video support, quarterly design refresh, social media integration, priority issue response (&lt;4 hours)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="margin-top: 16px;">All plans include a <strong>one-time website build</strong> covering discovery, design, development, testing, and launch. Included with every build: mobile-first design, contact form, SSL &amp; HTTPS, custom domain setup, and a launch-ready delivery.</p>
+        </div>
+
+        <!-- 4. Payment -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 4</div>
+            <h2>Fees &amp; Payment Terms</h2>
+            <p><strong>Initial Deposit:</strong> A one-time, non-refundable deposit of $150 is due before work begins. This deposit secures the Client's place in the project queue and covers the initial discovery and design phase.</p>
+            <p><strong>Monthly Maintenance Fee:</strong> The monthly plan fee is due on the same calendar date each month, starting 30 days after the site launches (or 60 days after the Start Date, whichever comes first). Monthly fees are billed automatically via the payment method on file.</p>
+            <p><strong>Late Payment:</strong> Invoices not paid within 10 days of the due date may result in suspension of services until payment is received. Accounts more than 30 days past due may be subject to a 1.5% monthly late fee.</p>
+            <p><strong>Price Changes:</strong> PurePulse reserves the right to adjust monthly rates at the end of any 12-month Term with at least 30 days' written notice.</p>
+
+            <div class="contract-highlight">
+                <strong>Total minimum commitment example (Starter):</strong> $150 deposit + (12 × $20/mo) = $390 over 12 months. The deposit is not an additional charge — it is applied as a credit toward the build cost.
+            </div>
+        </div>
+
+        <!-- 5. Delivery Timeline -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 5</div>
+            <h2>Delivery &amp; Timeline</h2>
+            <p>PurePulse will deliver the completed website within <strong>2–4 weeks</strong> from the date of the deposit, provided the Client supplies all required content (text, images, branding assets) within 5 business days of the Start Date. Complex or custom projects may have an extended timeline, which will be confirmed in writing during the initial consultation.</p>
+            <p>Delays caused by the Client's failure to provide content, feedback, or approvals in a timely manner will extend the delivery timeline accordingly, at no additional cost to PurePulse.</p>
+        </div>
+
+        <!-- 6. Client Responsibilities -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 6</div>
+            <h2>Client Responsibilities</h2>
+            <p>The Client agrees to:</p>
+            <ul>
+                <li>Provide all required content, copy, images, logos, and brand guidelines in a timely manner</li>
+                <li>Designate a single point of contact for approvals and feedback</li>
+                <li>Provide feedback and approvals within <strong>5 business days</strong> of receiving any design or development deliverable</li>
+                <li>Ensure that all content provided is owned by or licensed to the Client, and does not infringe any third-party rights</li>
+                <li>Maintain valid payment on file for monthly billing</li>
+                <li>Notify PurePulse of any planned content changes or additions before making them independently on the live site</li>
+            </ul>
+        </div>
+
+        <!-- 7. Revisions -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 7</div>
+            <h2>Revisions &amp; Change Requests</h2>
+            <p>The initial build includes <strong>two rounds of revisions</strong> based on Client feedback. Additional structural changes, new pages, or feature additions outside the original agreed scope may be quoted as a separate project or billed at $85/hour.</p>
+            <p>Ongoing content updates (text changes, image swaps, minor layout adjustments) are included per the terms of the Client's selected plan and are not subject to hourly billing.</p>
+        </div>
+
+        <!-- 8. Ownership & IP -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 8</div>
+            <h2>Ownership &amp; Intellectual Property</h2>
+            <p><strong>Client Content:</strong> All content, images, copy, and materials provided by the Client remain the sole property of the Client.</p>
+            <p><strong>Website Ownership:</strong> Upon completion of the build and receipt of all payments due, the Client owns the final website design and all custom code written for their project. PurePulse transfers full ownership to the Client upon the conclusion of this Agreement or earlier at the Client's written request.</p>
+            <p><strong>PurePulse Portfolio Rights:</strong> PurePulse retains the right to display the completed website in its portfolio, case studies, and marketing materials unless the Client requests otherwise in writing.</p>
+            <p><strong>Third-Party Assets:</strong> Any third-party fonts, stock images, plugins, or libraries used in the build remain subject to their own respective licenses. PurePulse will use only licensed or open-source assets and will document any that require ongoing licensing fees.</p>
+        </div>
+
+        <!-- 9. Confidentiality -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 9</div>
+            <h2>Confidentiality</h2>
+            <p>Both parties agree to keep confidential any non-public business information shared during the course of this engagement. PurePulse will not share the Client's business strategies, pricing, or proprietary information with third parties without written consent. This obligation survives the termination of this Agreement for a period of two (2) years.</p>
+        </div>
+
+        <!-- 10. Termination -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 10</div>
+            <h2>Termination</h2>
+            <p><strong>By the Client:</strong> The Client may terminate this Agreement with 30 days' written notice. If terminated before the end of the 12-month Term, the Client remains responsible for all monthly fees through the end of the Term. The $150 deposit is non-refundable in all cases.</p>
+            <p><strong>By PurePulse:</strong> PurePulse may terminate this Agreement with 30 days' written notice if the Client materially breaches this Agreement and fails to cure the breach within 10 business days of written notice. Upon termination by PurePulse, the Client will receive a prorated refund of any prepaid monthly fees for the unused portion of the Term.</p>
+            <p><strong>Effect of Termination:</strong> Upon termination, PurePulse will provide the Client with all final files, code, and assets within 10 business days. Hosting and maintenance services will cease at the end of the notice period.</p>
+        </div>
+
+        <!-- 11. Warranties & Disclaimers -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 11</div>
+            <h2>Warranties &amp; Disclaimers</h2>
+            <p>PurePulse warrants that all work performed will be original, completed in a professional manner, and free from defects for a period of <strong>30 days</strong> after delivery. PurePulse will correct any defects reported in writing during this period at no additional charge.</p>
+            <p>PurePulse does not guarantee specific search engine rankings, traffic levels, or business results from any website built or maintained under this Agreement. SEO and performance improvements are offered in good faith and results may vary.</p>
+            <p>THE SERVICES ARE PROVIDED "AS IS" AFTER THE 30-DAY WARRANTY PERIOD. PUREPULSE MAKES NO OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</p>
+        </div>
+
+        <!-- 12. Limitation of Liability -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 12</div>
+            <h2>Limitation of Liability</h2>
+            <p>In no event will PurePulse's total liability to the Client exceed the total fees paid by the Client in the three (3) months immediately preceding the event giving rise to the claim. PurePulse will not be liable for any indirect, incidental, consequential, special, or punitive damages, including loss of profits, revenue, or data, even if advised of the possibility of such damages.</p>
+            <p>PurePulse is not liable for any downtime, data loss, or security breaches caused by third-party hosting providers, domain registrars, or services outside PurePulse's direct control.</p>
+        </div>
+
+        <!-- 13. Governing Law -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 13</div>
+            <h2>Governing Law &amp; Disputes</h2>
+            <p>This Agreement is governed by the laws of the State of Texas, without regard to its conflict of law principles. Any dispute arising from this Agreement that cannot be resolved through good-faith negotiation will be submitted to binding arbitration in Austin, Texas under the rules of the American Arbitration Association. The prevailing party is entitled to recover reasonable attorneys' fees.</p>
+        </div>
+
+        <!-- 14. Entire Agreement -->
+        <div class="contract-section">
+            <div class="contract-section-num">Section 14</div>
+            <h2>Entire Agreement</h2>
+            <p>This Agreement constitutes the entire understanding between the parties with respect to its subject matter and supersedes all prior discussions, representations, and agreements. No modification is binding unless made in writing and signed by both parties.</p>
+            <p>If any provision of this Agreement is found unenforceable, the remaining provisions continue in full force and effect.</p>
+        </div>
+
+        <hr class="contract-divider">
+
+        <!-- Signature Block -->
+        <div>
+            <div class="contract-section-num" style="margin-bottom: 24px;">Signatures</div>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">By signing below, both parties agree to the terms of this Agreement. A digital signature or written confirmation via email constitutes acceptance.</p>
+
+            <div class="sig-block">
+                <div class="sig-party">
+                    <div class="sig-party-label">PurePulse — Service Provider</div>
+                    <div class="sig-line"></div>
+                    <div class="sig-field-label">Signature &amp; Date</div>
+                    <div class="sig-line"></div>
+                    <div class="sig-field-label">Printed Name &amp; Title</div>
+                </div>
+                <div class="sig-party">
+                    <div class="sig-party-label">Client</div>
+                    <div class="sig-line"></div>
+                    <div class="sig-field-label">Signature &amp; Date</div>
+                    <div class="sig-line"></div>
+                    <div class="sig-field-label">Printed Name &amp; Business (if applicable)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="contract-cta">
+            <p>Ready to get started? Book a free consultation and we'll walk you through everything — no pressure, no commitment until you're ready.</p>
+            <a href="home.html#consult" class="btn-primary">Book a Free Consultation</a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="logo">PurePulse</div>
+                <p>Professional web design &amp; maintenance.</p>
+            </div>
+            <div class="footer-links">
+                <a href="home.html#how-it-works">Process</a>
+                <a href="home.html#pricing">Pricing</a>
+                <a href="home.html#faq">FAQ</a>
+                <a href="home.html#consult">Contact</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 PurePulse. All rights reserved.</span>
+            <span>Built with care.</span>
+        </div>
+    </footer>
+
+</body>
+</html>
