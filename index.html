@@ -58,6 +58,53 @@
         <p class="hero-note">$150 deposit &middot; 12-month plans from $20/mo &middot; No surprises</p>
     </section>
 
+    // ── Splash Screen ─────────────────────────────────────────────────────
+(function () {
+    const splash = document.getElementById('splash');
+    const video  = document.getElementById('splashVideo');
+    const skip   = document.getElementById('splashSkip');
+    let dismissed = false;
+    let fallbackTimer = null;
+
+    document.documentElement.style.overflow = 'hidden';
+
+    function dismiss() {
+        if (dismissed) return;
+        dismissed = true;
+        clearTimeout(fallbackTimer);
+        splash.classList.add('splash--out');
+        document.documentElement.style.overflow = '';
+        setTimeout(() => { if (splash.parentNode) splash.remove(); }, 1100);
+    }
+
+    function startFallback(ms) {
+        if (video.readyState >= 2 && !video.paused) return;
+        fallbackTimer = setTimeout(dismiss, ms);
+    }
+
+    video.addEventListener('ended', dismiss);
+    skip.addEventListener('click', dismiss);
+
+    video.addEventListener('playing', () => {
+        clearTimeout(fallbackTimer);
+        setTimeout(dismiss, 12000);
+    });
+
+    video.addEventListener('error', () => startFallback(3500));
+
+    const source = video.querySelector('source');
+    if (source) source.addEventListener('error', () => startFallback(3500));
+
+    setTimeout(() => {
+        if (video.readyState === 0 || video.networkState === 3) {
+            startFallback(3500);
+        }
+    }, 600);
+
+    setTimeout(dismiss, 15000);
+})();
+// ── End Splash Screen ─────────────────────────────────────────────────
+
     <!-- Portfolio Lookbook -->
     <section id="portfolio" class="portfolio-section scroll-reveal">
         <div class="portfolio-header section">
