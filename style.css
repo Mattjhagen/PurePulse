@@ -368,6 +368,67 @@ p {
     z-index: 0;
 }
 
+/* Sister sites. Deliberately the same pill as .hero-tag directly below it --
+   same border, radius, type scale and letter-spacing -- so the three read as
+   one element belonging to the hero rather than a banner bolted on top. */
+.hero-sisters {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2px 14px;
+    max-width: 100%;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 7px 18px;
+    border-radius: var(--radius-full);
+    margin-bottom: 1.75rem;
+}
+
+.hero-sisters a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.hero-sisters a:hover,
+.hero-sisters a:focus-visible {
+    color: var(--text);
+}
+
+/* Hairline between entries, drawn in the container's own border colour. */
+.hero-sisters a + a::before {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    margin-right: 14px;
+    vertical-align: -1px;
+    background: var(--border-strong);
+}
+
+@media (max-width: 560px) {
+    .hero-sisters {
+        gap: 2px 10px;
+        letter-spacing: 0.12em;
+        padding: 7px 14px;
+    }
+    .hero-sisters a + a::before {
+        margin-right: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-sisters a {
+        transition: none;
+    }
+}
+
 .hero-tag {
     display: inline-flex;
     align-items: center;
