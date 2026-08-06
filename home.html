@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- v2 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,6 +32,7 @@
             <a href="#pricing">Pricing</a>
             <a href="#faq">FAQ</a>
         </nav>
+        <a href="https://purepulseadmin.netlify.app/portal" target="_blank" rel="noopener" style="color:#3b82f6;font-size:0.875rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.25rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Client Portal&nbsp;↗</a>
         <a href="#consult" class="btn-ghost">Book a Call</a>
     </header>
 
@@ -887,7 +889,11 @@
         </div>
         <div class="footer-bottom">
             <span>&copy; 2026 PurePulse. All rights reserved.</span>
-            <span>Built with care.</span>
+            <span style="display:flex;align-items:center;gap:1.5rem;">
+                <a href="https://purepulseadmin.netlify.app/portal" target="_blank" rel="noopener" style="color:#3b82f6;font-size:0.8125rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.2rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Client Portal&nbsp;↗</a>
+                <a href="https://purepulseadmin.netlify.app/login" target="_blank" rel="noopener" style="color:#3b82f6;font-size:0.8125rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.2rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Login&nbsp;↗</a>
+                <span>Built with care.</span>
+            </span>
         </div>
     </footer>
 
@@ -1007,7 +1013,7 @@
             const honeypot = form.querySelector('[name="website_url"]').value;
             if (honeypot) return;
 
-            submitBtn.textContent = 'Sending...';
+            submitBtn.textContent = 'Sending…';
             submitBtn.disabled = true;
             msg.className = 'form-message';
             msg.textContent = '';
@@ -1020,17 +1026,24 @@
             };
 
             try {
-                await fetch('mailto:contact@purepulse.one', { method: 'GET' });
-                throw new Error('use_mailto');
-            } catch {
-                const body    = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\nPlan: ${data.plan || 'Not selected'}\n\nProject Details:\n${data.project}`);
-                const subject = encodeURIComponent('Web Design Consultation Request');
-                window.location.href = `mailto:contact@purepulse.one?subject=${subject}&body=${body}`;
+                const res = await fetch('https://purepulseadmin.netlify.app/api/leads', {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify(data),
+                });
+
+                if (!res.ok) throw new Error('server error');
 
                 msg.className = 'form-message success';
-                msg.textContent = "Opening your mail client — we'll be in touch within one business day.";
+                msg.textContent = "Request received! Check your email for a portal invite…";
                 form.reset();
-            } finally {
+
+                setTimeout(() => {
+                    window.location.href = 'https://purepulseadmin.netlify.app/leads';
+                }, 1500);
+            } catch {
+                msg.className = 'form-message error';
+                msg.textContent = "Something went wrong — please email us at contact@purepulse.one.";
                 submitBtn.textContent = 'Send My Request';
                 submitBtn.disabled = false;
             }
