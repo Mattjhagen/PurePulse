@@ -32,7 +32,7 @@
             <a href="#pricing">Pricing</a>
             <a href="#faq">FAQ</a>
         </nav>
-        <a href="https://purepulseadmin.netlify.app/portal" target="_blank" rel="noopener" style="color:#3b82f6;font-size:0.875rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.25rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Client Portal&nbsp;↗</a>
+        <a href="https://login.purepulse.one/portal" target="_blank" rel="noopener" style="color:#3b82f6;font-size:0.875rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.25rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Client Portal&nbsp;↗</a>
         <a href="#consult" class="btn-ghost">Book a Call</a>
     </header>
 
@@ -673,7 +673,7 @@
                     <li class="dim"><span>–</span> SEO optimization</li>
                     <li class="dim"><span>–</span> Analytics dashboard</li>
                 </ul>
-                <a href="https://purepulseadmin.netlify.app/pricing/start?plan=starter" class="btn-outline">Get Started</a>
+                <a href="https://login.purepulse.one/pricing/start?plan=starter" class="btn-outline">Get Started</a>
             </div>
 
             <div class="pricing-card pricing-card--featured">
@@ -694,7 +694,7 @@
                     <li><span class="check">✓</span> Monthly performance report</li>
                     <li class="dim"><span>–</span> Custom feature development</li>
                 </ul>
-                <a href="https://purepulseadmin.netlify.app/pricing/start?plan=growth" class="btn-primary">Get Started</a>
+                <a href="https://login.purepulse.one/pricing/start?plan=growth" class="btn-primary">Get Started</a>
             </div>
 
             <div class="pricing-card">
@@ -714,7 +714,7 @@
                     <li><span class="check">✓</span> Social media integration</li>
                     <li><span class="check">✓</span> Priority issue response (&lt;4h)</li>
                 </ul>
-                <a href="https://purepulseadmin.netlify.app/pricing/start?plan=premium" class="btn-outline">Get Started</a>
+                <a href="https://login.purepulse.one/pricing/start?plan=premium" class="btn-outline">Get Started</a>
             </div>
 
             <div class="pricing-card">
@@ -733,7 +733,7 @@
                     <li><span class="check">✓</span> Ongoing performance review</li>
                     <li><span class="check">✓</span> Quarterly improvement roadmap</li>
                 </ul>
-                <a href="https://purepulseadmin.netlify.app/pricing/start?plan=business" class="btn-outline">Get Started</a>
+                <a href="https://login.purepulse.one/pricing/start?plan=business" class="btn-outline">Get Started</a>
             </div>
 
         </div>
@@ -890,8 +890,8 @@
         <div class="footer-bottom">
             <span>&copy; 2026 PurePulse. All rights reserved.</span>
             <span style="display:flex;align-items:center;gap:1.5rem;">
-                <a href="https://purepulseadmin.netlify.app/portal" target="_blank" rel="noopener" style="color:#3b82f6;font-size:0.8125rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.2rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Client Portal&nbsp;↗</a>
-                <a href="https://purepulseadmin.netlify.app/login" target="_blank" rel="noopener" style="color:#3b82f6;font-size:0.8125rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.2rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Login&nbsp;↗</a>
+                <a href="https://login.purepulse.one/portal" target="_blank" rel="noopener" style="color:#3b82f6;font-size:0.8125rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.2rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Client Portal&nbsp;↗</a>
+                <a href="https://login.purepulse.one/login" target="_blank" rel="noopener" style="color:#3b82f6;font-size:0.8125rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.2rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Login&nbsp;↗</a>
                 <span>Built with care.</span>
             </span>
         </div>
@@ -1026,7 +1026,7 @@
             };
 
             try {
-                const res = await fetch('https://purepulseadmin.netlify.app/api/leads', {
+                const res = await fetch('https://login.purepulse.one/api/leads', {
                     method:  'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body:    JSON.stringify(data),
@@ -1039,7 +1039,7 @@
                 form.reset();
 
                 setTimeout(() => {
-                    window.location.href = 'https://purepulseadmin.netlify.app/leads';
+                    window.location.href = 'https://login.purepulse.one/leads';
                 }, 1500);
             } catch {
                 msg.className = 'form-message error';
