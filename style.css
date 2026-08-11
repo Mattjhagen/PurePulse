@@ -1270,3 +1270,97 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
     .lb-page           { transition: none; }
     .hero-tag::before  { animation: none; }
 }
+
+/* ── P3 Lending — AI Social Finance ─────────────────────────────────────── */
+.lb-screen--p3new { background: #071018; display: flex; flex-direction: column; justify-content: space-between; }
+.p3n-init { font-size: 0.38rem; font-weight: 700; color: rgba(0,212,255,0.5); letter-spacing: 0.2em; padding: 8px 14px; border-bottom: 1px solid rgba(0,212,255,0.1); font-family: monospace; }
+.p3n-hero { padding: 12px 14px 8px; flex: 1; }
+.p3n-eyebrow { font-size: 0.42rem; font-weight: 700; color: #00D4FF; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 7px; }
+.p3n-headline { font-size: 1.15rem; font-weight: 800; color: #F4F4FF; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 6px; }
+.p3n-sub { font-size: 0.43rem; color: rgba(244,244,255,0.45); line-height: 1.55; margin-bottom: 10px; }
+.p3n-btns { display: flex; gap: 6px; }
+.p3n-btn-primary { font-size: 0.44rem; font-weight: 700; color: #07070D; background: #00D4FF; padding: 5px 12px; border-radius: 100px; }
+.p3n-btn-ghost { font-size: 0.44rem; color: rgba(244,244,255,0.5); border: 1px solid rgba(244,244,255,0.15); padding: 5px 12px; border-radius: 100px; }
+.p3n-stats { display: flex; border-top: 1px solid rgba(0,212,255,0.12); background: rgba(0,212,255,0.04); }
+.p3n-stat { flex: 1; padding: 8px 4px; text-align: center; border-right: 1px solid rgba(0,212,255,0.08); }
+.p3n-stat:last-child { border-right: none; }
+.p3n-num { display: block; font-size: 0.75rem; font-weight: 800; color: #00D4FF; letter-spacing: -0.02em; }
+.p3n-lbl { display: block; font-size: 0.36rem; color: rgba(244,244,255,0.3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+
+/* ── Rooted Daily v2 — Audio Bible ──────────────────────────────────────── */
+.lb-screen--rooted2 { background: #0d1117; display: flex; flex-direction: column; }
+.rd-nav { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; background: #161b22; border-bottom: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
+.rd-logo-wrap { display: flex; align-items: center; gap: 6px; }
+.rd-logo-icon { font-size: 0.9rem; }
+.rd-logo { font-size: 0.78rem; font-weight: 700; color: #4ea84e; letter-spacing: -0.01em; }
+.rd-nav-link { font-size: 0.42rem; color: rgba(255,255,255,0.4); }
+.rd-hero { padding: 18px 14px 10px; flex: 1; }
+.rd-tag { font-size: 0.4rem; font-weight: 700; color: #4ea84e; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+.rd-headline { font-size: 1.25rem; font-weight: 800; color: #e6edf3; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 6px; }
+.rd-sub { font-size: 0.43rem; color: rgba(230,237,243,0.4); line-height: 1.55; margin-bottom: 12px; }
+.rd-btns { display: flex; gap: 6px; }
+.rd-btn-primary { font-size: 0.43rem; font-weight: 700; color: #fff; background: #2d6a2d; padding: 5px 10px; border-radius: 6px; }
+.rd-btn-ghost { font-size: 0.43rem; color: rgba(230,237,243,0.55); border: 1px solid rgba(255,255,255,0.12); padding: 5px 10px; border-radius: 6px; }
+.rd-features { display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; background: #161b22; }
+.rd-feat { flex: 1; font-size: 0.38rem; font-weight: 600; color: rgba(230,237,243,0.45); text-align: center; padding: 8px 4px; border-right: 1px solid rgba(255,255,255,0.05); }
+.rd-feat:last-child { border-right: none; }
+
+/* ── FuelShield v2 — Gas Price Protection ───────────────────────────────── */
+.lb-screen--fuel2 { background: #071018; display: flex; flex-direction: column; }
+.fs2-nav { display: flex; align-items: center; padding: 8px 14px; background: #0b1825; border-bottom: 1px solid rgba(251,191,36,0.12); flex-shrink: 0; }
+.fs2-logo { font-size: 0.78rem; font-weight: 700; color: #fbbf24; white-space: nowrap; }
+.fs2-navlinks { display: flex; gap: 10px; flex: 1; margin-left: 14px; }
+.fs2-navlinks span { font-size: 0.44rem; color: rgba(255,255,255,0.35); white-space: nowrap; }
+.fs2-navcta { font-size: 0.44rem; font-weight: 700; color: #071018; background: #fbbf24; padding: 4px 10px; border-radius: 100px; white-space: nowrap; }
+.fs2-hero { padding: 10px 14px 8px; flex: 1; }
+.fs2-tag { font-size: 0.4rem; font-weight: 700; color: #fbbf24; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+.fs2-headline { font-size: 1.05rem; font-weight: 800; color: #fff; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 5px; }
+.fs2-sub { font-size: 0.42rem; color: rgba(255,255,255,0.38); line-height: 1.5; margin-bottom: 9px; }
+.fs2-plans { display: flex; gap: 6px; margin-bottom: 0; }
+.fs2-plan { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 7px 6px; text-align: center; }
+.fs2-plan--on { border-color: #fbbf24; background: rgba(251,191,36,0.08); }
+.fs2-plan-name { font-size: 0.4rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; }
+.fs2-plan-gal { font-size: 0.5rem; font-weight: 700; color: #fbbf24; margin: 3px 0; }
+.fs2-plan-price { font-size: 0.55rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+.fs2-card-row { padding: 8px 14px; border-top: 1px solid rgba(251,191,36,0.1); flex-shrink: 0; }
+.fs2-card-preview { background: linear-gradient(135deg, #0b1825 0%, #162840 100%); border: 1px solid rgba(251,191,36,0.2); border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; }
+.fs2-card-label { font-size: 0.42rem; font-weight: 700; color: #fbbf24; }
+.fs2-card-num { font-size: 0.42rem; color: rgba(255,255,255,0.45); font-family: monospace; }
+.fs2-card-sub { font-size: 0.38rem; color: rgba(255,255,255,0.25); }
+
+/* ── Relay — AI Dev Platform ─────────────────────────────────────────────── */
+.lb-screen--relay { background: #06060A; display: flex; flex-direction: column; }
+.rl-nav { display: flex; align-items: center; padding: 8px 14px; background: #0d0d14; border-bottom: 1px solid rgba(123,47,255,0.15); flex-shrink: 0; }
+.rl-logo { font-size: 0.82rem; font-weight: 700; color: #A066FF; letter-spacing: -0.02em; white-space: nowrap; }
+.rl-navlinks { display: flex; gap: 10px; flex: 1; margin-left: 14px; }
+.rl-navlinks span { font-size: 0.44rem; color: rgba(244,244,255,0.35); white-space: nowrap; }
+.rl-navcta { font-size: 0.44rem; font-weight: 700; color: #fff; background: #7B2FFF; padding: 4px 10px; border-radius: 100px; white-space: nowrap; }
+.rl-hero { padding: 12px 14px 8px; flex: 1; }
+.rl-eyebrow { font-size: 0.4rem; font-weight: 700; color: rgba(160,102,255,0.65); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+.rl-headline { font-size: 1.0rem; font-weight: 800; color: #F4F4FF; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 5px; }
+.rl-sub { font-size: 0.42rem; color: rgba(244,244,255,0.38); line-height: 1.5; margin-bottom: 10px; }
+.rl-btns { display: flex; gap: 6px; }
+.rl-btn-primary { font-size: 0.43rem; font-weight: 700; color: #fff; background: #7B2FFF; padding: 5px 10px; border-radius: 6px; box-shadow: 0 0 10px rgba(123,47,255,0.4); }
+.rl-btn-ghost { font-size: 0.43rem; color: rgba(244,244,255,0.5); border: 1px solid rgba(244,244,255,0.12); padding: 5px 10px; border-radius: 6px; }
+.rl-cards { display: flex; gap: 6px; padding: 8px 14px; border-top: 1px solid rgba(123,47,255,0.1); flex-shrink: 0; background: rgba(123,47,255,0.03); }
+.rl-card { flex: 1; background: rgba(123,47,255,0.06); border: 1px solid rgba(123,47,255,0.15); border-radius: 6px; padding: 7px 8px; }
+.rl-card-icon { font-size: 0.72rem; margin-bottom: 3px; }
+.rl-card-name { font-size: 0.44rem; font-weight: 700; color: #A066FF; margin-bottom: 2px; }
+.rl-card-desc { font-size: 0.37rem; color: rgba(244,244,255,0.35); line-height: 1.4; }
+
+/* ── Matty Hagen v2 — MATTY@VIBECODE ────────────────────────────────────── */
+.lb-screen--mattyv2 { background: #0a0a0a; display: flex; flex-direction: column; }
+.mv2-nav { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; background: #111; border-bottom: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
+.mv2-logo { font-size: 0.72rem; font-weight: 900; color: #fff; letter-spacing: 0.05em; }
+.mv2-at { color: rgba(255,255,255,0.35); }
+.mv2-navlinks { display: flex; gap: 10px; }
+.mv2-navlinks span { font-size: 0.42rem; color: rgba(255,255,255,0.35); }
+.mv2-hero { position: relative; flex: 1; overflow: hidden; }
+.mv2-headline { position: absolute; top: 10px; left: 14px; right: 14px; font-size: 0.88rem; font-weight: 900; color: #fff; line-height: 1.1; letter-spacing: 0.02em; z-index: 2; }
+.mv2-img-placeholder { position: absolute; inset: 0; background: linear-gradient(160deg, #1a1a1a 0%, #222 40%, #111 100%); }
+.mv2-img-placeholder::after { content: 'AI PLATFORM EXPERTISE'; position: absolute; bottom: 10px; left: 14px; font-size: 0.38rem; font-weight: 700; color: rgba(255,255,255,0.2); letter-spacing: 0.2em; }
+.mv2-services { display: flex; border-top: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; background: #0d0d0d; }
+.mv2-service { flex: 1; padding: 8px 10px; border-right: 1px solid rgba(255,255,255,0.06); }
+.mv2-service:last-child { border-right: none; }
+.mv2-svc-title { font-size: 0.38rem; font-weight: 800; color: rgba(255,255,255,0.7); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+.mv2-svc-desc { font-size: 0.35rem; color: rgba(255,255,255,0.25); line-height: 1.4; }
