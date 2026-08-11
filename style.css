@@ -1371,13 +1371,12 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
     overflow: hidden;
     position: relative;
     background: #0a0a12;
-    display: flex;
-    align-items: flex-start;
+    padding: 0;
 }
 
 .lb-screenshot {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
     object-position: top center;
