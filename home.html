@@ -798,6 +798,25 @@
                     dx < 0 ? goTo(current + 1, 1) : goTo(current - 1, -1);
                 }
             }, { passive: true });
+
+            // ── Auto-advance every 5 seconds ──
+            let autoTimer = setInterval(() => {
+                goTo(current === total - 1 ? 0 : current + 1, 1);
+            }, 5000);
+
+            // Pause on hover or manual interaction, resume after
+            function resetTimer() {
+                clearInterval(autoTimer);
+                autoTimer = setInterval(() => {
+                    goTo(current === total - 1 ? 0 : current + 1, 1);
+                }, 5000);
+            }
+
+            wrap.addEventListener('mouseenter', () => clearInterval(autoTimer));
+            wrap.addEventListener('mouseleave', () => resetTimer());
+            btnPrev.addEventListener('click', resetTimer);
+            btnNext.addEventListener('click', resetTimer);
+            dots.forEach(dot => dot.addEventListener('click', resetTimer));
         })();
 
         // ── Scroll reveal ─────────────────────────────────────────────────────
