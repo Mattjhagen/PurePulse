@@ -1,4 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#080808"/>
-  <text x="16" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="-1">P</text>
+  <rect width="32" height="32" rx="7" fill="#07070D"/>
+  <defs>
+    <linearGradient id="pg" x1="2" y1="0" x2="30" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7B2FFF"/>
+      <stop offset="100%" stop-color="#00D4FF"/>
+    </linearGradient>
+  </defs>
+  <polyline
+    points="2,16 7,16 8.5,16 9.5,14 10,10 10.5,22 11,13.5 12.5,16 16,16 17.5,12.5 19,7 20.5,25 21.5,12 23,16 30,16"
+    fill="none"
+    stroke="url(#pg)"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
 </svg>
