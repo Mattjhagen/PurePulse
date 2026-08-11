@@ -278,38 +278,44 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 2px 14px;
+    gap: 0;
     max-width: 100%;
-    font-size: 0.6875rem;
+    font-size: 0.72rem;
     font-weight: 600;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    border: 1px solid var(--border);
-    padding: 7px 18px;
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-full);
     margin-bottom: 1.75rem;
-    background: rgba(123, 47, 255, 0.05);
+    background: rgba(123, 47, 255, 0.08);
+    overflow: hidden;
+    padding: 0;
 }
 
 .hero-sisters a {
-    color: var(--text-muted);
+    color: rgba(244, 244, 255, 0.65);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, background 0.2s ease;
+    padding: 10px 22px;
+    display: inline-flex;
+    align-items: center;
 }
 
 .hero-sisters a:hover,
 .hero-sisters a:focus-visible {
-    color: var(--violet-glow);
+    color: var(--w);
+    background: rgba(123, 47, 255, 0.2);
 }
 
 .hero-sisters a + a::before {
     content: '';
     display: inline-block;
     width: 1px;
-    height: 10px;
-    margin-right: 14px;
-    vertical-align: -1px;
+    height: 16px;
+    margin-right: 22px;
+    vertical-align: -4px;
     background: var(--border-strong);
+    flex-shrink: 0;
 }
 
 @media (max-width: 560px) {
