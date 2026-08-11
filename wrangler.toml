@@ -1,0 +1,13 @@
+name = "purepulse-leads"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+# Set these as secrets via: wrangler secret put SUPABASE_URL etc.
+# SUPABASE_URL = "https://your-project.supabase.co"
+# SUPABASE_SERVICE_KEY = "your-service-role-key"
+# RESEND_API_KEY = "re_your_key"
+
+[[routes]]
+pattern = "purepulse.one/api/leads"
+zone_name = "purepulse.one"
