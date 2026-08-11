@@ -840,7 +840,7 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
 
 .lookbook-wrap {
     position: relative;
-    max-width: 1040px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 5% 80px;
     touch-action: pan-y;
@@ -848,7 +848,7 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
 
 .lookbook {
     position: relative;
-    height: 480px;
+    height: 580px;
     perspective: 1400px;
     outline: none;
 }
@@ -857,9 +857,9 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
     position: absolute;
     inset: 0;
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1.4fr 1fr;
     gap: 3rem;
-    align-items: center;
+    align-items: stretch;
     opacity: 0;
     pointer-events: none;
     transform: translateX(48px) rotateY(-4deg);
@@ -879,7 +879,12 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
 
 /* ── Browser mockup ── */
 
-.lb-mockup { position: relative; }
+.lb-mockup {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
 
 .lb-browser {
     border-radius: 10px;
@@ -887,6 +892,9 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
     border: 1px solid var(--border-strong);
     background: #0b0b12;
     box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(123,47,255,0.1), 0 2px 0 rgba(160,102,255,0.06) inset;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .lb-bar {
@@ -923,10 +931,11 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
 }
 
 .lb-screen {
-    height: 320px;
+    flex: 1;
     overflow: hidden;
     position: relative;
     background: #0a0a12;
+    min-height: 0;
 }
 
 /* ── P3 Lending ── */
@@ -1139,7 +1148,7 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
 }
 
 /* ── Info panel ── */
-.lb-info { display: flex; flex-direction: column; gap: 0; }
+.lb-info { display: flex; flex-direction: column; gap: 0; justify-content: center; }
 
 .lb-counter {
     font-size: 0.6875rem;
@@ -1254,7 +1263,9 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
     .lb-page.active { display: grid; pointer-events: auto; }
     .lb-page.lb-exit-left, .lb-page.lb-exit-right,
     .lb-page.lb-enter-right, .lb-page.lb-enter-left { display: none; }
-    .lb-screen     { height: 240px; }
+    .lb-mockup { height: 260px; }
+    .lb-screen { height: 220px; min-height: 220px; }
+    .lb-screen--img { min-height: 220px; }
     .lb-info h3    { font-size: 1.375rem; }
     .lb-arrow--prev { left: 0; }
     .lb-arrow--next { right: 0; }
@@ -1367,11 +1378,12 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
 
 /* ── Screenshot-based mockups ────────────────────────────────────────────── */
 .lb-screen--img {
-    height: 320px;
+    flex: 1;
     overflow: hidden;
     position: relative;
     background: #0a0a12;
     padding: 0;
+    min-height: 0;
 }
 
 .lb-screenshot {
@@ -1381,8 +1393,4 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
     object-fit: cover;
     object-position: top center;
     border: none;
-}
-
-@media (max-width: 768px) {
-    .lb-screen--img { height: 240px; }
 }
