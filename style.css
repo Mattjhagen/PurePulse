@@ -1413,6 +1413,7 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
     cursor: pointer;
     isolation: isolate;
     transition: color 0.2s, background 0.2s;
+    animation: vibeGlowPulse 2.4s ease-in-out infinite;
 }
 
 /* The spinning conic gradient border */
@@ -1424,9 +1425,10 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
     background: conic-gradient(
         from var(--angle, 0deg),
         transparent 0deg,
-        var(--cyan) 60deg,
-        var(--violet-glow) 120deg,
-        transparent 180deg,
+        #00D4FF 60deg,
+        #A066FF 150deg,
+        #7B2FFF 210deg,
+        transparent 270deg,
         transparent 360deg
     );
     animation: spinGlow 2.4s linear infinite;
@@ -1453,21 +1455,29 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
     to { --angle: 360deg; }
 }
 
+@keyframes vibeGlowPulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(0,212,255,0.25), 0 0 28px rgba(123,47,255,0.2); }
+    50%       { box-shadow: 0 0 24px rgba(0,212,255,0.5),  0 0 52px rgba(123,47,255,0.38); }
+}
+
 .btn-vibecodes:hover {
     color: #fff;
     background: rgba(123, 47, 255, 0.1);
+    animation: none;
+    box-shadow: 0 0 32px rgba(0,212,255,0.6), 0 0 64px rgba(123,47,255,0.45);
 }
 
 .btn-vibecodes:hover::before {
     background: conic-gradient(
         from var(--angle, 0deg),
         transparent 0deg,
-        var(--cyan) 80deg,
-        var(--violet-glow) 160deg,
-        transparent 240deg,
+        #00D4FF 90deg,
+        #A066FF 180deg,
+        #7B2FFF 270deg,
+        transparent 320deg,
         transparent 360deg
     );
-    animation-duration: 1.6s;
+    animation-duration: 1.4s;
 }
 
 @media (prefers-reduced-motion: reduce) {
