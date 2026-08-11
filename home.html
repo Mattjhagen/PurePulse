@@ -593,7 +593,7 @@
         </div>
 
         <div class="cta-tag" style="margin-top:32px">
-            <a href="https://vibecodes.space" class="btn-vibecodes" target="_blank" rel="noopener">Try vibeCodes →</a>
+            <button class="btn-vibecodes" id="vibeCodesBtn">Try vibeCodes →</button>
         </div>
     </section>
 
@@ -905,5 +905,185 @@
         });
     </script>
 
+<!-- ── vibeCodes Launch Splash ── -->
+<div id="vibe-splash" aria-hidden="true">
+    <canvas id="vibe-canvas"></canvas>
+    <div class="vibe-splash-inner">
+        <div class="vibe-logo">vibe<span>Codes</span></div>
+        <div class="vibe-status" id="vibeStatus">Initializing editor...</div>
+        <div class="vibe-bar-wrap"><div class="vibe-bar" id="vibeBar"></div></div>
+        <div class="vibe-sub" id="vibeSub">Powered by PurePulse</div>
+    </div>
+</div>
+
+<style>
+#vibe-splash {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #07070D;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+#vibe-splash.active { opacity: 1; pointer-events: all; }
+#vibe-splash.exit { animation: vSplashOut 0.6s cubic-bezier(0.76,0,0.24,1) forwards; }
+@keyframes vSplashOut { to { opacity: 0; transform: scale(1.04); } }
+
+#vibe-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.vibe-splash-inner {
+    position: relative; z-index: 2;
+    text-align: center; display: flex; flex-direction: column;
+    align-items: center; gap: 1.2rem;
+}
+
+.vibe-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700; letter-spacing: -0.03em;
+    color: #F4F4FF; line-height: 1;
+    opacity: 0; transform: translateY(20px);
+    animation: vFadeUp 0.5s ease 0.1s forwards;
+}
+.vibe-logo span { color: #A066FF; }
+
+.vibe-status {
+    font-family: 'Inter', monospace;
+    font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+    font-weight: 400; letter-spacing: 0.06em;
+    color: #00D4FF;
+    min-height: 1.4em;
+    opacity: 0;
+    animation: vFadeUp 0.5s ease 0.3s forwards;
+}
+
+.vibe-bar-wrap {
+    width: clamp(200px, 40vw, 400px); height: 3px;
+    background: rgba(123,47,255,0.2); border-radius: 100px;
+    overflow: hidden;
+    opacity: 0; animation: vFadeUp 0.5s ease 0.4s forwards;
+}
+.vibe-bar {
+    height: 100%; width: 0%; border-radius: 100px;
+    background: linear-gradient(90deg, #7B2FFF, #00D4FF);
+    box-shadow: 0 0 12px rgba(0,212,255,0.6);
+    transition: width 0.3s ease;
+}
+
+.vibe-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(244,244,255,0.25);
+    opacity: 0; animation: vFadeUp 0.5s ease 0.5s forwards;
+}
+
+@keyframes vFadeUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<script>
+(function() {
+    const MESSAGES = [
+        'Initializing editor...',
+        'Loading your workspace...',
+        'Compiling your vibe...',
+        'Importing design tokens...',
+        'Spinning up the AI engine...',
+        'Polishing the pixels...',
+        'Almost there...',
+        'Launching vibeCodes ✦'
+    ];
+
+    const btn    = document.getElementById('vibeCodesBtn');
+    const splash = document.getElementById('vibe-splash');
+    const status = document.getElementById('vibeStatus');
+    const bar    = document.getElementById('vibeBar');
+    const canvas = document.getElementById('vibe-canvas');
+    const ctx    = canvas.getContext('2d');
+
+    // ── Canvas particle field ──────────────────────────────────────────────
+    let W, H, particles = [], rafId;
+    function resizeCanvas() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function spawnParticles() {
+        particles = Array.from({ length: 80 }, () => ({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4,
+            r: 0.5 + Math.random() * 2,
+            a: 0.1 + Math.random() * 0.5,
+            col: Math.random() < 0.5 ? '123,47,255' : '0,212,255',
+        }));
+    }
+
+    function drawParticles() {
+        ctx.clearRect(0, 0, W, H);
+        // Radial glow bg
+        const g = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.min(W,H)*0.6);
+        g.addColorStop(0, 'rgba(123,47,255,0.08)');
+        g.addColorStop(0.5, 'rgba(0,212,255,0.03)');
+        g.addColorStop(1, 'transparent');
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+        particles.forEach(p => {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+            if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${p.col},${p.a})`;
+            ctx.fill();
+        });
+
+        rafId = requestAnimationFrame(drawParticles);
+    }
+
+    // ── Launch sequence ────────────────────────────────────────────────────
+    btn.addEventListener('click', () => {
+        spawnParticles();
+        splash.classList.add('active');
+        splash.removeAttribute('aria-hidden');
+        drawParticles();
+
+        let step = 0;
+        const totalSteps = MESSAGES.length;
+        const stepDuration = 320;
+
+        function tick() {
+            if (step >= totalSteps) {
+                // Launch!
+                cancelAnimationFrame(rafId);
+                splash.classList.add('exit');
+                setTimeout(() => {
+                    splash.classList.remove('active', 'exit');
+                    splash.setAttribute('aria-hidden', 'true');
+                    ctx.clearRect(0, 0, W, H);
+                    window.open('https://vibecodes.space', '_blank');
+                }, 650);
+                return;
+            }
+            status.style.opacity = '0';
+            status.style.transform = 'translateY(6px)';
+            setTimeout(() => {
+                status.textContent = MESSAGES[step];
+                status.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+                status.style.opacity = '1';
+                status.style.transform = 'translateY(0)';
+                bar.style.width = ((step + 1) / totalSteps * 100) + '%';
+                step++;
+                setTimeout(tick, stepDuration + (step === totalSteps ? 400 : 0));
+            }, 150);
+        }
+
+        setTimeout(tick, 400);
+    });
+})();
+</script>
 </body>
 </html>
