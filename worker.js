@@ -63,7 +63,7 @@ export default {
 
     // 2. Email YOU (notification)
     await sendEmail(env.RESEND_API_KEY, {
-      from: 'PurePulse Leads <leads@purepulse.one>',
+      from: 'PurePulse Leads <onboarding@resend.dev>',
       to: 'matty@purepulse.one',
       subject: `New lead: ${name}`,
       html: `
@@ -86,7 +86,7 @@ export default {
 
     // 3. Email THE CLIENT (confirmation)
     await sendEmail(env.RESEND_API_KEY, {
-      from: 'Matty at PurePulse <matty@purepulse.one>',
+      from: 'Matty at PurePulse <onboarding@resend.dev>',
       to: email,
       subject: `Got it, ${name.split(' ')[0]} — talk soon`,
       html: `
