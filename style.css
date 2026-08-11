@@ -1364,3 +1364,26 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
 .mv2-service:last-child { border-right: none; }
 .mv2-svc-title { font-size: 0.38rem; font-weight: 800; color: rgba(255,255,255,0.7); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
 .mv2-svc-desc { font-size: 0.35rem; color: rgba(255,255,255,0.25); line-height: 1.4; }
+
+/* ── Screenshot-based mockups ────────────────────────────────────────────── */
+.lb-screen--img {
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+    background: #0a0a12;
+    display: flex;
+    align-items: flex-start;
+}
+
+.lb-screenshot {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    object-position: top center;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .lb-screen--img { height: 240px; }
+}
