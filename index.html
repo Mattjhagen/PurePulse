@@ -39,18 +39,6 @@ to   { width: 100%; }
 </head>
 <body>
 
-    
-    <div class="splash-orb splash-orb-2"></div>
-  </div>
-  <div class="splash-content">
-    <div class="splash-pulse">
-      <div class="splash-pulse-dot"></div>
-    </div>
-    <div class="splash-logo">PurePulse</div>
-    <div class="splash-msg">Loading...</div>
-    <div class="splash-bar"><div class="splash-bar-fill"></div></div>
-  </div>
-</div>
 
     
 
@@ -1313,110 +1301,7 @@ to   { width: 100%; }
 }
 </style>
 
-<script>
-(function() {
-    const MESSAGES = [
-        'Initializing editor...',
-        'Loading your workspace...',
-        'Compiling your vibe...',
-        'Importing design tokens...',
-        'Spinning up the AI engine...',
-        'Polishing the pixels...',
-        'Almost there...',
-        'Launching vibeCodes ✦'
-    ];
 
-    const btn    = document.getElementById('vibeCodesBtn');
-    const splash = document.getElementById('vibe-splash');
-    const status = document.getElementById('vibeStatus');
-    const bar    = document.getElementById('vibeBar');
-    const canvas = document.getElementById('vibe-canvas');
-    const ctx    = canvas.getContext('2d');
-
-    // ── Canvas particle field ──────────────────────────────────────────────
-    let W, H, particles = [], rafId;
-    function resizeCanvas() {
-        W = canvas.width  = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    function spawnParticles() {
-        particles = Array.from({ length: 80 }, () => ({
-            x: Math.random() * W,
-            y: Math.random() * H,
-            vx: (Math.random() - 0.5) * 0.4,
-            vy: (Math.random() - 0.5) * 0.4,
-            r: 0.5 + Math.random() * 2,
-            a: 0.1 + Math.random() * 0.5,
-            col: Math.random() < 0.5 ? '123,47,255' : '0,212,255',
-        }));
-    }
-
-    function drawParticles() {
-        ctx.clearRect(0, 0, W, H);
-        // Radial glow bg
-        const g = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.min(W,H)*0.6);
-        g.addColorStop(0, 'rgba(123,47,255,0.08)');
-        g.addColorStop(0.5, 'rgba(0,212,255,0.03)');
-        g.addColorStop(1, 'transparent');
-        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-
-        particles.forEach(p => {
-            p.x += p.vx; p.y += p.vy;
-            if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-            if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${p.col},${p.a})`;
-            ctx.fill();
-        });
-
-        rafId = requestAnimationFrame(drawParticles);
-    }
-
-    // ── Launch sequence ────────────────────────────────────────────────────
-    btn.addEventListener('click', () => {
-        spawnParticles();
-        splash.classList.add('active');
-        splash.removeAttribute('aria-hidden');
-        drawParticles();
-
-        let step = 0;
-        const totalSteps = MESSAGES.length;
-        const stepDuration = 320;
-
-        function tick() {
-            if (step >= totalSteps) {
-                // Launch!
-                cancelAnimationFrame(rafId);
-                splash.classList.add('exit');
-                setTimeout(() => {
-                    splash.classList.remove('active', 'exit');
-                    splash.setAttribute('aria-hidden', 'true');
-                    ctx.clearRect(0, 0, W, H);
-                    window.open('https://vibecodes.space', '_blank');
-                }, 650);
-                return;
-            }
-            status.style.opacity = '0';
-            status.style.transform = 'translateY(6px)';
-            setTimeout(() => {
-                status.textContent = MESSAGES[step];
-                status.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-                status.style.opacity = '1';
-                status.style.transform = 'translateY(0)';
-                bar.style.width = ((step + 1) / totalSteps * 100) + '%';
-                step++;
-                setTimeout(tick, stepDuration + (step === totalSteps ? 400 : 0));
-            }, 150);
-        }
-
-        setTimeout(tick, 400);
-    });
-})();
-</script>
 
     <!-- PurePulse Chat Widget -->
     <style>
@@ -1540,36 +1425,7 @@ to   { width: 100%; }
         input.focus()
       }
     </script>
-<script>
-(function() {
-  const MESSAGES = [
-    'Building the web, one pixel at a time.',
-    'Clean code. Fast sites. Real results.',
-    'Your site is our craft.',
-    'Designed to perform. Built to last.',
-    'Professional websites, without the headache.',
-    'The web deserves better design.',
-  ];
 
-  const msg = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
-  document.querySelector('.splash-msg').textContent = msg;
-
-  document.documentElement.classList.add('splashing');
-  document.body.style.overflow = 'hidden';
-  document.documentElement.style.overflow = 'hidden';
-
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      const splash = document.getElementById('splash');
-      splash.classList.add('out');
-      setTimeout(function() {
-        splash.remove();
-        document.documentElement.classList.remove('splashing');
-      }, 650);
-    }, 1900);
-  });
-})();
-</script>
 </body>
 </html>
 <!-- deploy Wed Aug 12 05:44:38 UTC 2026 -->
