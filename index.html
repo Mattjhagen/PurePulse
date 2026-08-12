@@ -1,151 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PurePulse</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;800&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            background: #000;
-            overflow: hidden;
-        }
-
-        video {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-        }
-
-        .vignette {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            inset: 0;
-            z-index: 1;
-            background:
-                radial-gradient(ellipse at center, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.6) 100%),
-                linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.45) 100%);
-            pointer-events: none;
-        }
-
-        .brand {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 2;
-            animation: brandIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
-        }
-
-        .wordmark {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: clamp(2.5rem, 8vw, 5.5rem);
-            font-weight: 800;
-            letter-spacing: -0.055em;
-            color: #fff;
-            line-height: 1;
-            margin-bottom: 0.6rem;
-        }
-
-        .tagline {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: clamp(0.6rem, 1.4vw, 0.8125rem);
-            font-weight: 500;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.45);
-        }
-
-        .skip {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            color: rgba(255, 255, 255, 0.55);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-            padding: 9px 22px;
-            border-radius: 100px;
-            cursor: pointer;
-            z-index: 3;
-            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-            animation: fadeIn 0.7s ease 1.2s both;
-        }
-
-        .skip:hover {
-            background: rgba(255, 255, 255, 0.14);
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        @keyframes brandIn {
-            from { opacity: 0; transform: translate(-50%, calc(-50% + 18px)); }
-            to   { opacity: 1; transform: translate(-50%, -50%); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>PurePulse — Web Design &amp; Development</title>
+<meta name="description" content="PurePulse builds web experiences with sharp aesthetics, clean code, and creative instinct on every scroll. Professional websites starting at a $150 deposit.">
+<meta property="og:title" content="PurePulse — Web Design &amp; Development">
+<meta property="og:description" content="Design that moves people forward. Professional websites starting at a $150 deposit.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#07070D;--v:#7B2FFF;--vg:#A066FF;--c:#00D4FF;--w:#F4F4FF;--mu:rgba(244,244,255,0.35)}
+html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-family:'Space Grotesk',sans-serif;color:var(--w)}
+#intro{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;background:var(--bg)}
+canvas{position:absolute;inset:0;width:100%;height:100%}
+.lw{position:relative;z-index:2;text-align:center}
+.ln{font-size:clamp(3.5rem,9vw,8.5rem);font-weight:700;letter-spacing:-0.03em;line-height:1;display:flex;overflow:hidden;justify-content:center}
+.char{display:inline-block;transform:translateY(120%);opacity:0}
+.accent{color:var(--vg)}
+.lt{margin-top:0.9rem;font-family:'Inter',sans-serif;font-size:clamp(0.7rem,1.8vw,0.95rem);font-weight:300;letter-spacing:0.3em;text-transform:uppercase;color:var(--mu);opacity:0;transform:translateY(6px);transition:opacity 0.6s,transform 0.6s}
+#skip{position:absolute;bottom:2rem;right:2.5rem;z-index:3;font-family:'Inter',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mu);background:none;border:none;cursor:pointer;opacity:0;transition:color 0.2s;display:flex;align-items:center;gap:0.4rem}
+#skip:hover{color:var(--w)}
+#intro.exit{animation:out 0.85s cubic-bezier(0.76,0,0.24,1) forwards}
+@keyframes out{to{opacity:0;transform:scale(1.03)}}
+#site{position:fixed;inset:0;opacity:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s ease 0.4s;font-family:'Space Grotesk',sans-serif;color:var(--w);pointer-events:none}
+#site.vis{opacity:1;pointer-events:auto}
+nav{position:absolute;top:0;left:0;right:0;padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between}
+.nl{font-size:1.1rem;font-weight:700;letter-spacing:-0.02em;color:var(--w);text-decoration:none}.nl span{color:var(--vg)}
+.nr{display:flex;gap:2rem;list-style:none}
+.nr a{font-size:0.82rem;color:var(--mu);text-decoration:none;transition:color 0.2s;font-family:'Inter',sans-serif}.nr a:hover{color:var(--w)}
+.hero{text-align:center;max-width:780px;padding:0 2rem}
+.hero h1{font-size:clamp(2.2rem,5.5vw,4.8rem);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin-bottom:1.4rem}
+.hero h1 em{font-style:normal;color:var(--vg)}
+.hero p{font-family:'Inter',sans-serif;font-size:1.05rem;font-weight:300;color:var(--mu);line-height:1.7;max-width:520px;margin:0 auto 2.2rem}
+.cta{display:inline-flex;align-items:center;gap:0.5rem;background:var(--v);color:#fff;padding:0.8rem 1.9rem;border-radius:100px;font-size:0.88rem;font-weight:600;letter-spacing:0.02em;text-decoration:none;box-shadow:0 0 36px rgba(123,47,255,0.3);transition:box-shadow 0.3s,transform 0.2s;font-family:'Inter',sans-serif}
+.cta:hover{box-shadow:0 0 60px rgba(123,47,255,0.5);transform:translateY(-2px)}
+@media (max-width:640px){
+  nav{padding:1.5rem 1.25rem}
+  .nr{gap:1.1rem}
+  .nr a{font-size:0.75rem}
+  #skip{bottom:1.25rem;right:1.25rem}
+}
+</style>
 </head>
 <body>
 
-    <video id="vid" autoplay muted playsinline webkit-playsinline preload="auto">
-        <source src="splash.mp4" type="video/mp4">
-    </video>
+<div id="intro">
+  <canvas id="c"></canvas>
+  <div class="lw">
+    <div class="ln" id="name"></div>
+    <div class="lt" id="tag">Web Design &amp; Development</div>
+  </div>
+  <button id="skip" aria-label="Skip intro">Skip <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 6h8M7 3l3 3-3 3"/></svg></button>
+</div>
 
-    <div class="vignette"></div>
+<div id="site">
+  <nav>
+    <a class="nl" href="home.html">Pure<span>Pulse</span></a>
+    <ul class="nr">
+      <li><a href="home.html#portfolio">Work</a></li>
+      <li><a href="home.html#how-it-works">Process</a></li>
+      <li><a href="home.html#pricing">Pricing</a></li>
+      <li><a href="home.html#consult">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="hero">
+    <h1>Design that <em>moves</em><br>people forward</h1>
+    <p>PurePulse builds web experiences with sharp aesthetics, clean code, and creative instinct on every scroll.</p>
+    <a href="home.html#portfolio" class="cta" id="ctaWork">See our work ↗</a>
+  </div>
+</div>
 
-    <div class="brand">
-        <div class="wordmark">PurePulse</div>
-        <div class="tagline">Web Design &amp; Development</div>
-    </div>
+<script>
+(function(){
+// Deep links (purepulse.one/#pricing etc.) skip the intro entirely
+if(location.hash&&location.hash.length>1){
+  location.replace('home.html'+location.hash);
+  return;
+}
 
-    <button class="skip" id="skip" type="button">Skip ›</button>
+// ---- Shared: logo chars ----
+var W1='Pure',W2='Pulse';
+var nameEl=document.getElementById('name');
+W1.split('').forEach(function(ch){var s=document.createElement('span');s.className='char';s.textContent=ch;nameEl.appendChild(s)});
+W2.split('').forEach(function(ch){var s=document.createElement('span');s.className='char accent';s.textContent=ch;nameEl.appendChild(s)});
+var chars=Array.prototype.slice.call(nameEl.querySelectorAll('.char'));
 
-    <script>
-        var vid  = document.getElementById('vid');
-        var skip = document.getElementById('skip');
-        var gone = false;
+var cv=document.getElementById('c'),ctx=cv.getContext('2d');
+var W,H,cx,cy;
+function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;cx=W/2;cy=H/2}
+resize();window.addEventListener('resize',resize);
 
-        function go() {
-            if (gone) return;
-            gone = true;
-            window.location.href = 'home.html';
-        }
+function rgba(r,g,b,a){return 'rgba('+r+','+g+','+b+','+a+')'}
+function eout3(t){return 1-Math.pow(1-t,3)}
+function eout5(t){return 1-Math.pow(1-t,5)}
 
-        vid.addEventListener('ended', go);
-        skip.addEventListener('click', go);
+function animChars(p){
+  chars.forEach(function(el,i){
+    var thr=i/chars.length;
+    var loc=Math.max(0,Math.min(1,(p-thr)/(1/chars.length+0.18)));
+    var e=eout3(loc);
+    el.style.transform='translateY('+((1-e)*120)+'%)';
+    el.style.opacity=e;
+  });
+}
+function animCharsBloom(p){
+  chars.forEach(function(el,i){
+    var thr=i/chars.length;
+    var loc=Math.max(0,Math.min(1,(p-thr)/(1/chars.length+0.2)));
+    var e=eout5(loc);
+    var sc=0.4+0.6*e;
+    var bl=Math.round((1-e)*12);
+    el.style.transform='scale('+sc+') translateY('+((1-e)*30)+'px)';
+    el.style.filter='blur('+bl+'px)';
+    el.style.opacity=e;
+  });
+}
 
-        // Video failed to load — wait 3.5s then redirect
-        vid.addEventListener('error', function () { setTimeout(go, 3500); });
-        var src = vid.querySelector('source');
-        if (src) src.addEventListener('error', function () { setTimeout(go, 3500); });
+// ---- Variant picker ----
+var VARIANT=Math.floor(Math.random()*4); // 0 orbital, 1 grid warp, 2 bloom, 3 ECG pulse
+var start=null,done=false;
+var D1=VARIANT===1?2400:(VARIANT===2?2000:(VARIANT===3?2200:1800));
+var D2=VARIANT===2?1000:(VARIANT===1||VARIANT===3?900:800);
+var D3=500;
+var D4=VARIANT===1?1800:(VARIANT===3?1400:1600);
+var TOTAL=D1+D2+D3+D4;
+var charFn=VARIANT===2?animCharsBloom:animChars;
+if(VARIANT===2){chars.forEach(function(el){el.style.transform='scale(0.4) translateY(30px)';el.style.filter='blur(12px)'})}
 
-        // Check after 600ms — if video still hasn't started, it's missing
-        setTimeout(function () {
-            if (vid.readyState === 0 || vid.networkState === 3) setTimeout(go, 3500);
-        }, 600);
+// ---- Variant 0: Orbital ----
+var rings=[
+  {r:0.18,speed:0.00022,phase:0,dots:4,col:{r:123,g:47,b:255}},
+  {r:0.26,speed:-0.00015,phase:1.1,dots:6,col:{r:0,g:212,b:255}},
+  {r:0.35,speed:0.00010,phase:2.5,dots:3,col:{r:160,g:102,b:255}}
+];
+var pts=[];
+for(var i=0;i<90;i++){pts.push({x:Math.random(),y:Math.random(),vx:(Math.random()-0.5)*0.0003,vy:(Math.random()-0.5)*0.0003,s:0.6+Math.random()*2,a:0.1+Math.random()*0.4,col:Math.random()<0.6?{r:123,g:47,b:255}:{r:0,g:212,b:255}})}
 
-        // Hard cap — no matter what, redirect after 15s
-        setTimeout(go, 15000);
-    </script>
+function drawOrbital(ts,el,p1){
+  var bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.6);
+  bg.addColorStop(0,rgba(123,47,255,0.09));bg.addColorStop(1,'transparent');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  pts.forEach(function(p){
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=1;if(p.x>1)p.x=0;if(p.y<0)p.y=1;if(p.y>1)p.y=0;
+    ctx.beginPath();ctx.arc(p.x*W,p.y*H,p.s,0,Math.PI*2);
+    ctx.fillStyle=rgba(p.col.r,p.col.g,p.col.b,p.a*p1);ctx.fill();
+  });
+  rings.forEach(function(ring){
+    var rad=Math.min(W,H)*ring.r*p1;
+    ctx.beginPath();ctx.arc(cx,cy,rad,0,Math.PI*2);
+    ctx.strokeStyle=rgba(ring.col.r,ring.col.g,ring.col.b,0.12*p1);
+    ctx.lineWidth=1;ctx.setLineDash([4,8]);ctx.stroke();ctx.setLineDash([]);
+    for(var d=0;d<ring.dots;d++){
+      var angle=ring.phase+d*(Math.PI*2/ring.dots)+ts*ring.speed;
+      var dx=cx+Math.cos(angle)*rad,dy=cy+Math.sin(angle)*rad;
+      var dg=ctx.createRadialGradient(dx,dy,0,dx,dy,14);
+      dg.addColorStop(0,rgba(ring.col.r,ring.col.g,ring.col.b,0.7*p1));dg.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.arc(dx,dy,14,0,Math.PI*2);ctx.fillStyle=dg;ctx.fill();
+      ctx.beginPath();ctx.arc(dx,dy,2.5,0,Math.PI*2);ctx.fillStyle=rgba(ring.col.r,ring.col.g,ring.col.b,p1);ctx.fill();
+    }
+  });
+  if(p1>0.3){
+    var cp=Math.min(1,(p1-0.3)/0.7);
+    var cg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.08);
+    cg.addColorStop(0,rgba(160,102,255,0.5*cp));cg.addColorStop(0.5,rgba(123,47,255,0.15*cp));cg.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(cx,cy,Math.min(W,H)*0.08,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);ctx.fillStyle=rgba(244,244,255,0.9*cp);ctx.fill();
+  }
+}
 
+// ---- Variant 1: Grid Warp ----
+var COLS=28,ROWS=18,nodes=[];
+(function(){
+  for(var r=0;r<=ROWS;r++)for(var c=0;c<=COLS;c++){
+    var nx=c/COLS,ny=r/ROWS,dx=nx-0.5,dy=ny-0.5;
+    var dist=Math.sqrt(dx*dx+dy*dy);
+    nodes.push({nx:nx,ny:ny,dist:dist,phase:dist*6+Math.random()*0.5});
+  }
+})();
+function drawGrid(ts,el,p1){
+  var t=el*0.001;
+  var pulse=0.5+0.5*Math.sin(t*1.8);
+  var bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.55);
+  bg.addColorStop(0,rgba(123,47,255,(0.06+pulse*0.04)*p1));
+  bg.addColorStop(0.5,rgba(0,212,255,0.03*p1));
+  bg.addColorStop(1,'transparent');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  var cellW=W/COLS,cellH=H/ROWS,maxWarp=Math.min(cellW,cellH)*0.55;
+  function nodePos(r,c){
+    var n=nodes[r*(COLS+1)+c];
+    var wave=Math.sin(t*1.2+n.phase)*maxWarp*p1*(1-n.dist*0.8);
+    var wave2=Math.cos(t*0.9+n.phase*1.3)*maxWarp*0.4*p1*(1-n.dist*0.6);
+    return{x:n.nx*W+wave*0.5+wave2*0.3,y:n.ny*H+wave*0.4+wave2*0.5}
+  }
+  var r,c,a,b,frac,alpha;
+  for(r=0;r<=ROWS;r++)for(c=0;c<COLS;c++){
+    a=nodePos(r,c);b=nodePos(r,c+1);
+    frac=1-(Math.abs(r/ROWS-0.5)*2);alpha=0.06*frac*p1;
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+    ctx.strokeStyle=rgba(123,47,255,alpha);ctx.lineWidth=0.8;ctx.stroke();
+  }
+  for(c=0;c<=COLS;c++)for(r=0;r<ROWS;r++){
+    a=nodePos(r,c);b=nodePos(r+1,c);
+    frac=1-(Math.abs(c/COLS-0.5)*2);alpha=0.06*frac*p1;
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+    ctx.strokeStyle=rgba(0,212,255,alpha);ctx.lineWidth=0.8;ctx.stroke();
+  }
+  for(r=0;r<=ROWS;r++)for(c=0;c<=COLS;c++){
+    var n=nodes[r*(COLS+1)+c];
+    if(n.dist>0.3)continue;
+    var pos=nodePos(r,c);
+    var brightness=(0.3-n.dist)/0.3;
+    var flicker=0.7+0.3*Math.sin(t*3+n.phase*2);
+    ctx.beginPath();ctx.arc(pos.x,pos.y,1.5,0,Math.PI*2);
+    ctx.fillStyle=rgba(160,102,255,brightness*flicker*p1*0.7);ctx.fill();
+  }
+  if(p1<0.8){
+    var scanY=p1*(1/0.8)*H;
+    var sg=ctx.createLinearGradient(0,scanY-60,0,scanY+10);
+    sg.addColorStop(0,'transparent');sg.addColorStop(0.7,rgba(123,47,255,0.06));sg.addColorStop(1,rgba(0,212,255,0.18));
+    ctx.fillStyle=sg;ctx.fillRect(0,scanY-60,W,70);
+  }
+}
+
+// ---- Variant 2: Bloom ----
+var blooms=[];[0,200,450,750,1100,1500].forEach(function(delay){
+  blooms.push({delay:delay,r:0,maxR:0,alpha:0,born:false,col:Math.random()<0.6?[123,47,255]:[0,212,255]});
+});
+var tendrils=[];
+(function(){
+  var len=Math.min(window.innerWidth,window.innerHeight)*0.32;
+  for(var i=0;i<14;i++){
+    var angle=(i/14)*Math.PI*2;
+    tendrils.push({
+      angle:angle,len:len,
+      cp1:{dx:Math.cos(angle+0.8)*len*0.4,dy:Math.sin(angle+0.8)*len*0.4},
+      cp2:{dx:Math.cos(angle-0.5)*len*0.8,dy:Math.sin(angle-0.5)*len*0.8},
+      col:Math.random()<0.5?[123,47,255]:[0,212,255],
+      progress:0
+    });
+  }
+})();
+function drawBloom(ts,el,p1){
+  var t=el*0.001;
+  var breath=0.5+0.5*Math.sin(t*1.5);
+  var bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.6);
+  bg.addColorStop(0,rgba(123,47,255,(0.05+breath*0.03)*p1));
+  bg.addColorStop(0.6,rgba(0,212,255,0.02*p1));
+  bg.addColorStop(1,'transparent');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  blooms.forEach(function(b){
+    if(el<b.delay)return;
+    if(!b.born){b.born=true;b.maxR=Math.min(W,H)*(0.25+Math.random()*0.25)}
+    var age=(el-b.delay)*0.0008;
+    b.r=Math.min(b.maxR,b.maxR*eout5(Math.min(1,age)));
+    b.alpha=age<0.5?age*2:(2-age*1.5);
+    if(b.alpha<=0)return;
+    [{w:b.r*0.18,o:0.04},{w:b.r*0.06,o:0.08},{w:2,o:0.25}].forEach(function(l){
+      ctx.beginPath();ctx.arc(cx,cy,Math.max(1,b.r),0,Math.PI*2);
+      ctx.strokeStyle=rgba(b.col[0],b.col[1],b.col[2],b.alpha*l.o*p1);
+      ctx.lineWidth=l.w;ctx.stroke();
+    });
+  });
+  tendrils.forEach(function(td,i){
+    var delay=i*120;
+    if(el<delay)return;
+    td.progress=Math.min(1,(el-delay)/(D1*0.7));
+    var ep=eout3(td.progress);
+    var ex=cx+Math.cos(td.angle)*td.len*ep;
+    var ey=cy+Math.sin(td.angle)*td.len*ep;
+    ctx.beginPath();ctx.moveTo(cx,cy);
+    ctx.bezierCurveTo(cx+td.cp1.dx*ep,cy+td.cp1.dy*ep,cx+td.cp2.dx*ep,cy+td.cp2.dy*ep,ex,ey);
+    var alpha=(0.5-Math.abs(td.progress-0.5))*0.3;
+    ctx.strokeStyle=rgba(td.col[0],td.col[1],td.col[2],alpha*p1);
+    ctx.lineWidth=1.5;ctx.stroke();
+    if(td.progress>0.1&&td.progress<0.95){
+      var tg=ctx.createRadialGradient(ex,ey,0,ex,ey,12);
+      tg.addColorStop(0,rgba(td.col[0],td.col[1],td.col[2],0.5*td.progress*p1));
+      tg.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.arc(ex,ey,12,0,Math.PI*2);ctx.fillStyle=tg;ctx.fill();
+    }
+  });
+  if(p1>0.2){
+    var cp=Math.min(1,(p1-0.2)/0.8);
+    var pls=0.5+0.5*Math.sin(t*4);
+    var rr=Math.min(W,H)*0.06*(1+pls*0.2);
+    var cg=ctx.createRadialGradient(cx,cy,0,cx,cy,rr);
+    cg.addColorStop(0,rgba(244,244,255,0.85*cp));
+    cg.addColorStop(0.3,rgba(160,102,255,0.4*cp));
+    cg.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(cx,cy,rr,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);ctx.fillStyle=rgba(244,244,255,cp);ctx.fill();
+  }
+}
+
+// ---- Variant 3: ECG Pulse ----
+var VCOL={r:123,g:47,b:255},CCOL={r:0,g:212,b:255};
+function buildWavePoints(w,h){
+  var y0=h*0.5,baseAmp=h*0.12,wp=[],steps=600;
+  for(var i=0;i<=steps;i++){
+    var t=i/steps,x=t*w,y=y0,local;
+    if(t<0.25){local=t/0.25;y=y0+Math.sin(local*Math.PI*4)*baseAmp*0.15*local}
+    else if(t<0.35){local=(t-0.25)/0.1;y=y0-baseAmp*2.6*Math.sin(local*Math.PI)}
+    else if(t<0.42){local=(t-0.35)/0.07;y=y0+baseAmp*1.1*Math.sin(local*Math.PI)}
+    else if(t<0.52){local=(t-0.42)/0.10;y=y0-baseAmp*0.6*Math.sin(local*Math.PI)}
+    else if(t<0.75){local=(t-0.52)/0.23;y=y0+Math.sin(local*Math.PI*3+Math.PI)*baseAmp*0.08*(1-local)}
+    wp.push({x:x,y:y});
+  }
+  return wp;
+}
+var ecgParticles=[];
+function spawnEcgParticle(x,y){
+  ecgParticles.push({x:x,y:y,vx:(Math.random()-0.5)*1.2,vy:(Math.random()-0.85)*1.6,life:1,decay:0.012+Math.random()*0.014,size:1.5+Math.random()*2.5,col:Math.random()<0.5?VCOL:CCOL});
+}
+function drawECG(ts,el,p1){
+  var bgGlow=ctx.createRadialGradient(cx,cy,0,cx,cy,W*0.5);
+  bgGlow.addColorStop(0,rgba(VCOL.r,VCOL.g,VCOL.b,0.07));
+  bgGlow.addColorStop(1,'transparent');
+  ctx.fillStyle=bgGlow;ctx.fillRect(0,0,W,H);
+  var wavePoints=buildWavePoints(W,H);
+  if(p1>0){
+    var endIdx=Math.floor(p1*(wavePoints.length-1)),i;
+    ctx.beginPath();ctx.moveTo(wavePoints[0].x,wavePoints[0].y);
+    for(i=1;i<=endIdx;i++)ctx.lineTo(wavePoints[i].x,wavePoints[i].y);
+    ctx.strokeStyle=rgba(VCOL.r,VCOL.g,VCOL.b,0.18);ctx.lineWidth=18;
+    ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.filter='blur(10px)';ctx.stroke();ctx.filter='none';
+    ctx.beginPath();ctx.moveTo(wavePoints[0].x,wavePoints[0].y);
+    for(i=1;i<=endIdx;i++)ctx.lineTo(wavePoints[i].x,wavePoints[i].y);
+    ctx.strokeStyle=rgba(VCOL.r,VCOL.g,VCOL.b,0.45);ctx.lineWidth=5;
+    ctx.filter='blur(3px)';ctx.stroke();ctx.filter='none';
+    var grad=ctx.createLinearGradient(0,0,W,0);
+    grad.addColorStop(0,rgba(VCOL.r,VCOL.g,VCOL.b,0.9));
+    grad.addColorStop(0.5,rgba(VCOL.r,VCOL.g,VCOL.b,1));
+    grad.addColorStop(1,rgba(CCOL.r,CCOL.g,CCOL.b,1));
+    ctx.beginPath();ctx.moveTo(wavePoints[0].x,wavePoints[0].y);
+    for(i=1;i<=endIdx;i++)ctx.lineTo(wavePoints[i].x,wavePoints[i].y);
+    ctx.strokeStyle=grad;ctx.lineWidth=1.8;ctx.stroke();
+    var tip=wavePoints[endIdx];
+    var dotGlow=ctx.createRadialGradient(tip.x,tip.y,0,tip.x,tip.y,24);
+    dotGlow.addColorStop(0,rgba(CCOL.r,CCOL.g,CCOL.b,0.9));
+    dotGlow.addColorStop(0.3,rgba(VCOL.r,VCOL.g,VCOL.b,0.5));
+    dotGlow.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(tip.x,tip.y,24,0,Math.PI*2);ctx.fillStyle=dotGlow;ctx.fill();
+    ctx.beginPath();ctx.arc(tip.x,tip.y,3.5,0,Math.PI*2);ctx.fillStyle=rgba(CCOL.r,CCOL.g,CCOL.b,1);ctx.fill();
+    if(p1<0.99&&Math.random()<0.4)spawnEcgParticle(tip.x,tip.y);
+  }
+  for(var j=ecgParticles.length-1;j>=0;j--){
+    var p=ecgParticles[j];
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.04;p.life-=p.decay;
+    if(p.life<=0){ecgParticles.splice(j,1);continue}
+    ctx.beginPath();ctx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2);
+    ctx.fillStyle=rgba(p.col.r,p.col.g,p.col.b,p.life*0.8);ctx.fill();
+  }
+  if(p1>0.1){
+    ctx.fillStyle=rgba(VCOL.r,VCOL.g,VCOL.b,0.015);
+    for(var yy=0;yy<H;yy+=4)ctx.fillRect(0,yy,W,1);
+  }
+}
+
+var draws=[drawOrbital,drawGrid,drawBloom,drawECG];
+
+function frame(ts){
+  if(!start)start=ts;
+  var el=ts-start;
+  if(done)return;
+  ctx.clearRect(0,0,W,H);
+  var p1=Math.min(1,el/D1);
+  draws[VARIANT](ts,el,p1);
+  if(el>D1)charFn(Math.min(1,(el-D1)/D2));
+  if(el>D1+D2){
+    var p3=eout3(Math.min(1,(el-D1-D2)/D3));
+    var tg=document.getElementById('tag');
+    tg.style.opacity=p3;tg.style.transform='translateY('+((1-p3)*6)+'px)';
+  }
+  if(el>500)document.getElementById('skip').style.opacity=Math.min(1,(el-500)/400);
+  if(el>TOTAL){exitIntro();return}
+  requestAnimationFrame(frame);
+}
+
+function exitIntro(){
+  if(done)return;done=true;
+  charFn(1);
+  chars.forEach(function(el){el.style.filter='none'});
+  var tg=document.getElementById('tag');tg.style.opacity=1;tg.style.transform='translateY(0)';
+  var intro=document.getElementById('intro');
+  intro.classList.add('exit');
+  setTimeout(function(){document.getElementById('site').classList.add('vis');intro.style.pointerEvents='none'},300);
+  setTimeout(function(){intro.style.display='none'},1200);
+}
+
+// Safety: never trap the user — force exit after 9s no matter what
+setTimeout(exitIntro,9000);
+
+document.getElementById('skip').addEventListener('click',exitIntro);
+if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+  charFn(1);chars.forEach(function(el){el.style.filter='none'});
+  setTimeout(exitIntro,800);
+}else{
+  requestAnimationFrame(frame);
+}
+})();
+</script>
 </body>
 </html>

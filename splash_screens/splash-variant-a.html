@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PurePulse — Variant A: Orbital</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#07070D;
+  --v:#7B2FFF;
+  --vg:#A066FF;
+  --c:#00D4FF;
+  --w:#F4F4FF;
+  --mu:rgba(244,244,255,0.35);
+}
+html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-family:'Space Grotesk',sans-serif;color:var(--w)}
+#intro{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;background:var(--bg)}
+canvas{position:absolute;inset:0;width:100%;height:100%}
+.logo-wrap{position:relative;z-index:2;text-align:center}
+.logo-name{
+  font-size:clamp(3.5rem,9vw,8.5rem);
+  font-weight:700;letter-spacing:-0.03em;line-height:1;
+  display:flex;overflow:hidden;
+}
+.char{display:inline-block;transform:translateY(120%);opacity:0}
+.accent{color:var(--vg)}
+.logo-tag{
+  margin-top:0.9rem;
+  font-family:'Inter',sans-serif;
+  font-size:clamp(0.7rem,1.8vw,0.95rem);
+  font-weight:300;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--mu);opacity:0;transform:translateY(6px);
+  transition:opacity 0.6s,transform 0.6s;
+}
+#skip{
+  position:absolute;bottom:2rem;right:2.5rem;
+  font-family:'Inter',sans-serif;font-size:0.75rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--mu);background:none;border:none;cursor:pointer;
+  opacity:0;transition:color 0.2s;display:flex;align-items:center;gap:0.4rem;
+}
+#skip:hover{color:var(--w)}
+#intro.exit{animation:out 0.85s cubic-bezier(0.76,0,0.24,1) forwards}
+@keyframes out{to{opacity:0;transform:scale(1.03)}}
+#site{
+  position:fixed;inset:0;opacity:0;
+  background:var(--bg);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  transition:opacity 0.8s ease 0.4s;font-family:'Space Grotesk',sans-serif;color:var(--w)
+}
+#site.vis{opacity:1}
+nav{position:absolute;top:0;left:0;right:0;padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between}
+.nl{font-size:1.1rem;font-weight:700;letter-spacing:-0.02em}.nl span{color:var(--vg)}
+.nr{display:flex;gap:2rem;list-style:none}
+.nr a{font-size:0.82rem;color:var(--mu);text-decoration:none;transition:color 0.2s}.nr a:hover{color:var(--w)}
+.hero{text-align:center;max-width:780px;padding:0 2rem}
+.hero h1{font-size:clamp(2.2rem,5.5vw,4.8rem);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin-bottom:1.4rem}
+.hero h1 em{font-style:normal;color:var(--vg)}
+.hero p{font-family:'Inter',sans-serif;font-size:1.05rem;font-weight:300;color:var(--mu);line-height:1.7;max-width:520px;margin:0 auto 2.2rem}
+.cta{display:inline-flex;align-items:center;gap:0.5rem;background:var(--v);color:#fff;padding:0.8rem 1.9rem;border-radius:100px;font-size:0.88rem;font-weight:600;letter-spacing:0.02em;text-decoration:none;box-shadow:0 0 36px rgba(123,47,255,0.3);transition:box-shadow 0.3s,transform 0.2s}
+.cta:hover{box-shadow:0 0 60px rgba(123,47,255,0.5);transform:translateY(-2px)}
+</style>
+</head>
+<body>
+<div id="intro">
+  <canvas id="c"></canvas>
+  <div class="logo-wrap">
+    <div class="logo-name" id="name"></div>
+    <div class="logo-tag" id="tag">Web Design &amp; Development</div>
+  </div>
+  <button id="skip">Skip <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M7 3l3 3-3 3"/></svg></button>
+</div>
+<div id="site">
+  <nav><div class="nl">Pure<span>Pulse</span></div><ul class="nr"><li><a href="#">Work</a></li><li><a href="#">Services</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul></nav>
+  <div class="hero"><h1>Design that <em>moves</em><br>people forward</h1><p>PurePulse builds web experiences with sharp aesthetics, clean code, and creative instinct on every scroll.</p><a href="#" class="cta">See our work ↗</a></div>
+</div>
+<script>
+// Chars
+const W1='Pure',W2='Pulse';
+const nameEl=document.getElementById('name');
+[...W1].forEach(c=>{const s=document.createElement('span');s.className='char';s.textContent=c;nameEl.appendChild(s)});
+[...W2].forEach(c=>{const s=document.createElement('span');s.className='char accent';s.textContent=c;nameEl.appendChild(s)});
+const chars=[...nameEl.querySelectorAll('.char')];
+
+const cv=document.getElementById('c'),ctx=cv.getContext('2d');
+let W,H,cx,cy;
+function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;cx=W/2;cy=H/2}
+resize();window.addEventListener('resize',resize);
+
+// Orbital rings
+const rings=[
+  {r:0.18,speed:0.00022,phase:0,dots:4,col:{r:123,g:47,b:255}},
+  {r:0.26,speed:-0.00015,phase:1.1,dots:6,col:{r:0,g:212,b:255}},
+  {r:0.35,speed:0.00010,phase:2.5,dots:3,col:{r:160,g:102,b:255}},
+];
+
+// Particle field
+const pts=Array.from({length:90},()=>({
+  x:Math.random(),y:Math.random(),
+  vx:(Math.random()-0.5)*0.0003,
+  vy:(Math.random()-0.5)*0.0003,
+  s:0.6+Math.random()*2,
+  a:0.1+Math.random()*0.4,
+  col:Math.random()<0.6?{r:123,g:47,b:255}:{r:0,g:212,b:255},
+}));
+
+let start=null,done=false;
+const D1=1800,D2=800,D3=500,D4=1600;
+const TOTAL=D1+D2+D3+D4;
+
+function eout(t){return 1-Math.pow(1-t,3)}
+function animChars(p){
+  chars.forEach((el,i)=>{
+    const thr=i/chars.length;
+    const loc=Math.max(0,Math.min(1,(p-thr)/(1/chars.length+0.18)));
+    const e=eout(loc);
+    el.style.transform=`translateY(${(1-e)*120}%)`;
+    el.style.opacity=e;
+  });
+}
+
+function rgba(col,a){return `rgba(${col.r},${col.g},${col.b},${a})`}
+
+function frame(ts){
+  if(!start)start=ts;
+  const el=ts-start;
+  if(done)return;
+  ctx.clearRect(0,0,W,H);
+
+  // bg radial
+  const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.6);
+  bg.addColorStop(0,rgba({r:123,g:47,b:255},0.09));
+  bg.addColorStop(1,'transparent');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  const p1=Math.min(1,el/D1);
+
+  // Floating particles
+  pts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=1;if(p.x>1)p.x=0;
+    if(p.y<0)p.y=1;if(p.y>1)p.y=0;
+    ctx.beginPath();
+    ctx.arc(p.x*W,p.y*H,p.s,0,Math.PI*2);
+    ctx.fillStyle=rgba(p.col,p.a*p1);
+    ctx.fill();
+  });
+
+  // Draw rings
+  rings.forEach(ring=>{
+    const rad=Math.min(W,H)*ring.r*p1;
+    // ring circle (dashed feel via opacity gradient)
+    ctx.beginPath();
+    ctx.arc(cx,cy,rad,0,Math.PI*2);
+    ctx.strokeStyle=rgba(ring.col,0.12*p1);
+    ctx.lineWidth=1;
+    ctx.setLineDash([4,8]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // orbiting dots
+    for(let d=0;d<ring.dots;d++){
+      const angle=ring.phase+d*(Math.PI*2/ring.dots)+ts*ring.speed;
+      const dx=cx+Math.cos(angle)*rad;
+      const dy=cy+Math.sin(angle)*rad;
+      // dot glow
+      const dg=ctx.createRadialGradient(dx,dy,0,dx,dy,14);
+      dg.addColorStop(0,rgba(ring.col,0.7*p1));
+      dg.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.arc(dx,dy,14,0,Math.PI*2);
+      ctx.fillStyle=dg;ctx.fill();
+      ctx.beginPath();ctx.arc(dx,dy,2.5,0,Math.PI*2);
+      ctx.fillStyle=rgba(ring.col,1*p1);ctx.fill();
+    }
+  });
+
+  // Center core
+  if(p1>0.3){
+    const cp=Math.min(1,(p1-0.3)/0.7);
+    const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.08);
+    cg.addColorStop(0,rgba({r:160,g:102,b:255},0.5*cp));
+    cg.addColorStop(0.5,rgba({r:123,g:47,b:255},0.15*cp));
+    cg.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(cx,cy,Math.min(W,H)*0.08,0,Math.PI*2);
+    ctx.fillStyle=cg;ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);
+    ctx.fillStyle=rgba({r:244,g:244,b:255},0.9*cp);ctx.fill();
+  }
+
+  // Phase 2: chars
+  if(el>D1)animChars(Math.min(1,(el-D1)/D2));
+  // Phase 3: tag
+  if(el>D1+D2){
+    const p3=eout(Math.min(1,(el-D1-D2)/D3));
+    const t=document.getElementById('tag');
+    t.style.opacity=p3;t.style.transform=`translateY(${(1-p3)*6}px)`;
+  }
+  // skip fade
+  if(el>500)document.getElementById('skip').style.opacity=Math.min(1,(el-500)/400);
+
+  if(el>TOTAL){exitIntro();return}
+  requestAnimationFrame(frame);
+}
+
+function exitIntro(){
+  if(done)return;done=true;
+  animChars(1);
+  const t=document.getElementById('tag');t.style.opacity=1;t.style.transform='translateY(0)';
+  const intro=document.getElementById('intro');
+  intro.classList.add('exit');
+  setTimeout(()=>{document.getElementById('site').classList.add('vis');intro.style.pointerEvents='none';},300);
+  setTimeout(()=>{intro.style.display='none'},1200);
+}
+document.getElementById('skip').addEventListener('click',exitIntro);
+if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){animChars(1);setTimeout(exitIntro,800)}
+else requestAnimationFrame(frame);
+</script>
+</body>
+</html>
