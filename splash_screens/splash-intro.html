@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PurePulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --obsidian:   #07070D;
+    --violet:     #7B2FFF;
+    --violet-glow:#A066FF;
+    --cyan:       #00D4FF;
+    --white:      #F4F4FF;
+    --muted:      rgba(244,244,255,0.38);
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--obsidian);
+    overflow: hidden;
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--white);
+  }
+
+  /* ── INTRO OVERLAY ── */
+  #intro {
+    position: fixed; inset: 0;
+    background: var(--obsidian);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 100;
+    cursor: pointer;
+  }
+
+  /* Canvas behind everything */
+  #pulseCanvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+  }
+
+  /* Logotype */
+  .logo-wrap {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    user-select: none;
+  }
+
+  .logo-name {
+    font-size: clamp(3.5rem, 10vw, 9rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--white);
+    display: flex;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .logo-name .char {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    transition: none;
+  }
+
+  /* "Pure" stays white; "Pulse" goes violet-glow */
+  .logo-name .accent { color: var(--violet-glow); }
+
+  .logo-tag {
+    margin-top: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.75rem, 2vw, 1rem);
+    font-weight: 300;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  /* Skip button */
+  #skip-btn {
+    position: absolute;
+    bottom: 2.5rem; right: 2.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: color 0.2s;
+  }
+  #skip-btn:hover { color: var(--white); }
+  #skip-btn svg { width: 14px; height: 14px; }
+
+  /* Noise grain overlay for texture */
+  #intro::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.028;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── EXIT TRANSITION ── */
+  #intro.exit {
+    animation: introExit 0.9s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  }
+  @keyframes introExit {
+    0%   { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.04); pointer-events: none; }
+  }
+
+  /* ── MAIN SITE (hidden until intro exits) ── */
+  #site {
+    position: fixed; inset: 0;
+    opacity: 0;
+    background: var(--obsidian);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 0.8s ease 0.5s;
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--white);
+  }
+  #site.visible { opacity: 1; }
+
+  .site-nav {
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: 2rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .site-logo {
+    font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em;
+  }
+  .site-logo span { color: var(--violet-glow); }
+  .site-nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .site-nav-links a {
+    font-size: 0.85rem; font-weight: 400; letter-spacing: 0.04em;
+    color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .site-nav-links a:hover { color: var(--white); }
+  .site-hero {
+    text-align: center; max-width: 800px; padding: 0 2rem;
+  }
+  .site-hero h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700; line-height: 1.05; letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .site-hero h1 em { font-style: normal; color: var(--violet-glow); }
+  .site-hero p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem; font-weight: 300;
+    color: var(--muted); line-height: 1.7;
+    max-width: 540px; margin: 0 auto 2.5rem;
+  }
+  .site-cta {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--violet);
+    color: #fff; padding: 0.85rem 2rem;
+    border-radius: 100px;
+    font-size: 0.9rem; font-weight: 600; letter-spacing: 0.02em;
+    text-decoration: none;
+    box-shadow: 0 0 40px rgba(123,47,255,0.35);
+    transition: box-shadow 0.3s, transform 0.2s;
+  }
+  .site-cta:hover {
+    box-shadow: 0 0 60px rgba(123,47,255,0.55);
+    transform: translateY(-2px);
+  }
+</style>
+</head>
+<body>
+
+<!-- ── INTRO ── -->
+<div id="intro">
+  <canvas id="pulseCanvas"></canvas>
+
+  <div class="logo-wrap">
+    <div class="logo-name" id="logoName" aria-label="PurePulse">
+      <!-- chars injected by JS -->
+    </div>
+    <div class="logo-tag" id="logoTag">Web Design &amp; Development</div>
+  </div>
+
+  <button id="skip-btn" aria-label="Skip intro">
+    <span>Skip</span>
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M3 7h8M8 4l3 3-3 3"/>
+    </svg>
+  </button>
+</div>
+
+<!-- ── MAIN SITE ── -->
+<div id="site">
+  <nav class="site-nav">
+    <div class="site-logo">Pure<span>Pulse</span></div>
+    <ul class="site-nav-links">
+      <li><a href="#">Work</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="site-hero">
+    <h1>Design that <em>moves</em><br>people forward</h1>
+    <p>PurePulse builds web experiences with sharp aesthetics, clean code, and a creative instinct you can feel on every scroll.</p>
+    <a href="#" class="site-cta">See our work ↗</a>
+  </div>
+</div>
+
+<script>
+// ── SPLIT NAME INTO CHARS ──────────────────────────────
+const WORD1 = 'Pure';
+const WORD2 = 'Pulse';
+const nameEl = document.getElementById('logoName');
+
+[...WORD1].forEach(c => {
+  const s = document.createElement('span');
+  s.className = 'char';
+  s.textContent = c;
+  nameEl.appendChild(s);
+});
+[...WORD2].forEach(c => {
+  const s = document.createElement('span');
+  s.className = 'char accent';
+  s.textContent = c;
+  nameEl.appendChild(s);
+});
+
+const chars = Array.from(nameEl.querySelectorAll('.char'));
+
+// ── CANVAS SETUP ─────────────────────────────────────
+const canvas = document.getElementById('pulseCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, cx, cy;
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  cx = W / 2; cy = H / 2;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ── PALETTE ──────────────────────────────────────────
+const V  = { r:123, g:47,  b:255 };
+const C  = { r:0,   g:212, b:255 };
+const W2 = { r:244, g:244, b:255 };
+
+function rgba(col, a) {
+  return `rgba(${col.r},${col.g},${col.b},${a})`;
+}
+
+// ── PULSE WAVEFORM PATH ───────────────────────────────
+// A heartbeat-style SVG path that draws across the screen.
+// We map it to canvas via progress 0→1.
+
+function buildWavePoints(w, h) {
+  // Centered horizontally; waveform height spans ±baseAmp
+  const y0 = h * 0.5;
+  const baseAmp = h * 0.12;
+  const pts = [];
+  const steps = 600;
+
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;  // 0 → 1
+    const x = t * w;
+
+    // Compose a pulse: flat → small sine → big spike → flat
+    let y = y0;
+
+    if (t < 0.25) {
+      // gentle ripple approaching
+      const local = t / 0.25;
+      y = y0 + Math.sin(local * Math.PI * 4) * baseAmp * 0.15 * local;
+    } else if (t < 0.35) {
+      // rapid climb
+      const local = (t - 0.25) / 0.1;
+      y = y0 - baseAmp * 2.6 * Math.sin(local * Math.PI);
+    } else if (t < 0.42) {
+      // sharp trough
+      const local = (t - 0.35) / 0.07;
+      y = y0 + baseAmp * 1.1 * Math.sin(local * Math.PI);
+    } else if (t < 0.52) {
+      // secondary peak
+      const local = (t - 0.42) / 0.10;
+      y = y0 - baseAmp * 0.6 * Math.sin(local * Math.PI);
+    } else if (t < 0.75) {
+      // gentle exit ripple
+      const local = (t - 0.52) / 0.23;
+      y = y0 + Math.sin(local * Math.PI * 3 + Math.PI) * baseAmp * 0.08 * (1 - local);
+    }
+    // else flat to end
+
+    pts.push({ x, y });
+  }
+  return pts;
+}
+
+// ── PARTICLES ────────────────────────────────────────
+const particles = [];
+function spawnParticle(x, y) {
+  particles.push({
+    x, y,
+    vx: (Math.random() - 0.5) * 1.2,
+    vy: (Math.random() - 0.85) * 1.6,
+    life: 1,
+    decay: 0.012 + Math.random() * 0.014,
+    size: 1.5 + Math.random() * 2.5,
+    col: Math.random() < 0.5 ? V : C,
+  });
+}
+
+// ── ANIMATION STATE ──────────────────────────────────
+let startTime = null;
+const PHASE1_DUR  = 2200;   // pulse line draws
+const PHASE2_DUR  = 900;    // characters drop in
+const PHASE3_DUR  = 500;    // tagline fades
+const PHASE4_WAIT = 1400;   // hold
+const TOTAL_DUR   = PHASE1_DUR + PHASE2_DUR + PHASE3_DUR + PHASE4_WAIT;
+
+let wavePoints = [];
+let animDone = false;
+let skipPressed = false;
+
+function easeInOut(t) {
+  return t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+}
+function easeOut(t) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+function animChars(progress) {
+  // progress 0→1 over PHASE2_DUR
+  chars.forEach((el, i) => {
+    const threshold = i / chars.length;
+    const local = Math.max(0, Math.min(1, (progress - threshold) / (1 / chars.length + 0.15)));
+    const ease = easeOut(local);
+    el.style.transform = `translateY(${(1 - ease) * 110}%)`;
+    el.style.opacity = ease;
+  });
+}
+
+function drawFrame(ts) {
+  if (!startTime) startTime = ts;
+  const elapsed = ts - startTime;
+  if (animDone) return;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // ── BG glow at center ──
+  const bgGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, W * 0.5);
+  bgGlow.addColorStop(0, rgba(V, 0.07));
+  bgGlow.addColorStop(1, 'transparent');
+  ctx.fillStyle = bgGlow;
+  ctx.fillRect(0, 0, W, H);
+
+  // ── PHASE 1: draw pulse line ──
+  const p1 = Math.min(1, elapsed / PHASE1_DUR);
+  wavePoints = buildWavePoints(W, H);
+
+  if (p1 > 0) {
+    const endIdx = Math.floor(p1 * (wavePoints.length - 1));
+
+    // Glow layer (wide, soft)
+    ctx.beginPath();
+    ctx.moveTo(wavePoints[0].x, wavePoints[0].y);
+    for (let i = 1; i <= endIdx; i++) {
+      ctx.lineTo(wavePoints[i].x, wavePoints[i].y);
+    }
+    ctx.strokeStyle = rgba(V, 0.18);
+    ctx.lineWidth = 18;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.filter = 'blur(10px)';
+    ctx.stroke();
+    ctx.filter = 'none';
+
+    // Medium glow
+    ctx.beginPath();
+    ctx.moveTo(wavePoints[0].x, wavePoints[0].y);
+    for (let i = 1; i <= endIdx; i++) {
+      ctx.lineTo(wavePoints[i].x, wavePoints[i].y);
+    }
+    ctx.strokeStyle = rgba(V, 0.45);
+    ctx.lineWidth = 5;
+    ctx.filter = 'blur(3px)';
+    ctx.stroke();
+    ctx.filter = 'none';
+
+    // Sharp core — gradient from violet to cyan
+    const grad = ctx.createLinearGradient(0, 0, W, 0);
+    grad.addColorStop(0,   rgba(V,  0.9));
+    grad.addColorStop(0.5, rgba(V,  1  ));
+    grad.addColorStop(1,   rgba(C,  1  ));
+    ctx.beginPath();
+    ctx.moveTo(wavePoints[0].x, wavePoints[0].y);
+    for (let i = 1; i <= endIdx; i++) {
+      ctx.lineTo(wavePoints[i].x, wavePoints[i].y);
+    }
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 1.8;
+    ctx.stroke();
+
+    // Leading dot
+    const tip = wavePoints[endIdx];
+    const dotGlow = ctx.createRadialGradient(tip.x, tip.y, 0, tip.x, tip.y, 24);
+    dotGlow.addColorStop(0, rgba(C, 0.9));
+    dotGlow.addColorStop(0.3, rgba(V, 0.5));
+    dotGlow.addColorStop(1, 'transparent');
+    ctx.beginPath();
+    ctx.arc(tip.x, tip.y, 24, 0, Math.PI * 2);
+    ctx.fillStyle = dotGlow;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(tip.x, tip.y, 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(C, 1);
+    ctx.fill();
+
+    // Spawn particles at tip (only during drawing)
+    if (p1 < 0.99 && Math.random() < 0.4) spawnParticle(tip.x, tip.y);
+  }
+
+  // ── PARTICLES ──
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i];
+    p.x += p.vx; p.y += p.vy;
+    p.vy += 0.04; // gravity
+    p.life -= p.decay;
+    if (p.life <= 0) { particles.splice(i, 1); continue; }
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(p.col, p.life * 0.8);
+    ctx.fill();
+  }
+
+  // ── Subtle horizontal scanlines ──
+  if (p1 > 0.1) {
+    ctx.fillStyle = rgba(V, 0.015);
+    for (let yy = 0; yy < H; yy += 4) {
+      ctx.fillRect(0, yy, W, 1);
+    }
+  }
+
+  // ── PHASE 2: drop in characters ──
+  if (elapsed > PHASE1_DUR) {
+    const p2 = Math.min(1, (elapsed - PHASE1_DUR) / PHASE2_DUR);
+    animChars(p2);
+  }
+
+  // ── PHASE 3: tagline ──
+  if (elapsed > PHASE1_DUR + PHASE2_DUR) {
+    const p3 = Math.min(1, (elapsed - PHASE1_DUR - PHASE2_DUR) / PHASE3_DUR);
+    const tagEl = document.getElementById('logoTag');
+    tagEl.style.opacity = easeOut(p3);
+    tagEl.style.transform = `translateY(${(1-easeOut(p3))*8}px)`;
+  }
+
+  // ── Skip button fade in ──
+  if (elapsed > 600) {
+    const skipEl = document.getElementById('skip-btn');
+    skipEl.style.opacity = Math.min(1, (elapsed - 600) / 400);
+  }
+
+  // ── PHASE 4: auto-exit ──
+  if (elapsed > TOTAL_DUR) {
+    exitIntro();
+    return;
+  }
+
+  requestAnimationFrame(drawFrame);
+}
+
+function exitIntro() {
+  if (animDone) return;
+  animDone = true;
+
+  // Make sure chars are all visible
+  animChars(1);
+  document.getElementById('logoTag').style.opacity = '1';
+
+  const intro = document.getElementById('intro');
+  intro.classList.add('exit');
+
+  // Show site
+  setTimeout(() => {
+    document.getElementById('site').classList.add('visible');
+    intro.style.pointerEvents = 'none';
+    setTimeout(() => { intro.style.display = 'none'; }, 1000);
+  }, 300);
+}
+
+// Skip on click
+document.getElementById('skip-btn').addEventListener('click', exitIntro);
+document.getElementById('intro').addEventListener('click', function(e) {
+  if (e.target === this || e.target.id === 'pulseCanvas') {
+    // tap anywhere on the canvas to skip after 1.5s of animation
+    if ((performance.now() - (startTime || 0)) > 1500) exitIntro();
+  }
+});
+
+// Reduce motion
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (prefersReducedMotion) {
+  // Just show immediately
+  animChars(1);
+  document.getElementById('logoTag').style.opacity = '1';
+  document.getElementById('skip-btn').style.opacity = '1';
+  setTimeout(exitIntro, 1200);
+} else {
+  requestAnimationFrame(drawFrame);
+}
+</script>
+</body>
+</html>
