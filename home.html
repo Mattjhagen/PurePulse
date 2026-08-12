@@ -1024,7 +1024,7 @@
     const ctx    = canvas.getContext('2d');
 
     // ── Canvas particle field ──────────────────────────────────────────────
-    let W, H, particles = [], rafId;
+    let W, H, particles = [], rafId, isLaunching = false;
     function resizeCanvas() {
         W = canvas.width  = window.innerWidth;
         H = canvas.height = window.innerHeight;
@@ -1068,6 +1068,9 @@
 
     // ── Launch sequence ────────────────────────────────────────────────────
     btn.addEventListener('click', () => {
+        if (isLaunching) return;
+        isLaunching = true;
+        btn.disabled = true;
         spawnParticles();
         splash.classList.add('active');
         splash.removeAttribute('aria-hidden');
@@ -1086,7 +1089,7 @@
                     splash.classList.remove('active', 'exit');
                     splash.setAttribute('aria-hidden', 'true');
                     ctx.clearRect(0, 0, W, H);
-                    window.open('https://vibecodes.space', '_blank');
+                    window.location.assign('https://vibecodes.space');
                 }, 650);
                 return;
             }
