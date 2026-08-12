@@ -977,6 +977,98 @@ to   { width: 100%; }
 }
 </style>
 
+<script>
+(function() {
+    const MESSAGES = [
+        'Initializing editor...', 'Loading your workspace...', 'Compiling your vibe...',
+        'Importing design tokens...', 'Spinning up the AI engine...', 'Polishing the pixels...',
+        'Almost there...', 'Launching vibeCodes ✦'
+    ];
+    const vibeBtn = document.getElementById('vibeCodesBtn');
+    const splash = document.getElementById('vibe-splash');
+    const status = document.getElementById('vibeStatus');
+    const bar = document.getElementById('vibeBar');
+    const canvas = document.getElementById('vibe-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [], rafId, isLaunching = false;
+
+    function resizeCanvas() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function spawnParticles() {
+        particles = Array.from({ length: 80 }, () => ({
+            x: Math.random() * W, y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+            r: 0.5 + Math.random() * 2, a: 0.1 + Math.random() * 0.5,
+            col: Math.random() < 0.5 ? '123,47,255' : '0,212,255'
+        }));
+    }
+
+    function drawParticles() {
+        ctx.clearRect(0, 0, W, H);
+        const glow = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, Math.min(W, H) * 0.6);
+        glow.addColorStop(0, 'rgba(123,47,255,0.08)');
+        glow.addColorStop(0.5, 'rgba(0,212,255,0.03)');
+        glow.addColorStop(1, 'transparent');
+        ctx.fillStyle = glow;
+        ctx.fillRect(0, 0, W, H);
+        particles.forEach((particle) => {
+            particle.x += particle.vx; particle.y += particle.vy;
+            if (particle.x < 0) particle.x = W;
+            if (particle.x > W) particle.x = 0;
+            if (particle.y < 0) particle.y = H;
+            if (particle.y > H) particle.y = 0;
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${particle.col},${particle.a})`;
+            ctx.fill();
+        });
+        rafId = requestAnimationFrame(drawParticles);
+    }
+
+    vibeBtn.addEventListener('click', () => {
+        if (isLaunching) return;
+        isLaunching = true;
+        vibeBtn.disabled = true;
+        spawnParticles();
+        splash.classList.add('active');
+        splash.removeAttribute('aria-hidden');
+        drawParticles();
+        let step = 0;
+
+        function tick() {
+            if (step >= MESSAGES.length) {
+                cancelAnimationFrame(rafId);
+                splash.classList.add('exit');
+                setTimeout(() => {
+                    splash.classList.remove('active', 'exit');
+                    splash.setAttribute('aria-hidden', 'true');
+                    ctx.clearRect(0, 0, W, H);
+                    window.location.assign('https://vibecodes.space');
+                }, 650);
+                return;
+            }
+            status.style.opacity = '0';
+            status.style.transform = 'translateY(6px)';
+            setTimeout(() => {
+                status.textContent = MESSAGES[step];
+                status.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+                status.style.opacity = '1';
+                status.style.transform = 'translateY(0)';
+                bar.style.width = `${((step + 1) / MESSAGES.length) * 100}%`;
+                step++;
+                setTimeout(tick, 320 + (step === MESSAGES.length ? 400 : 0));
+            }, 150);
+        }
+        setTimeout(tick, 400);
+    });
+})();
+</script>
+
 
 
     <!-- PurePulse Chat Widget -->
