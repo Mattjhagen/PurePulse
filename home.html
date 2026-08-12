@@ -133,23 +133,6 @@ to   { width: 100%; }
   opacity: 0 !important;
   transition: opacity 0.8s ease !important;
 }
-#pp-skip-btn {
-  position: absolute !important;
-  bottom: 2rem !important;
-  right: 2.5rem !important;
-  font-family: 'Inter', sans-serif !important;
-  font-size: 0.75rem !important;
-  letter-spacing: 0.15em !important;
-  text-transform: uppercase !important;
-  color: rgba(244,244,255,0.35) !important;
-  background: none !important;
-  border: none !important;
-  cursor: pointer !important;
-  opacity: 0 !important;
-  transition: color 0.2s !important;
-  z-index: 10 !important;
-}
-#pp-skip-btn:hover { color: #F4F4FF !important; }
 </style>
 <div id="pp-splash-overlay">
   <canvas id="pp-splash-canvas"></canvas>
@@ -158,7 +141,6 @@ to   { width: 100%; }
     <div id="pp-splash-tag">Web Design &amp; Development</div>
     <div id="pp-splash-msg"></div>
   </div>
-  <button id="pp-skip-btn">Skip →</button>
 </div>
 <script>
 (function() {
@@ -370,11 +352,7 @@ to   { width: 100%; }
       var msg=document.getElementById('pp-splash-msg');
       if(msg&&p3>0.5){msg.style.opacity=(p3-0.5)*2;}
     }
-    if(el>500) {
-      var sk=document.getElementById('pp-skip-btn');
-      if(sk) sk.style.opacity=Math.min(1,(el-500)/400);
-    }
-    if(el>TOTAL){exitSplash();return;}
+      if(el>TOTAL){exitSplash();return;}
     requestAnimationFrame(frame);
   }
 
@@ -392,7 +370,6 @@ to   { width: 100%; }
     }
   }
 
-  document.getElementById('pp-skip-btn').addEventListener('click', exitSplash);
   if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
     animChars(1); setTimeout(exitSplash, 600);
   } else {
