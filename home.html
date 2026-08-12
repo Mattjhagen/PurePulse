@@ -863,18 +863,13 @@ to   { width: 100%; }
             };
 
             try {
-                const res = await fetch('https://purepulse-leads.mattjhagen.workers.dev', {
+                const res = await fetch('https://login.purepulse.one/api/leads', {
                     method:  'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body:    JSON.stringify(data),
                 });
 
                 if (!res.ok) throw new Error('server error');
-
-                const result = await res.json();
-                if (result.emailErrors) {
-                    console.warn('Email errors:', result.emailErrors);
-                }
 
                 msg.className = 'form-message success';
                 msg.textContent = "Request received! I'll be in touch within one business day.";
