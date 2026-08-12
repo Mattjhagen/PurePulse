@@ -839,6 +839,13 @@ to   { width: 100%; }
             });
         });
 
+        // ── Referral attribution ────────────────────────────────────────────────
+        // Persist ?ref= across the visit (e.g. after landing via /ref/{code}) so
+        // it's still there when the visitor eventually submits the lead form.
+        const urlRef = new URLSearchParams(window.location.search).get('ref');
+        if (urlRef) sessionStorage.setItem('pp_ref', urlRef);
+        const referralCode = sessionStorage.getItem('pp_ref');
+
         // ── Consultation form ─────────────────────────────────────────────────
         const form      = document.getElementById('consultForm');
         const msg       = document.getElementById('form-message');
@@ -860,6 +867,7 @@ to   { width: 100%; }
                 email:   form.email.value.trim(),
                 project: form.project.value.trim(),
                 plan:    form.plan.value,
+                referral_code: referralCode || undefined,
             };
 
             try {
