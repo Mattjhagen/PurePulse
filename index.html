@@ -1,1430 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v2 -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark">
-    <meta name='impact-site-verification' value='a8b60141-8292-4cc5-8abc-a7845db98a29'>
-    <title>PurePulse — Web Design &amp; Maintenance</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <meta property="og:title" content="PurePulse — Web Design &amp; Maintenance">
-    <meta property="og:description" content="Professional websites starting at a $150 deposit. Choose your maintenance plan and grow with confidence.">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="PurePulse — Web Design &amp; Maintenance">
-    <meta name="twitter:description" content="Professional websites starting at a $150 deposit. Choose your maintenance plan and grow with confidence.">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <!-- Vercel Web Analytics -->
-    <script>
-      window.va = window.va || function () { 
-        (window.vaq = window.vaq || []).push(arguments); 
-      };
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>PurePulse — Web Design &amp; Development</title>
+<meta name="description" content="PurePulse builds web experiences with sharp aesthetics, clean code, and creative instinct on every scroll. Professional websites starting at a $150 deposit.">
+<meta property="og:title" content="PurePulse — Web Design &amp; Development">
+<meta property="og:description" content="Design that moves people forward. Professional websites starting at a $150 deposit.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-to   { width: 100%; }
-}
-
-/* ECG line */
-.splash-ecg {
-  width: 200px; height: 40px;
-  opacity: 0.6;
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#07070D;--v:#7B2FFF;--vg:#A066FF;--c:#00D4FF;--w:#F4F4FF;--mu:rgba(244,244,255,0.35)}
+html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-family:'Space Grotesk',sans-serif;color:var(--w)}
+#intro{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;background:var(--bg)}
+canvas{position:absolute;inset:0;width:100%;height:100%}
+.lw{position:relative;z-index:2;text-align:center}
+.ln{font-size:clamp(3.5rem,9vw,8.5rem);font-weight:700;letter-spacing:-0.03em;line-height:1;display:flex;overflow:hidden;justify-content:center}
+.char{display:inline-block;transform:translateY(120%);opacity:0}
+.accent{color:var(--vg)}
+.lt{margin-top:0.9rem;font-family:'Inter',sans-serif;font-size:clamp(0.7rem,1.8vw,0.95rem);font-weight:300;letter-spacing:0.3em;text-transform:uppercase;color:var(--mu);opacity:0;transform:translateY(6px);transition:opacity 0.6s,transform 0.6s}
+#skip{position:absolute;bottom:2rem;right:2.5rem;z-index:3;font-family:'Inter',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mu);background:none;border:none;cursor:pointer;opacity:0;transition:color 0.2s;display:flex;align-items:center;gap:0.4rem}
+#skip:hover{color:var(--w)}
+#intro.exit{animation:out 0.85s cubic-bezier(0.76,0,0.24,1) forwards}
+@keyframes out{to{opacity:0;transform:scale(1.03)}}
+#site{position:fixed;inset:0;opacity:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s ease 0.4s;font-family:'Space Grotesk',sans-serif;color:var(--w);pointer-events:none}
+#site.vis{opacity:1;pointer-events:auto}
+nav{position:absolute;top:0;left:0;right:0;padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between}
+.nl{font-size:1.1rem;font-weight:700;letter-spacing:-0.02em;color:var(--w);text-decoration:none}.nl span{color:var(--vg)}
+.nr{display:flex;gap:2rem;list-style:none}
+.nr a{font-size:0.82rem;color:var(--mu);text-decoration:none;transition:color 0.2s;font-family:'Inter',sans-serif}.nr a:hover{color:var(--w)}
+.hero{text-align:center;max-width:780px;padding:0 2rem}
+.hero h1{font-size:clamp(2.2rem,5.5vw,4.8rem);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin-bottom:1.4rem}
+.hero h1 em{font-style:normal;color:var(--vg)}
+.hero p{font-family:'Inter',sans-serif;font-size:1.05rem;font-weight:300;color:var(--mu);line-height:1.7;max-width:520px;margin:0 auto 2.2rem}
+.cta{display:inline-flex;align-items:center;gap:0.5rem;background:var(--v);color:#fff;padding:0.8rem 1.9rem;border-radius:100px;font-size:0.88rem;font-weight:600;letter-spacing:0.02em;text-decoration:none;box-shadow:0 0 36px rgba(123,47,255,0.3);transition:box-shadow 0.3s,transform 0.2s;font-family:'Inter',sans-serif}
+.cta:hover{box-shadow:0 0 60px rgba(123,47,255,0.5);transform:translateY(-2px)}
+@media (max-width:640px){
+  nav{padding:1.5rem 1.25rem}
+  .nr{gap:1.1rem}
+  .nr a{font-size:0.75rem}
+  #skip{bottom:1.25rem;right:1.25rem}
 }
 </style>
 </head>
 <body>
 
+<div id="intro">
+  <canvas id="c"></canvas>
+  <div class="lw">
+    <div class="ln" id="name"></div>
+    <div class="lt" id="tag">Web Design &amp; Development</div>
+  </div>
+  <button id="skip" aria-label="Skip intro">Skip <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 6h8M7 3l3 3-3 3"/></svg></button>
+</div>
 
-    
-
-    <style id="pp-splash-css">
-#pp-splash-overlay {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 999999 !important;
-  background: #07070D !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  flex-direction: column !important;
-  overflow: hidden !important;
-}
-#pp-splash-overlay.pp-out {
-  animation: ppOut 0.85s cubic-bezier(0.76,0,0.24,1) forwards !important;
-}
-@keyframes ppOut {
-  to { opacity: 0; transform: scale(1.03); }
-}
-#pp-splash-canvas {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-#pp-splash-content {
-  position: relative !important;
-  z-index: 2 !important;
-  text-align: center !important;
-  font-family: 'Space Grotesk', 'Inter', sans-serif !important;
-}
-#pp-splash-title {
-  font-size: clamp(3.5rem, 9vw, 8.5rem) !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.03em !important;
-  line-height: 1 !important;
-  color: #F4F4FF !important;
-  display: flex !important;
-  overflow: hidden !important;
-}
-#pp-splash-title .pp-char {
-  display: inline-block !important;
-  transform: translateY(120%) !important;
-  opacity: 0 !important;
-  color: #F4F4FF !important;
-}
-#pp-splash-title .pp-accent {
-  color: #A066FF !important;
-}
-#pp-splash-tag {
-  margin-top: 0.9rem !important;
-  font-family: 'Inter', sans-serif !important;
-  font-size: clamp(0.7rem, 1.8vw, 0.95rem) !important;
-  font-weight: 300 !important;
-  letter-spacing: 0.3em !important;
-  text-transform: uppercase !important;
-  color: rgba(244,244,255,0.35) !important;
-  opacity: 0 !important;
-}
-#pp-splash-msg {
-  margin-top: 0.5rem !important;
-  font-family: 'Inter', sans-serif !important;
-  font-size: clamp(0.65rem, 1.4vw, 0.82rem) !important;
-  font-weight: 300 !important;
-  letter-spacing: 0.08em !important;
-  color: rgba(160,102,255,0.5) !important;
-  opacity: 0 !important;
-  transition: opacity 0.8s ease !important;
-}
-</style>
-<div id="pp-splash-overlay" style="opacity:0">
-  <canvas id="pp-splash-canvas"></canvas>
-  <div id="pp-splash-content">
-    <div id="pp-splash-title"></div>
-    <div id="pp-splash-tag">Web Design &amp; Development</div>
-    <div id="pp-splash-msg"></div>
+<div id="site">
+  <nav>
+    <a class="nl" href="home.html">Pure<span>Pulse</span></a>
+    <ul class="nr">
+      <li><a href="home.html#portfolio">Work</a></li>
+      <li><a href="home.html#how-it-works">Process</a></li>
+      <li><a href="home.html#pricing">Pricing</a></li>
+      <li><a href="home.html#consult">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="hero">
+    <h1>Design that <em>moves</em><br>people forward</h1>
+    <p>PurePulse builds web experiences with sharp aesthetics, clean code, and creative instinct on every scroll.</p>
+    <a href="home.html#portfolio" class="cta" id="ctaWork">See our work ↗</a>
   </div>
 </div>
+
 <script>
-(function() {
-  var MSGS = [
-    'Building the web, one pixel at a time.',
-    'Clean code. Fast sites. Real results.',
-    'Your site is our craft.',
-    'Designed to perform. Built to last.',
-    'Professional websites, without the headache.',
-    'The web deserves better design.'
-  ];
-  var VARIANTS = 4;
-  var variant = Math.floor(Math.random() * VARIANTS);
+(function(){
+// Deep links (purepulse.one/#pricing etc.) skip the intro entirely
+if(location.hash&&location.hash.length>1){
+  location.replace('home.html'+location.hash);
+  return;
+}
 
-  // Show splash and lock scroll
-  var ov2 = document.getElementById('pp-splash-overlay');
-  if(ov2) ov2.style.opacity = '1';
-  document.body.style.overflow = 'hidden';
-  
-  // Safety: always unlock scroll after 8 seconds no matter what
-  setTimeout(function() {
-    document.body.style.overflow = '';
-    var ov = document.getElementById('pp-splash-overlay');
-    if(ov) { ov.style.display = 'none'; ov.remove(); }
-    var css = document.getElementById('pp-splash-css');
-    if(css) css.remove();
-  }, 8000);
+// ---- Shared: logo chars ----
+var W1='Pure',W2='Pulse';
+var nameEl=document.getElementById('name');
+W1.split('').forEach(function(ch){var s=document.createElement('span');s.className='char';s.textContent=ch;nameEl.appendChild(s)});
+W2.split('').forEach(function(ch){var s=document.createElement('span');s.className='char accent';s.textContent=ch;nameEl.appendChild(s)});
+var chars=Array.prototype.slice.call(nameEl.querySelectorAll('.char'));
 
-  // Pick message
-  document.getElementById('pp-splash-msg').textContent = MSGS[Math.floor(Math.random() * MSGS.length)];
+var cv=document.getElementById('c'),ctx=cv.getContext('2d');
+var W,H,cx,cy;
+function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;cx=W/2;cy=H/2}
+resize();window.addEventListener('resize',resize);
 
-  // Build title chars
-  var title = document.getElementById('pp-splash-title');
-  'Pure'.split('').forEach(function(c) {
-    var s = document.createElement('span');
-    s.className = 'pp-char';
-    s.textContent = c;
-    title.appendChild(s);
+function rgba(r,g,b,a){return 'rgba('+r+','+g+','+b+','+a+')'}
+function eout3(t){return 1-Math.pow(1-t,3)}
+function eout5(t){return 1-Math.pow(1-t,5)}
+
+function animChars(p){
+  chars.forEach(function(el,i){
+    var thr=i/chars.length;
+    var loc=Math.max(0,Math.min(1,(p-thr)/(1/chars.length+0.18)));
+    var e=eout3(loc);
+    el.style.transform='translateY('+((1-e)*120)+'%)';
+    el.style.opacity=e;
   });
-  'Pulse'.split('').forEach(function(c) {
-    var s = document.createElement('span');
-    s.className = 'pp-char pp-accent';
-    s.textContent = c;
-    title.appendChild(s);
+}
+function animCharsBloom(p){
+  chars.forEach(function(el,i){
+    var thr=i/chars.length;
+    var loc=Math.max(0,Math.min(1,(p-thr)/(1/chars.length+0.2)));
+    var e=eout5(loc);
+    var sc=0.4+0.6*e;
+    var bl=Math.round((1-e)*12);
+    el.style.transform='scale('+sc+') translateY('+((1-e)*30)+'px)';
+    el.style.filter='blur('+bl+'px)';
+    el.style.opacity=e;
   });
-  var chars = Array.from(title.querySelectorAll('.pp-char'));
+}
 
-  var cv = document.getElementById('pp-splash-canvas');
-  var ctx = cv.getContext('2d');
-  var W, H, cx, cy;
-  function resize() { W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; cx = W/2; cy = H/2; }
-  resize();
-  window.addEventListener('resize', resize);
+// ---- Variant picker ----
+var VARIANT=Math.floor(Math.random()*4); // 0 orbital, 1 grid warp, 2 bloom, 3 ECG pulse
+var start=null,done=false;
+var D1=VARIANT===1?2400:(VARIANT===2?2000:(VARIANT===3?2200:1800));
+var D2=VARIANT===2?1000:(VARIANT===1||VARIANT===3?900:800);
+var D3=500;
+var D4=VARIANT===1?1800:(VARIANT===3?1400:1600);
+var TOTAL=D1+D2+D3+D4;
+var charFn=VARIANT===2?animCharsBloom:animChars;
+if(VARIANT===2){chars.forEach(function(el){el.style.transform='scale(0.4) translateY(30px)';el.style.filter='blur(12px)'})}
 
-  function rgba(r,g,b,a) { return 'rgba('+r+','+g+','+b+','+a+')'; }
-  function eout(t) { return 1 - Math.pow(1-t, 3); }
+// ---- Variant 0: Orbital ----
+var rings=[
+  {r:0.18,speed:0.00022,phase:0,dots:4,col:{r:123,g:47,b:255}},
+  {r:0.26,speed:-0.00015,phase:1.1,dots:6,col:{r:0,g:212,b:255}},
+  {r:0.35,speed:0.00010,phase:2.5,dots:3,col:{r:160,g:102,b:255}}
+];
+var pts=[];
+for(var i=0;i<90;i++){pts.push({x:Math.random(),y:Math.random(),vx:(Math.random()-0.5)*0.0003,vy:(Math.random()-0.5)*0.0003,s:0.6+Math.random()*2,a:0.1+Math.random()*0.4,col:Math.random()<0.6?{r:123,g:47,b:255}:{r:0,g:212,b:255}})}
 
-  function animChars(p) {
-    chars.forEach(function(el, i) {
-      var thr = i / chars.length;
-      var loc = Math.max(0, Math.min(1, (p - thr) / (1/chars.length + 0.18)));
-      var e = eout(loc);
-      el.style.transform = 'translateY(' + ((1-e)*120) + '%)';
-      el.style.opacity = e;
-    });
-  }
-
-  var start = null, done = false;
-  var D1 = 2000, D2 = 900, D3 = 500, D4 = 1500;
-  var TOTAL = D1 + D2 + D3 + D4;
-
-  // Variant-specific setup
-  var rings, pts, blooms, tendrils;
-
-  if (variant === 1) {
-    // Orbital
-    rings = [
-      {r:0.18, speed:0.00022, phase:0, dots:4, col:[123,47,255]},
-      {r:0.26, speed:-0.00015, phase:1.1, dots:6, col:[0,212,255]},
-      {r:0.35, speed:0.00010, phase:2.5, dots:3, col:[160,102,255]},
-    ];
-    pts = Array.from({length:90}, function() { return {
-      x:Math.random(), y:Math.random(),
-      vx:(Math.random()-0.5)*0.0003, vy:(Math.random()-0.5)*0.0003,
-      s:0.6+Math.random()*2, a:0.1+Math.random()*0.4,
-      col:Math.random()<0.6?[123,47,255]:[0,212,255]
-    };});
-  } else if (variant === 2) {
-    // Grid warp
-  } else if (variant === 3) {
-    // Bloom
-    blooms = [];
-    [0,200,450,750,1100,1500].forEach(function(delay) {
-      blooms.push({delay:delay, r:0, maxR:0, alpha:0, born:false, col:Math.random()<0.6?[123,47,255]:[0,212,255]});
-    });
-  }
-
-  function drawVariant(el, p1, ts) {
-    var t = el * 0.001;
-
-    if (variant === 0) {
-      // ECG waveform
-      var pts2 = [];
-      for (var i = 0; i <= 600; i++) {
-        var tv = i/600, x = tv*W, y = cy;
-        if (tv < 0.25) { y = cy + Math.sin(tv/0.25*Math.PI*4)*H*0.12*0.15*(tv/0.25); }
-        else if (tv < 0.35) { var l=(tv-0.25)/0.1; y = cy - H*0.12*2.6*Math.sin(l*Math.PI); }
-        else if (tv < 0.42) { var l=(tv-0.35)/0.07; y = cy + H*0.12*1.1*Math.sin(l*Math.PI); }
-        else if (tv < 0.52) { var l=(tv-0.42)/0.10; y = cy - H*0.12*0.6*Math.sin(l*Math.PI); }
-        else if (tv < 0.75) { var l=(tv-0.52)/0.23; y = cy + Math.sin(l*Math.PI*3+Math.PI)*H*0.12*0.08*(1-l); }
-        pts2.push({x:x,y:y});
-      }
-      var endIdx = Math.floor(p1*(pts2.length-1));
-      if (endIdx > 0) {
-        ctx.beginPath(); ctx.moveTo(pts2[0].x, pts2[0].y);
-        for (var i=1;i<=endIdx;i++) ctx.lineTo(pts2[i].x, pts2[i].y);
-        ctx.strokeStyle = rgba(123,47,255,0.4); ctx.lineWidth = 6; ctx.filter='blur(4px)'; ctx.stroke(); ctx.filter='none';
-        var g = ctx.createLinearGradient(0,0,W,0);
-        g.addColorStop(0,rgba(123,47,255,0.9)); g.addColorStop(1,rgba(0,212,255,1));
-        ctx.beginPath(); ctx.moveTo(pts2[0].x, pts2[0].y);
-        for (var i=1;i<=endIdx;i++) ctx.lineTo(pts2[i].x, pts2[i].y);
-        ctx.strokeStyle=g; ctx.lineWidth=2; ctx.stroke();
-        var tip=pts2[endIdx];
-        var dg=ctx.createRadialGradient(tip.x,tip.y,0,tip.x,tip.y,20);
-        dg.addColorStop(0,rgba(0,212,255,0.8)); dg.addColorStop(1,'transparent');
-        ctx.beginPath(); ctx.arc(tip.x,tip.y,20,0,Math.PI*2); ctx.fillStyle=dg; ctx.fill();
-      }
-    } else if (variant === 1) {
-      // Orbital
-      pts.forEach(function(p) {
-        p.x+=p.vx; p.y+=p.vy;
-        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
-        ctx.beginPath(); ctx.arc(p.x*W,p.y*H,p.s,0,Math.PI*2);
-        ctx.fillStyle=rgba(p.col[0],p.col[1],p.col[2],p.a*p1); ctx.fill();
-      });
-      rings.forEach(function(ring) {
-        var rad=Math.min(W,H)*ring.r*p1;
-        ctx.beginPath(); ctx.arc(cx,cy,rad,0,Math.PI*2);
-        ctx.strokeStyle=rgba(ring.col[0],ring.col[1],ring.col[2],0.12*p1);
-        ctx.lineWidth=1; ctx.setLineDash([4,8]); ctx.stroke(); ctx.setLineDash([]);
-        for(var d=0;d<ring.dots;d++) {
-          var angle=ring.phase+d*(Math.PI*2/ring.dots)+ts*ring.speed;
-          var dx=cx+Math.cos(angle)*rad, dy=cy+Math.sin(angle)*rad;
-          var dg=ctx.createRadialGradient(dx,dy,0,dx,dy,12);
-          dg.addColorStop(0,rgba(ring.col[0],ring.col[1],ring.col[2],0.7*p1));
-          dg.addColorStop(1,'transparent');
-          ctx.beginPath(); ctx.arc(dx,dy,12,0,Math.PI*2); ctx.fillStyle=dg; ctx.fill();
-          ctx.beginPath(); ctx.arc(dx,dy,2.5,0,Math.PI*2);
-          ctx.fillStyle=rgba(ring.col[0],ring.col[1],ring.col[2],p1); ctx.fill();
-        }
-      });
-    } else if (variant === 2) {
-      // Grid warp
-      var COLS=24, ROWS=14, tv=el*0.001;
-      var cellW=W/COLS, cellH=H/ROWS, maxWarp=Math.min(cellW,cellH)*0.5;
-      function gpos(r,c) {
-        var nx=c/COLS, ny=r/ROWS, dx=nx-0.5, dy=ny-0.5;
-        var dist=Math.sqrt(dx*dx+dy*dy);
-        var wave=Math.sin(tv*1.2+dist*6)*maxWarp*p1*(1-dist*0.8);
-        var wave2=Math.cos(tv*0.9+dist*8)*maxWarp*0.4*p1*(1-dist*0.6);
-        return {x:nx*W+wave*0.5, y:ny*H+wave*0.4+wave2*0.5};
-      }
-      for(var r=0;r<=ROWS;r++) for(var c=0;c<COLS;c++) {
-        var a=gpos(r,c), b=gpos(r,c+1);
-        var frac=1-(Math.abs(r/ROWS-0.5)*2);
-        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-        ctx.strokeStyle=rgba(123,47,255,0.07*frac*p1); ctx.lineWidth=0.8; ctx.stroke();
-      }
-      for(var c=0;c<=COLS;c++) for(var r=0;r<ROWS;r++) {
-        var a=gpos(r,c), b=gpos(r+1,c);
-        var frac=1-(Math.abs(c/COLS-0.5)*2);
-        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-        ctx.strokeStyle=rgba(0,212,255,0.07*frac*p1); ctx.lineWidth=0.8; ctx.stroke();
-      }
-    } else if (variant === 3) {
-      // Bloom
-      blooms.forEach(function(b) {
-        if(el<b.delay) return;
-        if(!b.born){b.born=true;b.maxR=Math.min(W,H)*(0.25+Math.random()*0.25);}
-        var age=(el-b.delay)*0.0008;
-        b.r=Math.min(b.maxR,b.maxR*(1-Math.pow(1-age,5)));
-        b.alpha=age<0.5?age*2:(2-age*1.5);
-        if(b.alpha<=0||b.r<=0) return;
-        ctx.beginPath(); ctx.arc(cx,cy,b.r,0,Math.PI*2);
-        ctx.strokeStyle=rgba(b.col[0],b.col[1],b.col[2],b.alpha*0.25*p1);
-        ctx.lineWidth=b.r*0.06; ctx.stroke();
-        ctx.beginPath(); ctx.arc(cx,cy,b.r,0,Math.PI*2);
-        ctx.strokeStyle=rgba(b.col[0],b.col[1],b.col[2],b.alpha*0.2*p1);
-        ctx.lineWidth=2; ctx.stroke();
-      });
-      // Center pulse
-      var pls=0.5+0.5*Math.sin(el*0.004);
-      var cg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.06*(1+pls*0.2));
-      cg.addColorStop(0,rgba(244,244,255,0.8*p1));
-      cg.addColorStop(0.4,rgba(160,102,255,0.3*p1));
-      cg.addColorStop(1,'transparent');
-      ctx.beginPath(); ctx.arc(cx,cy,Math.min(W,H)*0.06,0,Math.PI*2);
-      ctx.fillStyle=cg; ctx.fill();
+function drawOrbital(ts,el,p1){
+  var bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.6);
+  bg.addColorStop(0,rgba(123,47,255,0.09));bg.addColorStop(1,'transparent');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  pts.forEach(function(p){
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=1;if(p.x>1)p.x=0;if(p.y<0)p.y=1;if(p.y>1)p.y=0;
+    ctx.beginPath();ctx.arc(p.x*W,p.y*H,p.s,0,Math.PI*2);
+    ctx.fillStyle=rgba(p.col.r,p.col.g,p.col.b,p.a*p1);ctx.fill();
+  });
+  rings.forEach(function(ring){
+    var rad=Math.min(W,H)*ring.r*p1;
+    ctx.beginPath();ctx.arc(cx,cy,rad,0,Math.PI*2);
+    ctx.strokeStyle=rgba(ring.col.r,ring.col.g,ring.col.b,0.12*p1);
+    ctx.lineWidth=1;ctx.setLineDash([4,8]);ctx.stroke();ctx.setLineDash([]);
+    for(var d=0;d<ring.dots;d++){
+      var angle=ring.phase+d*(Math.PI*2/ring.dots)+ts*ring.speed;
+      var dx=cx+Math.cos(angle)*rad,dy=cy+Math.sin(angle)*rad;
+      var dg=ctx.createRadialGradient(dx,dy,0,dx,dy,14);
+      dg.addColorStop(0,rgba(ring.col.r,ring.col.g,ring.col.b,0.7*p1));dg.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.arc(dx,dy,14,0,Math.PI*2);ctx.fillStyle=dg;ctx.fill();
+      ctx.beginPath();ctx.arc(dx,dy,2.5,0,Math.PI*2);ctx.fillStyle=rgba(ring.col.r,ring.col.g,ring.col.b,p1);ctx.fill();
     }
-
-    // Shared bg glow
-    var bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.5);
-    bg.addColorStop(0,rgba(123,47,255,0.07*p1));
-    bg.addColorStop(1,'transparent');
-    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+  });
+  if(p1>0.3){
+    var cp=Math.min(1,(p1-0.3)/0.7);
+    var cg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.08);
+    cg.addColorStop(0,rgba(160,102,255,0.5*cp));cg.addColorStop(0.5,rgba(123,47,255,0.15*cp));cg.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(cx,cy,Math.min(W,H)*0.08,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);ctx.fillStyle=rgba(244,244,255,0.9*cp);ctx.fill();
   }
+}
 
-  function frame(ts) {
-    if(!start) start=ts;
-    var el=ts-start;
-    if(done) return;
-    ctx.clearRect(0,0,W,H);
-    var p1=Math.min(1,el/D1);
-    drawVariant(el,p1,ts);
-    if(el>D1) animChars(Math.min(1,(el-D1)/D2));
-    if(el>D1+D2) {
-      var p3=eout(Math.min(1,(el-D1-D2)/D3));
-      var tag=document.getElementById('pp-splash-tag');
-      if(tag){tag.style.opacity=p3;}
-      var msg=document.getElementById('pp-splash-msg');
-      if(msg&&p3>0.5){msg.style.opacity=(p3-0.5)*2;}
-    }
-      if(el>TOTAL){exitSplash();return;}
-    requestAnimationFrame(frame);
-  }
-
-  function exitSplash() {
-    if(done) return; done=true;
-    animChars(1);
-    var ov=document.getElementById('pp-splash-overlay');
-    if(ov) {
-      ov.classList.add('pp-out');
-      setTimeout(function(){
-        ov.remove();
-        document.getElementById('pp-splash-css').remove();
-        document.body.style.overflow='';
-      }, 900);
-    }
-  }
-
-  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
-    animChars(1); setTimeout(exitSplash, 600);
-  } else {
-    requestAnimationFrame(frame);
+// ---- Variant 1: Grid Warp ----
+var COLS=28,ROWS=18,nodes=[];
+(function(){
+  for(var r=0;r<=ROWS;r++)for(var c=0;c<=COLS;c++){
+    var nx=c/COLS,ny=r/ROWS,dx=nx-0.5,dy=ny-0.5;
+    var dist=Math.sqrt(dx*dx+dy*dy);
+    nodes.push({nx:nx,ny:ny,dist:dist,phase:dist*6+Math.random()*0.5});
   }
 })();
+function drawGrid(ts,el,p1){
+  var t=el*0.001;
+  var pulse=0.5+0.5*Math.sin(t*1.8);
+  var bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.55);
+  bg.addColorStop(0,rgba(123,47,255,(0.06+pulse*0.04)*p1));
+  bg.addColorStop(0.5,rgba(0,212,255,0.03*p1));
+  bg.addColorStop(1,'transparent');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  var cellW=W/COLS,cellH=H/ROWS,maxWarp=Math.min(cellW,cellH)*0.55;
+  function nodePos(r,c){
+    var n=nodes[r*(COLS+1)+c];
+    var wave=Math.sin(t*1.2+n.phase)*maxWarp*p1*(1-n.dist*0.8);
+    var wave2=Math.cos(t*0.9+n.phase*1.3)*maxWarp*0.4*p1*(1-n.dist*0.6);
+    return{x:n.nx*W+wave*0.5+wave2*0.3,y:n.ny*H+wave*0.4+wave2*0.5}
+  }
+  var r,c,a,b,frac,alpha;
+  for(r=0;r<=ROWS;r++)for(c=0;c<COLS;c++){
+    a=nodePos(r,c);b=nodePos(r,c+1);
+    frac=1-(Math.abs(r/ROWS-0.5)*2);alpha=0.06*frac*p1;
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+    ctx.strokeStyle=rgba(123,47,255,alpha);ctx.lineWidth=0.8;ctx.stroke();
+  }
+  for(c=0;c<=COLS;c++)for(r=0;r<ROWS;r++){
+    a=nodePos(r,c);b=nodePos(r+1,c);
+    frac=1-(Math.abs(c/COLS-0.5)*2);alpha=0.06*frac*p1;
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+    ctx.strokeStyle=rgba(0,212,255,alpha);ctx.lineWidth=0.8;ctx.stroke();
+  }
+  for(r=0;r<=ROWS;r++)for(c=0;c<=COLS;c++){
+    var n=nodes[r*(COLS+1)+c];
+    if(n.dist>0.3)continue;
+    var pos=nodePos(r,c);
+    var brightness=(0.3-n.dist)/0.3;
+    var flicker=0.7+0.3*Math.sin(t*3+n.phase*2);
+    ctx.beginPath();ctx.arc(pos.x,pos.y,1.5,0,Math.PI*2);
+    ctx.fillStyle=rgba(160,102,255,brightness*flicker*p1*0.7);ctx.fill();
+  }
+  if(p1<0.8){
+    var scanY=p1*(1/0.8)*H;
+    var sg=ctx.createLinearGradient(0,scanY-60,0,scanY+10);
+    sg.addColorStop(0,'transparent');sg.addColorStop(0.7,rgba(123,47,255,0.06));sg.addColorStop(1,rgba(0,212,255,0.18));
+    ctx.fillStyle=sg;ctx.fillRect(0,scanY-60,W,70);
+  }
+}
+
+// ---- Variant 2: Bloom ----
+var blooms=[];[0,200,450,750,1100,1500].forEach(function(delay){
+  blooms.push({delay:delay,r:0,maxR:0,alpha:0,born:false,col:Math.random()<0.6?[123,47,255]:[0,212,255]});
+});
+var tendrils=[];
+(function(){
+  var len=Math.min(window.innerWidth,window.innerHeight)*0.32;
+  for(var i=0;i<14;i++){
+    var angle=(i/14)*Math.PI*2;
+    tendrils.push({
+      angle:angle,len:len,
+      cp1:{dx:Math.cos(angle+0.8)*len*0.4,dy:Math.sin(angle+0.8)*len*0.4},
+      cp2:{dx:Math.cos(angle-0.5)*len*0.8,dy:Math.sin(angle-0.5)*len*0.8},
+      col:Math.random()<0.5?[123,47,255]:[0,212,255],
+      progress:0
+    });
+  }
+})();
+function drawBloom(ts,el,p1){
+  var t=el*0.001;
+  var breath=0.5+0.5*Math.sin(t*1.5);
+  var bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.6);
+  bg.addColorStop(0,rgba(123,47,255,(0.05+breath*0.03)*p1));
+  bg.addColorStop(0.6,rgba(0,212,255,0.02*p1));
+  bg.addColorStop(1,'transparent');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  blooms.forEach(function(b){
+    if(el<b.delay)return;
+    if(!b.born){b.born=true;b.maxR=Math.min(W,H)*(0.25+Math.random()*0.25)}
+    var age=(el-b.delay)*0.0008;
+    b.r=Math.min(b.maxR,b.maxR*eout5(Math.min(1,age)));
+    b.alpha=age<0.5?age*2:(2-age*1.5);
+    if(b.alpha<=0)return;
+    [{w:b.r*0.18,o:0.04},{w:b.r*0.06,o:0.08},{w:2,o:0.25}].forEach(function(l){
+      ctx.beginPath();ctx.arc(cx,cy,Math.max(1,b.r),0,Math.PI*2);
+      ctx.strokeStyle=rgba(b.col[0],b.col[1],b.col[2],b.alpha*l.o*p1);
+      ctx.lineWidth=l.w;ctx.stroke();
+    });
+  });
+  tendrils.forEach(function(td,i){
+    var delay=i*120;
+    if(el<delay)return;
+    td.progress=Math.min(1,(el-delay)/(D1*0.7));
+    var ep=eout3(td.progress);
+    var ex=cx+Math.cos(td.angle)*td.len*ep;
+    var ey=cy+Math.sin(td.angle)*td.len*ep;
+    ctx.beginPath();ctx.moveTo(cx,cy);
+    ctx.bezierCurveTo(cx+td.cp1.dx*ep,cy+td.cp1.dy*ep,cx+td.cp2.dx*ep,cy+td.cp2.dy*ep,ex,ey);
+    var alpha=(0.5-Math.abs(td.progress-0.5))*0.3;
+    ctx.strokeStyle=rgba(td.col[0],td.col[1],td.col[2],alpha*p1);
+    ctx.lineWidth=1.5;ctx.stroke();
+    if(td.progress>0.1&&td.progress<0.95){
+      var tg=ctx.createRadialGradient(ex,ey,0,ex,ey,12);
+      tg.addColorStop(0,rgba(td.col[0],td.col[1],td.col[2],0.5*td.progress*p1));
+      tg.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.arc(ex,ey,12,0,Math.PI*2);ctx.fillStyle=tg;ctx.fill();
+    }
+  });
+  if(p1>0.2){
+    var cp=Math.min(1,(p1-0.2)/0.8);
+    var pls=0.5+0.5*Math.sin(t*4);
+    var rr=Math.min(W,H)*0.06*(1+pls*0.2);
+    var cg=ctx.createRadialGradient(cx,cy,0,cx,cy,rr);
+    cg.addColorStop(0,rgba(244,244,255,0.85*cp));
+    cg.addColorStop(0.3,rgba(160,102,255,0.4*cp));
+    cg.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(cx,cy,rr,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);ctx.fillStyle=rgba(244,244,255,cp);ctx.fill();
+  }
+}
+
+// ---- Variant 3: ECG Pulse ----
+var VCOL={r:123,g:47,b:255},CCOL={r:0,g:212,b:255};
+function buildWavePoints(w,h){
+  var y0=h*0.5,baseAmp=h*0.12,wp=[],steps=600;
+  for(var i=0;i<=steps;i++){
+    var t=i/steps,x=t*w,y=y0,local;
+    if(t<0.25){local=t/0.25;y=y0+Math.sin(local*Math.PI*4)*baseAmp*0.15*local}
+    else if(t<0.35){local=(t-0.25)/0.1;y=y0-baseAmp*2.6*Math.sin(local*Math.PI)}
+    else if(t<0.42){local=(t-0.35)/0.07;y=y0+baseAmp*1.1*Math.sin(local*Math.PI)}
+    else if(t<0.52){local=(t-0.42)/0.10;y=y0-baseAmp*0.6*Math.sin(local*Math.PI)}
+    else if(t<0.75){local=(t-0.52)/0.23;y=y0+Math.sin(local*Math.PI*3+Math.PI)*baseAmp*0.08*(1-local)}
+    wp.push({x:x,y:y});
+  }
+  return wp;
+}
+var ecgParticles=[];
+function spawnEcgParticle(x,y){
+  ecgParticles.push({x:x,y:y,vx:(Math.random()-0.5)*1.2,vy:(Math.random()-0.85)*1.6,life:1,decay:0.012+Math.random()*0.014,size:1.5+Math.random()*2.5,col:Math.random()<0.5?VCOL:CCOL});
+}
+function drawECG(ts,el,p1){
+  var bgGlow=ctx.createRadialGradient(cx,cy,0,cx,cy,W*0.5);
+  bgGlow.addColorStop(0,rgba(VCOL.r,VCOL.g,VCOL.b,0.07));
+  bgGlow.addColorStop(1,'transparent');
+  ctx.fillStyle=bgGlow;ctx.fillRect(0,0,W,H);
+  var wavePoints=buildWavePoints(W,H);
+  if(p1>0){
+    var endIdx=Math.floor(p1*(wavePoints.length-1)),i;
+    ctx.beginPath();ctx.moveTo(wavePoints[0].x,wavePoints[0].y);
+    for(i=1;i<=endIdx;i++)ctx.lineTo(wavePoints[i].x,wavePoints[i].y);
+    ctx.strokeStyle=rgba(VCOL.r,VCOL.g,VCOL.b,0.18);ctx.lineWidth=18;
+    ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.filter='blur(10px)';ctx.stroke();ctx.filter='none';
+    ctx.beginPath();ctx.moveTo(wavePoints[0].x,wavePoints[0].y);
+    for(i=1;i<=endIdx;i++)ctx.lineTo(wavePoints[i].x,wavePoints[i].y);
+    ctx.strokeStyle=rgba(VCOL.r,VCOL.g,VCOL.b,0.45);ctx.lineWidth=5;
+    ctx.filter='blur(3px)';ctx.stroke();ctx.filter='none';
+    var grad=ctx.createLinearGradient(0,0,W,0);
+    grad.addColorStop(0,rgba(VCOL.r,VCOL.g,VCOL.b,0.9));
+    grad.addColorStop(0.5,rgba(VCOL.r,VCOL.g,VCOL.b,1));
+    grad.addColorStop(1,rgba(CCOL.r,CCOL.g,CCOL.b,1));
+    ctx.beginPath();ctx.moveTo(wavePoints[0].x,wavePoints[0].y);
+    for(i=1;i<=endIdx;i++)ctx.lineTo(wavePoints[i].x,wavePoints[i].y);
+    ctx.strokeStyle=grad;ctx.lineWidth=1.8;ctx.stroke();
+    var tip=wavePoints[endIdx];
+    var dotGlow=ctx.createRadialGradient(tip.x,tip.y,0,tip.x,tip.y,24);
+    dotGlow.addColorStop(0,rgba(CCOL.r,CCOL.g,CCOL.b,0.9));
+    dotGlow.addColorStop(0.3,rgba(VCOL.r,VCOL.g,VCOL.b,0.5));
+    dotGlow.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(tip.x,tip.y,24,0,Math.PI*2);ctx.fillStyle=dotGlow;ctx.fill();
+    ctx.beginPath();ctx.arc(tip.x,tip.y,3.5,0,Math.PI*2);ctx.fillStyle=rgba(CCOL.r,CCOL.g,CCOL.b,1);ctx.fill();
+    if(p1<0.99&&Math.random()<0.4)spawnEcgParticle(tip.x,tip.y);
+  }
+  for(var j=ecgParticles.length-1;j>=0;j--){
+    var p=ecgParticles[j];
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.04;p.life-=p.decay;
+    if(p.life<=0){ecgParticles.splice(j,1);continue}
+    ctx.beginPath();ctx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2);
+    ctx.fillStyle=rgba(p.col.r,p.col.g,p.col.b,p.life*0.8);ctx.fill();
+  }
+  if(p1>0.1){
+    ctx.fillStyle=rgba(VCOL.r,VCOL.g,VCOL.b,0.015);
+    for(var yy=0;yy<H;yy+=4)ctx.fillRect(0,yy,W,1);
+  }
+}
+
+var draws=[drawOrbital,drawGrid,drawBloom,drawECG];
+
+function frame(ts){
+  if(!start)start=ts;
+  var el=ts-start;
+  if(done)return;
+  ctx.clearRect(0,0,W,H);
+  var p1=Math.min(1,el/D1);
+  draws[VARIANT](ts,el,p1);
+  if(el>D1)charFn(Math.min(1,(el-D1)/D2));
+  if(el>D1+D2){
+    var p3=eout3(Math.min(1,(el-D1-D2)/D3));
+    var tg=document.getElementById('tag');
+    tg.style.opacity=p3;tg.style.transform='translateY('+((1-p3)*6)+'px)';
+  }
+  if(el>500)document.getElementById('skip').style.opacity=Math.min(1,(el-500)/400);
+  if(el>TOTAL){exitIntro();return}
+  requestAnimationFrame(frame);
+}
+
+function exitIntro(){
+  if(done)return;done=true;
+  charFn(1);
+  chars.forEach(function(el){el.style.filter='none'});
+  var tg=document.getElementById('tag');tg.style.opacity=1;tg.style.transform='translateY(0)';
+  var intro=document.getElementById('intro');
+  intro.classList.add('exit');
+  setTimeout(function(){document.getElementById('site').classList.add('vis');intro.style.pointerEvents='none'},300);
+  setTimeout(function(){intro.style.display='none'},1200);
+}
+
+// Safety: never trap the user — force exit after 9s no matter what
+setTimeout(exitIntro,9000);
+
+document.getElementById('skip').addEventListener('click',exitIntro);
+if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+  charFn(1);chars.forEach(function(el){el.style.filter='none'});
+  setTimeout(exitIntro,800);
+}else{
+  requestAnimationFrame(frame);
+}
+})();
 </script>
-
-    <div class="ambient-bg"></div>
-
-    <!-- Header -->
-    <header class="header">
-        <div class="logo">Pure<span style="color:#A066FF">Pulse</span></div>
-        <nav class="nav-links">
-            <a href="#portfolio">Work</a>
-            <a href="#how-it-works">Process</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#faq">FAQ</a>
-        </nav>
-        <a href="https://login.purepulse.one/portal" target="_blank" rel="noopener" style="color:#00D4FF;font-size:0.875rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.25rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Client Portal&nbsp;↗</a>
-        <a href="#consult" class="btn-ghost">Book a Call</a>
-    </header>
-
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-glow"></div>
-        <nav class="hero-sisters" aria-label="Sister sites">
-            <a href="https://relayapp.pro" target="_blank" rel="noopener">Relay</a>
-            <a href="https://pacmacmobile.com" target="_blank" rel="noopener">PacMac Mobile</a>
-            <a href="https://eventtransport.space" target="_blank" rel="noopener">Event Transport</a>
-            <a href="https://mattjhagen.xyz" target="_blank" rel="noopener">Matty Hagen</a>
-            <a href="http://thegentlecon.quest" target="_blank" rel="noopener">The Gentle Conquest</a>
-        </nav>
-        <div class="hero-tag">Web Design &amp; Development</div>
-        <h1>Your website,<br>built right.</h1>
-        <p class="hero-sub">Clean, fast, professional websites — built to perform and built to last. Yours starts at a $150 deposit.</p>
-        <div class="hero-actions">
-            <a href="#consult" class="btn-primary">Schedule a Consultation</a>
-            <a href="#pricing" class="btn-ghost btn-ghost--lg">See Pricing</a>
-        </div>
-        <p class="hero-note">$150 deposit &middot; 12-month plans from $20/mo &middot; No surprises</p>
-    </section>
-
-    <!-- Portfolio Lookbook -->
-    <section id="portfolio" class="portfolio-section scroll-reveal">
-        <div class="portfolio-header section">
-            <div class="section-label">Our Work</div>
-            <h2>Sites we've built.</h2>
-            <p class="section-sub">Flip through a few of the projects we're proud of. Each one built to perform and built to last.</p>
-        </div>
-
-        <div class="lookbook-wrap">
-            <div class="lookbook" id="lookbook">
-
-                <!-- 01: P3 Lending — AI-Powered Social Finance -->
-                <!-- 01: P3 Lending -->
-                <article class="lb-page active" data-index="0" aria-label="Project 1 of 6: P3 Lending">
-                    <div class="lb-mockup">
-                        <div class="lb-browser">
-                            <div class="lb-bar">
-                                <div class="lb-dots-frame"><span></span><span></span><span></span></div>
-                                <div class="lb-url">p3lending.space</div>
-                            </div>
-                            <div class="lb-screen lb-screen--img">
-                                <img src="screenshots/p3lending.png" alt="P3 Lending" class="lb-screenshot">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lb-info">
-                        <span class="lb-counter">01 / 06</span>
-                        <h3>P3 Lending</h3>
-                        <p>An AI-powered social finance platform — your social credit score is better than collateral. Analyzes social capital and on-chain history to unlock instant liquidity.</p>
-                        <ul class="lb-features">
-                            <li>Social Credit Score Protocol</li>
-                            <li>On-chain history analysis</li>
-                            <li>Instant liquidity matching</li>
-                            <li>Fresh Start program for thin files</li>
-                        </ul>
-                        <a href="#consult" class="btn-ghost btn-view">Build Mine →</a>
-                    </div>
-                </article>
-
-                <!-- 02: Rooted Daily -->
-                <article class="lb-page" data-index="1" aria-label="Project 2 of 6: Rooted Daily">
-                    <div class="lb-mockup">
-                        <div class="lb-browser">
-                            <div class="lb-bar">
-                                <div class="lb-dots-frame"><span></span><span></span><span></span></div>
-                                <div class="lb-url">rootedapp.space</div>
-                            </div>
-                            <div class="lb-screen lb-screen--img">
-                                <img src="screenshots/rooted.png" alt="Rooted Daily" class="lb-screenshot">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lb-info">
-                        <span class="lb-counter">02 / 06</span>
-                        <h3>Rooted Daily</h3>
-                        <p>Renew Your Mind. Rooted in Truth. Scripture with natural audio narration, AI-guided reflections, and spiritual habit tracking — web and mobile.</p>
-                        <ul class="lb-features">
-                            <li>Full Bible with audio narration</li>
-                            <li>AI-guided Scripture reflections</li>
-                            <li>Spiritual habit & reading tracking</li>
-                            <li>Native iOS & Android apps</li>
-                        </ul>
-                        <div class="lb-app-links">
-                            <a href="https://play.google.com/store/apps/details?id=com.rooteddaily.bible&hl=en_US" target="_blank" rel="noopener" class="lb-app-badge">▶ Google Play</a>
-                            <a href="https://apps.apple.com/us/app/rooted-daily/id6763426267" target="_blank" rel="noopener" class="lb-app-badge">⬛ App Store</a>
-                        </div>
-                        <a href="#consult" class="btn-ghost btn-view">Build Mine →</a>
-                    </div>
-                </article>
-
-                <!-- 03: FuelShield -->
-                <article class="lb-page" data-index="2" aria-label="Project 3 of 6: FuelShield">
-                    <div class="lb-mockup">
-                        <div class="lb-browser">
-                            <div class="lb-bar">
-                                <div class="lb-dots-frame"><span></span><span></span><span></span></div>
-                                <div class="lb-url">fuelshield.xyz</div>
-                            </div>
-                            <div class="lb-screen lb-screen--img">
-                                <img src="screenshots/fuelshield.png" alt="FuelShield" class="lb-screenshot">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lb-info">
-                        <span class="lb-counter">03 / 06</span>
-                        <h3>FuelShield</h3>
-                        <p>Know your fuel cost before prices spike. A monthly gas price protection subscription with a gallon allowance and a dedicated Fuel Card for every covered purchase.</p>
-                        <ul class="lb-features">
-                            <li>Monthly gallon allowance plans</li>
-                            <li>Dedicated FuelShield Fuel Card</li>
-                            <li>Price spike reimbursement protocol</li>
-                            <li>Accepted at stations nationwide</li>
-                        </ul>
-                        <a href="#consult" class="btn-ghost btn-view">Build Mine →</a>
-                    </div>
-                </article>
-
-                <!-- 05: Relay -->
-                <article class="lb-page" data-index="3" aria-label="Project 5 of 6: Relay">
-                    <div class="lb-mockup">
-                        <div class="lb-browser">
-                            <div class="lb-bar">
-                                <div class="lb-dots-frame"><span></span><span></span><span></span></div>
-                                <div class="lb-url">relayapp.pro</div>
-                            </div>
-                            <div class="lb-screen lb-screen--img">
-                                <img src="screenshots/relay.png" alt="Relay" class="lb-screenshot">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lb-info">
-                        <span class="lb-counter">05 / 06</span>
-                        <h3>Relay</h3>
-                        <p>The AI dev platform that goes everywhere. Build apps with AI, learn to code, browse docs, and monitor system status — one platform, every device.</p>
-                        <ul class="lb-features">
-                            <li>Archon IDE — full browser-based coding</li>
-                            <li>Multi-model AI: Claude, GPT-4o, Gemini</li>
-                            <li>Gamified learning center with XP</li>
-                            <li>Real-time system status dashboard</li>
-                        </ul>
-                        <a href="https://relayapp.pro" target="_blank" rel="noopener" class="btn-ghost btn-view">Visit Site →</a>
-                    </div>
-                </article>
-
-                                <!-- 06: Matty Hagen — mattjhagen.xyz -->
-                <article class="lb-page" data-index="4" aria-label="Project 6 of 7: Matty Hagen">
-                    <div class="lb-mockup">
-                        <div class="lb-browser">
-                            <div class="lb-bar">
-                                <div class="lb-dots-frame"><span></span><span></span><span></span></div>
-                                <div class="lb-url">mattjhagen.xyz</div>
-                            </div>
-                            <div class="lb-screen lb-screen--img">
-                                <img src="screenshots/mattjhagen.png" alt="Matty Hagen" class="lb-screenshot">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lb-info">
-                        <span class="lb-counter">06 / 07</span>
-                        <h3>Matty Hagen</h3>
-                        <p>A terminal-aesthetic developer portfolio — monospace type, amber glow, and a live command prompt. Founder · Developer · Writer building products across fintech, AI, and privacy.</p>
-                        <ul class="lb-features">
-                            <li>Terminal-style interactive UI</li>
-                            <li>Work across fintech, AI & privacy</li>
-                            <li>Resume, writing & project showcase</li>
-                            <li>Dark, distinctive personal brand</li>
-                        </ul>
-                        <a href="https://mattjhagen.xyz" target="_blank" rel="noopener" class="btn-ghost btn-view">Visit Site →</a>
-                    </div>
-                </article>
-
-                                <!-- 07: The Gentle Conquest -->
-                <article class="lb-page" data-index="5" aria-label="Project 7 of 8: The Gentle Conquest">
-                    <div class="lb-mockup">
-                        <div class="lb-browser">
-                            <div class="lb-bar">
-                                <div class="lb-dots-frame"><span></span><span></span><span></span></div>
-                                <div class="lb-url">thegentlecon.quest</div>
-                            </div>
-                            <div class="lb-screen lb-screen--img">
-                                <img src="screenshots/gentleconquest.png" alt="The Gentle Conquest" class="lb-screenshot">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lb-info">
-                        <span class="lb-counter">07 / 08</span>
-                        <h3>The Gentle Conquest</h3>
-                        <p>A novel by Matthew James Hagen — coming 2026. "The most dangerous lie is that convenience is harmless." A dark editorial landing page built to pull readers in.</p>
-                        <ul class="lb-features">
-                            <li>Full-bleed dark editorial design</li>
-                            <li>Serif typography &amp; immersive atmosphere</li>
-                            <li>AI-character terminal ("meridian")</li>
-                            <li>Chapter 1 sneak peek &amp; email capture</li>
-                        </ul>
-                        <a href="http://thegentlecon.quest" target="_blank" rel="noopener" class="btn-ghost btn-view">Visit Site →</a>
-                    </div>
-                </article>
-
-                                <!-- 08: PacMac Mobile -->
-                <article class="lb-page" data-index="6" aria-label="Project 8 of 10: PacMac Mobile">
-                    <div class="lb-mockup">
-                        <div class="lb-browser">
-                            <div class="lb-bar">
-                                <div class="lb-dots-frame"><span></span><span></span><span></span></div>
-                                <div class="lb-url">pacmacmobile.com</div>
-                            </div>
-                            <div class="lb-screen lb-screen--img">
-                                <img src="screenshots/pacmac.png" alt="PacMac Mobile" class="lb-screenshot">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lb-info">
-                        <span class="lb-counter">08 / 10</span>
-                        <h3>PacMac Mobile</h3>
-                        <p>Prepaid wireless, rebuilt from the cell up. Cellular service that adjusts to your actual usage, backed by AI that blocks scam calls before your phone vibrates.</p>
-                        <ul class="lb-features">
-                            <li>Usage-based billing — no data tiers</li>
-                            <li>AI scam call blocking</li>
-                            <li>3-minute eSIM activation</li>
-                            <li>Customer & admin dashboards</li>
-                        </ul>
-                        <a href="https://pacmacmobile.com" target="_blank" rel="noopener" class="btn-ghost btn-view">Visit Site →</a>
-                    </div>
-                </article>
-
-                <!-- 09: Event Transport -->
-                <article class="lb-page" data-index="7" aria-label="Project 9 of 10: Event Transport Protocol">
-                    <div class="lb-mockup">
-                        <div class="lb-browser">
-                            <div class="lb-bar">
-                                <div class="lb-dots-frame"><span></span><span></span><span></span></div>
-                                <div class="lb-url">eventtransport.space</div>
-                            </div>
-                            <div class="lb-screen lb-screen--img">
-                                <img src="screenshots/eventtransport.png" alt="Event Transport Protocol" class="lb-screenshot">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lb-info">
-                        <span class="lb-counter">09 / 10</span>
-                        <h3>Event Transport Protocol</h3>
-                        <p>Meetings change. Static invites don't. ETP is the infrastructure layer for authoritative event-state synchronization across the living web.</p>
-                        <ul class="lb-features">
-                            <li>Live event state protocol v0.1</li>
-                            <li>Real-time invite synchronization</li>
-                            <li>CMAMeet integration</li>
-                            <li>Living Scheduler & protocol source</li>
-                        </ul>
-                        <a href="https://eventtransport.space" target="_blank" rel="noopener" class="btn-ghost btn-view">Visit Site →</a>
-                    </div>
-                </article>
-
-                <!-- 10: Living Legacy Translation -->
-                <article class="lb-page" data-index="8" aria-label="Project 10 of 10: Living Legacy Translation">
-                    <div class="lb-mockup">
-                        <div class="lb-browser">
-                            <div class="lb-bar">
-                                <div class="lb-dots-frame"><span></span><span></span><span></span></div>
-                                <div class="lb-url">llt.rootedapp.space</div>
-                            </div>
-                            <div class="lb-screen lb-screen--llt">
-                                <div class="llt-nav">
-                                    <span class="llt-logo">📖 Rooted Daily Bible (LLT)</span>
-                                    <div class="llt-browse">Browse Bible →</div>
-                                </div>
-                                <div class="llt-hero">
-                                    <div class="llt-headline">The Living Legacy<br>Translation</div>
-                                    <div class="llt-sub">Ancient Truth in Today's Language — a modern, faithful English Bible built for clarity, depth, and daily reading.</div>
-                                    <div class="llt-stats">
-                                        <div class="llt-stat"><div class="llt-num">66</div><div class="llt-lbl">Books</div></div>
-                                        <div class="llt-stat"><div class="llt-num">1,189</div><div class="llt-lbl">Chapters</div></div>
-                                        <div class="llt-stat"><div class="llt-num">31,102</div><div class="llt-lbl">Verses</div></div>
-                                    </div>
-                                    <div class="llt-cta">Start Reading →</div>
-                                </div>
-                                <div class="llt-cards">
-                                    <div class="llt-card">
-                                        <div class="llt-card-icon">📖</div>
-                                        <div class="llt-card-title">Complete Bible</div>
-                                        <div class="llt-card-desc">All 66 books fully formatted for online reading.</div>
-                                    </div>
-                                    <div class="llt-card">
-                                        <div class="llt-card-icon">🔍</div>
-                                        <div class="llt-card-title">SEO Optimized</div>
-                                        <div class="llt-card-desc">Structured data & meta tags on every chapter.</div>
-                                    </div>
-                                    <div class="llt-card">
-                                        <div class="llt-card-icon">📄</div>
-                                        <div class="llt-card-title">Open Format</div>
-                                        <div class="llt-card-desc">Markdown, JSON, HTML — ready for any tool.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lb-info">
-                        <span class="lb-counter">10 / 10</span>
-                        <h3>Living Legacy Translation</h3>
-                        <p>A complete digital Bible — 66 books, 31,102 verses, fully SEO-optimized with structured data on every page for maximum discoverability.</p>
-                        <ul class="lb-features">
-                            <li>Full Bible — 66 books, 31,102 verses</li>
-                            <li>SEO-optimized chapter &amp; verse pages</li>
-                            <li>Markdown, JSON &amp; HTML export</li>
-                            <li>Daily reading plans &amp; search</li>
-                        </ul>
-                        <a href="#consult" class="btn-ghost btn-view">Build Mine →</a>
-                    </div>
-                </article>
-
-
-            <!-- Arrow controls -->
-            <button class="lb-arrow lb-arrow--prev" id="lbPrev" aria-label="Previous project" disabled>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                    <path d="M11 14L6 9L11 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-            <button class="lb-arrow lb-arrow--next" id="lbNext" aria-label="Next project">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                    <path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-
-            <!-- Dot nav -->
-            <div class="lb-dots" role="tablist" aria-label="Portfolio projects">
-                <button class="lb-dot active" data-index="0" role="tab" aria-selected="true" aria-label="P3 Lending"></button>
-                <button class="lb-dot" data-index="1" role="tab" aria-selected="false" aria-label="Rooted Daily"></button>
-                <button class="lb-dot" data-index="2" role="tab" aria-selected="false" aria-label="FuelShield"></button>
-                <button class="lb-dot" data-index="3" role="tab" aria-selected="false" aria-label="Relay"></button>
-                <button class="lb-dot" data-index="4" role="tab" aria-selected="false" aria-label="Matty Hagen"></button>
-                <button class="lb-dot" data-index="5" role="tab" aria-selected="false" aria-label="The Gentle Conquest"></button>
-                <button class="lb-dot" data-index="6" role="tab" aria-selected="false" aria-label="PacMac Mobile"></button>
-                <button class="lb-dot" data-index="7" role="tab" aria-selected="false" aria-label="Event Transport Protocol"></button>
-                <button class="lb-dot" data-index="8" role="tab" aria-selected="false" aria-label="Living Legacy Translation"></button>
-            </div>
-        </div><!-- /.lookbook-wrap -->
-    </section>
-
-    <!-- How It Works -->
-    <section id="how-it-works" class="section scroll-reveal">
-        <div class="section-label">The Process</div>
-        <h2>Simple from day one.</h2>
-        <p class="section-sub">No surprises. No bloated contracts. Just a clear path from idea to live site.</p>
-
-        <div class="steps">
-            <div class="step">
-                <div class="step-num">01</div>
-                <div class="step-body">
-                    <h3>Book a consultation</h3>
-                    <p>We learn about your business, goals, and vision. Completely free — no commitment required.</p>
-                </div>
-            </div>
-            <div class="step-connector"></div>
-            <div class="step">
-                <div class="step-num">02</div>
-                <div class="step-body">
-                    <h3>Deposit &amp; design</h3>
-                    <p>Lock in your project with a $150 deposit. We design, build, and deliver your site — fast.</p>
-                </div>
-            </div>
-            <div class="step-connector"></div>
-            <div class="step">
-                <div class="step-num">03</div>
-                <div class="step-body">
-                    <h3>Launch &amp; maintain</h3>
-                    <p>Go live with your new site. Choose a monthly plan to keep it updated, secure, and growing.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- What You Get -->
-    <section class="section scroll-reveal">
-        <div class="section-label">Included with Every Build</div>
-        <h2>The foundation, covered.</h2>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">◻</div>
-                <h4>Mobile-first design</h4>
-                <p>Every site looks great on phones, tablets, and desktops — no extra charge.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">◻</div>
-                <h4>Fast load times</h4>
-                <p>Clean code, optimized assets, and modern hosting so your site loads in seconds.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">◻</div>
-                <h4>Contact form</h4>
-                <p>Capture leads directly from your site — delivered straight to your inbox.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">◻</div>
-                <h4>SSL &amp; security</h4>
-                <p>HTTPS encryption and basic security hardening come standard on every project.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">◻</div>
-                <h4>Custom domain setup</h4>
-                <p>We help connect your domain and handle the technical side so you don't have to.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">◻</div>
-                <h4>Launch-ready delivery</h4>
-                <p>Fully reviewed, tested, and handed off with clear instructions for what comes next.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="pricing" class="section scroll-reveal">
-        <div class="section-label">Pricing</div>
-        <h2>Start for $150. Grow from there.</h2>
-        <p class="section-sub">Your site is built for a flat $150 deposit. Then pick the monthly plan that fits where you are right now — all plans are 12-month contracts.</p>
-
-        <div class="pricing-grid">
-
-            <div class="pricing-card">
-                <div class="pricing-tier">Starter</div>
-                <div class="pricing-amount">
-                    <span class="price-dollar">$</span>
-                    <span class="price-num">20</span>
-                    <span class="price-per">/mo</span>
-                </div>
-                <p class="pricing-desc">Essential care for a site that just needs to stay online and up-to-date.</p>
-                <ul class="pricing-features">
-                    <li><span class="check">✓</span> Secure hosting &amp; uptime monitoring</li>
-                    <li><span class="check">✓</span> Up to 2 content updates per month</li>
-                    <li><span class="check">✓</span> Bug fixes &amp; security patches</li>
-                    <li><span class="check">✓</span> Email support</li>
-                    <li class="dim"><span>–</span> Priority response time</li>
-                    <li class="dim"><span>–</span> SEO optimization</li>
-                    <li class="dim"><span>–</span> Analytics dashboard</li>
-                </ul>
-                <a href="https://login.purepulse.one/pricing/start?plan=starter" class="btn-outline">Get Started</a>
-            </div>
-
-            <div class="pricing-card pricing-card--featured">
-                <div class="pricing-badge">Most Popular</div>
-                <div class="pricing-tier">Growth</div>
-                <div class="pricing-amount">
-                    <span class="price-dollar">$</span>
-                    <span class="price-num">50</span>
-                    <span class="price-per">/mo</span>
-                </div>
-                <p class="pricing-desc">More updates, better search visibility, and the data to help your site perform.</p>
-                <ul class="pricing-features">
-                    <li><span class="check">✓</span> Everything in Starter</li>
-                    <li><span class="check">✓</span> Unlimited content updates</li>
-                    <li><span class="check">✓</span> Priority email support (24h)</li>
-                    <li><span class="check">✓</span> Basic SEO optimization</li>
-                    <li><span class="check">✓</span> Google Analytics setup</li>
-                    <li><span class="check">✓</span> Monthly performance report</li>
-                    <li class="dim"><span>–</span> Custom feature development</li>
-                </ul>
-                <a href="https://login.purepulse.one/pricing/start?plan=growth" class="btn-primary">Get Started</a>
-            </div>
-
-            <div class="pricing-card">
-                <div class="pricing-tier">Premium</div>
-                <div class="pricing-amount">
-                    <span class="price-dollar">$</span>
-                    <span class="price-num">75</span>
-                    <span class="price-per">/mo</span>
-                </div>
-                <p class="pricing-desc">Hands-on support, advanced SEO, and custom development when you need it.</p>
-                <ul class="pricing-features">
-                    <li><span class="check">✓</span> Everything in Growth</li>
-                    <li><span class="check">✓</span> Custom feature development</li>
-                    <li><span class="check">✓</span> Advanced SEO &amp; keyword tracking</li>
-                    <li><span class="check">✓</span> Phone &amp; video support</li>
-                    <li><span class="check">✓</span> Quarterly design refresh</li>
-                    <li><span class="check">✓</span> Social media integration</li>
-                    <li><span class="check">✓</span> Priority issue response (&lt;4h)</li>
-                </ul>
-                <a href="https://login.purepulse.one/pricing/start?plan=premium" class="btn-outline">Get Started</a>
-            </div>
-
-            <div class="pricing-card">
-                <div class="pricing-tier">Business</div>
-                <div class="pricing-amount">
-                    <span class="price-dollar">$</span>
-                    <span class="price-num">100</span>
-                    <span class="price-per">/mo</span>
-                </div>
-                <p class="pricing-desc">A dedicated website partner for businesses with ongoing changes and growth plans.</p>
-                <ul class="pricing-features">
-                    <li><span class="check">✓</span> Everything in Premium</li>
-                    <li><span class="check">✓</span> Monthly planning call</li>
-                    <li><span class="check">✓</span> Priority email &amp; phone support</li>
-                    <li><span class="check">✓</span> Up to 2 hours of approved custom website work</li>
-                    <li><span class="check">✓</span> Ongoing performance review</li>
-                    <li><span class="check">✓</span> Quarterly improvement roadmap</li>
-                </ul>
-                <a href="https://login.purepulse.one/pricing/start?plan=business" class="btn-outline">Get Started</a>
-            </div>
-
-        </div>
-
-        <div class="pricing-note">
-            All plans require a <a href="contract.html" class="pricing-note-link"><strong>12-month commitment</strong></a> and a <strong>$150 one-time deposit</strong> to begin your build. Not sure which plan fits? We'll help you decide on the call.
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="build-it-yourself" class="section scroll-reveal">
-        <div class="section-label">Another Way In</div>
-        <h2>Rather build it yourself?</h2>
-        <p class="section-sub">PurePulse is a done-for-you build. vibeCodes is the opposite &mdash; a self-serve builder that drafts a personal site from the r&eacute;sum&eacute; you already have. Different product, same people behind it.</p>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">&#9723;</div>
-                <h4>Starts from your r&eacute;sum&eacute;</h4>
-                <p>Connect a LinkedIn profile or upload a r&eacute;sum&eacute;, and it drafts a full portfolio site from your actual experience.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#9723;</div>
-                <h4>Edit it yourself</h4>
-                <p>Rewrite, reorder or remove any section directly. No template syntax, no HTML, no waiting on anyone.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#9723;</div>
-                <h4>Free to try</h4>
-                <p>Generate and preview a site at no cost. Publish to a free <strong>yourname.vibecodes.space</strong> subdomain instantly — no credit card needed.</p>
-            </div>
-        </div>
-
-        <div class="cta-tag" style="margin-top:32px">
-            <button class="btn-vibecodes" id="vibeCodesBtn">Try vibeCodes →</button>
-        </div>
-    </section>
-
-    <section id="faq" class="section scroll-reveal">
-        <div class="section-label">FAQ</div>
-        <h2>Straight answers.</h2>
-
-        <div class="faq-list">
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false">
-                    What does the $150 deposit cover?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>The deposit secures your spot and kicks off the design and build process. It covers our initial work — discovery, design, development, and launch. The deposit is applied toward the total project cost and is non-refundable after work begins.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false">
-                    How long does it take to build my site?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>Most sites are delivered within 2–4 weeks from the time we receive your deposit and content. Complex or custom projects may take a bit longer — we'll give you a clear timeline during your consultation.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false">
-                    Can I upgrade or change my plan later?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>Yes. You can upgrade to a higher tier at any time. Downgrades are available at the end of your 12-month contract. We'll always work with you to find the right fit.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false">
-                    What happens after my 12-month contract ends?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>You're free to renew, switch plans, or move on. Your site belongs to you — we'll hand over all files and assets. We hope you'll stay, but we never lock you in against your will.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false">
-                    Do I need to provide content and images?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>We'll work with what you have. If you have copy and photos ready, great. If not, we can advise on structure and source royalty-free images — basic copywriting assistance is available on Growth and Premium plans.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false">
-                    What types of websites do you build?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>Everything — marketing sites, portfolios, small business pages, landing pages, e-commerce stores, and full custom web apps. If you can imagine it, we can build it. Book a call and let's talk through what you need.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Consultation CTA -->
-    <section id="consult" class="section cta-section scroll-reveal">
-        <div class="cta-card">
-            <div class="cta-tag">Free Consultation</div>
-            <h2>Let's build something good.</h2>
-            <p>Tell us about your project and we'll get back to you within one business day. No pressure, no pitch — just a real conversation.</p>
-
-            <form class="consult-form" id="consultForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" placeholder="Jane Smith" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" placeholder="jane@example.com" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="project">Tell us about your project</label>
-                    <textarea id="project" name="project" rows="4" placeholder="What kind of site do you need? What does your business do? Any details help."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="plan">Which plan are you considering?</label>
-                    <select id="plan" name="plan">
-                        <option value="">Not sure yet</option>
-                        <option value="starter">Starter — $20/mo</option>
-                        <option value="growth">Growth — $50/mo</option>
-                        <option value="premium">Premium — $75/mo</option>
-                    </select>
-                </div>
-                <!-- Honeypot -->
-                <input type="text" name="website_url" style="display:none" tabindex="-1" autocomplete="off">
-                <button type="submit" class="btn-primary btn-submit" id="submitBtn">Send My Request</button>
-            </form>
-            <div id="form-message" class="form-message"></div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <div class="logo">Pure<span style="color:#A066FF">Pulse</span></div>
-                <p>Professional web design &amp; maintenance.</p>
-            </div>
-            <div class="footer-links">
-                <a href="#how-it-works">Process</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#faq">FAQ</a>
-                <a href="#consult">Contact</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span>&copy; 2026 PurePulse. All rights reserved.</span>
-            <span style="display:flex;align-items:center;gap:1.5rem;">
-                <a href="https://login.purepulse.one/portal" target="_blank" rel="noopener" style="color:#00D4FF;font-size:0.8125rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.2rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Client Portal&nbsp;↗</a>
-                <a href="https://login.purepulse.one/login" target="_blank" rel="noopener" style="color:#00D4FF;font-size:0.8125rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.2rem;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Login&nbsp;↗</a>
-                <span>Built with care.</span>
-            </span>
-        </div>
-    </footer>
-
-    <script>
-        // ── Lookbook ──────────────────────────────────────────────────────────
-        (function () {
-            const pages   = Array.from(document.querySelectorAll('.lb-page'));
-            const dots    = Array.from(document.querySelectorAll('.lb-dot'));
-            const btnPrev = document.getElementById('lbPrev');
-            const btnNext = document.getElementById('lbNext');
-            const total   = pages.length;
-            let current   = 0;
-            let animating = false;
-
-            function goTo(next, dir) {
-                if (next === current || animating) return;
-                animating = true;
-
-                const outPage = pages[current];
-                const inPage  = pages[next];
-
-                outPage.classList.add(dir === 1 ? 'lb-exit-left' : 'lb-exit-right');
-                inPage.classList.add(dir === 1 ? 'lb-enter-right' : 'lb-enter-left');
-                inPage.classList.add('lb-page--visible');
-
-                void inPage.offsetWidth;
-
-                inPage.classList.add('active');
-                inPage.classList.remove('lb-enter-right', 'lb-enter-left');
-
-                outPage.addEventListener('transitionend', function onEnd() {
-                    outPage.removeEventListener('transitionend', onEnd);
-                    outPage.classList.remove('active', 'lb-exit-left', 'lb-exit-right', 'lb-page--visible');
-                    inPage.classList.remove('lb-page--visible');
-                    animating = false;
-                }, { once: true });
-
-                dots[current].classList.remove('active');
-                dots[current].setAttribute('aria-selected', 'false');
-                dots[next].classList.add('active');
-                dots[next].setAttribute('aria-selected', 'true');
-
-                btnPrev.disabled = next === 0;
-                btnNext.disabled = next === total - 1;
-
-                current = next;
-            }
-
-            btnPrev.addEventListener('click', () => goTo(current - 1, -1));
-            btnNext.addEventListener('click', () => goTo(current + 1,  1));
-
-            dots.forEach(dot => {
-                dot.addEventListener('click', () => {
-                    const idx = parseInt(dot.dataset.index, 10);
-                    goTo(idx, idx > current ? 1 : -1);
-                });
-            });
-
-            document.getElementById('lookbook').addEventListener('keydown', e => {
-                if (e.key === 'ArrowLeft')  goTo(current - 1, -1);
-                if (e.key === 'ArrowRight') goTo(current + 1,  1);
-            });
-
-            let touchStartX = 0;
-            let touchStartY = 0;
-            const wrap = document.querySelector('.lookbook-wrap');
-
-            wrap.addEventListener('touchstart', e => {
-                touchStartX = e.touches[0].clientX;
-                touchStartY = e.touches[0].clientY;
-            }, { passive: true });
-
-            wrap.addEventListener('touchend', e => {
-                const dx = e.changedTouches[0].clientX - touchStartX;
-                const dy = e.changedTouches[0].clientY - touchStartY;
-                if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-                    dx < 0 ? goTo(current + 1, 1) : goTo(current - 1, -1);
-                }
-            }, { passive: true });
-
-            // ── Auto-advance every 5 seconds ──
-            let autoTimer = setInterval(() => {
-                goTo(current === total - 1 ? 0 : current + 1, 1);
-            }, 5000);
-
-            // Pause on hover or manual interaction, resume after
-            function resetTimer() {
-                clearInterval(autoTimer);
-                autoTimer = setInterval(() => {
-                    goTo(current === total - 1 ? 0 : current + 1, 1);
-                }, 5000);
-            }
-
-            wrap.addEventListener('mouseenter', () => clearInterval(autoTimer));
-            wrap.addEventListener('mouseleave', () => resetTimer());
-            btnPrev.addEventListener('click', resetTimer);
-            btnNext.addEventListener('click', resetTimer);
-            dots.forEach(dot => dot.addEventListener('click', resetTimer));
-        })();
-
-        // ── Scroll reveal ─────────────────────────────────────────────────────
-        const reveals = document.querySelectorAll('.scroll-reveal');
-        const revealObs = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) e.target.classList.add('visible');
-            });
-        }, { threshold: 0.1 });
-        reveals.forEach(el => revealObs.observe(el));
-
-        // ── FAQ accordion ─────────────────────────────────────────────────────
-        document.querySelectorAll('.faq-question').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const item = btn.closest('.faq-item');
-                const isOpen = btn.getAttribute('aria-expanded') === 'true';
-
-                document.querySelectorAll('.faq-item').forEach(i => {
-                    i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-                    i.classList.remove('open');
-                });
-
-                if (!isOpen) {
-                    btn.setAttribute('aria-expanded', 'true');
-                    item.classList.add('open');
-                }
-            });
-        });
-
-        // ── Consultation form ─────────────────────────────────────────────────
-        const form      = document.getElementById('consultForm');
-        const msg       = document.getElementById('form-message');
-        const submitBtn = document.getElementById('submitBtn');
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const honeypot = form.querySelector('[name="website_url"]').value;
-            if (honeypot) return;
-
-            submitBtn.textContent = 'Sending…';
-            submitBtn.disabled = true;
-            msg.className = 'form-message';
-            msg.textContent = '';
-
-            const data = {
-                name:    form.name.value.trim(),
-                email:   form.email.value.trim(),
-                project: form.project.value.trim(),
-                plan:    form.plan.value,
-            };
-
-            try {
-                const res = await fetch('https://purepulse-leads.mattjhagen.workers.dev', {
-                    method:  'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body:    JSON.stringify(data),
-                });
-
-                if (!res.ok) throw new Error('server error');
-
-                const result = await res.json();
-                if (result.emailErrors) {
-                    console.warn('Email errors:', result.emailErrors);
-                }
-
-                msg.className = 'form-message success';
-                msg.textContent = "Request received! I'll be in touch within one business day.";
-                form.reset();
-                submitBtn.textContent = 'Send My Request';
-                submitBtn.disabled = false;
-            } catch {
-                msg.className = 'form-message error';
-                msg.textContent = "Something went wrong — please email us at contact@purepulse.one.";
-                submitBtn.textContent = 'Send My Request';
-                submitBtn.disabled = false;
-            }
-        });
-
-        // ── Smooth scroll ─────────────────────────────────────────────────────
-        document.querySelectorAll('a[href^="#"]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                const target = document.querySelector(link.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-    </script>
-
-<!-- ── vibeCodes Launch Splash ── -->
-<div id="vibe-splash" aria-hidden="true">
-    <canvas id="vibe-canvas"></canvas>
-    <div class="vibe-splash-inner">
-        <div class="vibe-logo">vibe<span>Codes</span></div>
-        <div class="vibe-status" id="vibeStatus">Initializing editor...</div>
-        <div class="vibe-bar-wrap"><div class="vibe-bar" id="vibeBar"></div></div>
-        <div class="vibe-sub" id="vibeSub">Powered by PurePulse</div>
-    </div>
-</div>
-
-<style>
-#vibe-splash {
-    position: fixed; inset: 0; z-index: 9999;
-    background: #07070D;
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.4s ease;
-}
-#vibe-splash.active { opacity: 1; pointer-events: all; }
-#vibe-splash.exit { animation: vSplashOut 0.6s cubic-bezier(0.76,0,0.24,1) forwards; }
-@keyframes vSplashOut { to { opacity: 0; transform: scale(1.04); } }
-
-#vibe-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-
-.vibe-splash-inner {
-    position: relative; z-index: 2;
-    text-align: center; display: flex; flex-direction: column;
-    align-items: center; gap: 1.2rem;
-}
-
-.vibe-logo {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 700; letter-spacing: -0.03em;
-    color: #F4F4FF; line-height: 1;
-    opacity: 0; transform: translateY(20px);
-    animation: vFadeUp 0.5s ease 0.1s forwards;
-}
-.vibe-logo span { color: #A066FF; }
-
-.vibe-status {
-    font-family: 'Inter', monospace;
-    font-size: clamp(0.75rem, 1.8vw, 0.95rem);
-    font-weight: 400; letter-spacing: 0.06em;
-    color: #00D4FF;
-    min-height: 1.4em;
-    opacity: 0;
-    animation: vFadeUp 0.5s ease 0.3s forwards;
-}
-
-.vibe-bar-wrap {
-    width: clamp(200px, 40vw, 400px); height: 3px;
-    background: rgba(123,47,255,0.2); border-radius: 100px;
-    overflow: hidden;
-    opacity: 0; animation: vFadeUp 0.5s ease 0.4s forwards;
-}
-.vibe-bar {
-    height: 100%; width: 0%; border-radius: 100px;
-    background: linear-gradient(90deg, #7B2FFF, #00D4FF);
-    box-shadow: 0 0 12px rgba(0,212,255,0.6);
-    transition: width 0.3s ease;
-}
-
-.vibe-sub {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem; letter-spacing: 0.2em;
-    text-transform: uppercase; color: rgba(244,244,255,0.25);
-    opacity: 0; animation: vFadeUp 0.5s ease 0.5s forwards;
-}
-
-@keyframes vFadeUp {
-    to { opacity: 1; transform: translateY(0); }
-}
-</style>
-
-
-
-    <!-- PurePulse Chat Widget -->
-    <style>
-      #pp-chat-btn {
-        position: fixed !important; bottom: 2rem !important; right: 2rem !important;
-        z-index: 99999 !important; width: 56px !important; height: 56px !important;
-        border-radius: 50% !important;
-        background: linear-gradient(135deg, #7B2FFF, #00D4FF) !important;
-        border: none !important; cursor: pointer !important;
-        box-shadow: 0 4px 24px rgba(123,47,255,0.5) !important;
-        display: flex !important; align-items: center !important;
-        justify-content: center !important;
-        visibility: visible !important; opacity: 1 !important;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-      #pp-chat-btn:hover { transform: scale(1.08) !important; box-shadow: 0 6px 32px rgba(123,47,255,0.7) !important; }
-      #pp-chat-btn svg { width: 24px; height: 24px; fill: #F4F4FF; }
-      #pp-chat-box {
-        position: fixed !important; bottom: 5.5rem !important; right: 2rem !important;
-        z-index: 99998 !important; width: 360px; max-height: 520px;
-        background: #0f0f14; border: 1px solid rgba(123,47,255,0.3);
-        border-radius: 16px; box-shadow: 0 8px 48px rgba(0,0,0,0.6);
-        display: none; flex-direction: column; overflow: hidden;
-        font-family: 'Inter', sans-serif;
-      }
-      #pp-chat-box.open { display: flex !important; }
-      #pp-chat-header {
-        background: #07070D; padding: 1rem 1.25rem;
-        border-bottom: 1px solid rgba(123,47,255,0.2);
-        display: flex; align-items: center; justify-content: space-between;
-      }
-      .pp-title { font-size: 0.9rem; font-weight: 700; color: #F4F4FF; }
-      .pp-title span { color: #A066FF; }
-      .pp-status { font-size: 0.7rem; color: #00D4FF; display: flex; align-items: center; gap: 0.3rem; }
-      .pp-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #00D4FF; display: inline-block; }
-      #pp-chat-close { background: none; border: none; color: #666; cursor: pointer; font-size: 1.1rem; padding: 0; }
-      #pp-chat-close:hover { color: #F4F4FF; }
-      #pp-chat-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
-      .pp-msg { max-width: 85%; padding: 0.625rem 0.875rem; border-radius: 12px; font-size: 0.8375rem; line-height: 1.5; }
-      .pp-msg.assistant { background: rgba(123,47,255,0.12); border: 1px solid rgba(123,47,255,0.2); color: #F4F4FF; align-self: flex-start; border-bottom-left-radius: 4px; }
-      .pp-msg.user { background: linear-gradient(135deg, #7B2FFF, #5a1fd4); color: #F4F4FF; align-self: flex-end; border-bottom-right-radius: 4px; }
-      .pp-msg.typing { color: #A066FF; font-style: italic; }
-      #pp-chat-input-row { padding: 0.75rem; border-top: 1px solid rgba(123,47,255,0.2); display: flex; gap: 0.5rem; align-items: center; }
-      #pp-chat-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(123,47,255,0.25); border-radius: 8px; padding: 0.5rem 0.75rem; color: #F4F4FF; font-size: 0.8375rem; font-family: inherit; outline: none; resize: none; max-height: 80px; }
-      #pp-chat-input:focus { border-color: #7B2FFF; }
-      #pp-chat-input::placeholder { color: #555; }
-      #pp-chat-send { background: linear-gradient(135deg, #7B2FFF, #00D4FF); border: none; border-radius: 8px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity 0.2s; }
-      #pp-chat-send:hover { opacity: 0.85; }
-      #pp-chat-send svg { width: 16px; height: 16px; fill: #F4F4FF; }
-      #pp-chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
-    </style>
-
-    <button id="pp-chat-btn" aria-label="Chat with us">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
-    </button>
-
-    <div id="pp-chat-box">
-      <div id="pp-chat-header">
-        <div>
-          <div class="pp-title">Pure<span>Pulse</span> Assistant</div>
-          <div class="pp-status">Online</div>
-        </div>
-        <button id="pp-chat-close">✕</button>
-      </div>
-      <div id="pp-chat-messages">
-        <div class="pp-msg assistant">Hey! 👋 I'm the PurePulse assistant. Ask me anything about our services, pricing, or process.</div>
-      </div>
-      <div id="pp-chat-input-row">
-        <textarea id="pp-chat-input" placeholder="Ask a question..." rows="1"></textarea>
-        <button id="pp-chat-send">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <script>
-      const WORKER_URL = 'https://purepulse-chat.mattjhagen.workers.dev'
-      const btn = document.getElementById('pp-chat-btn')
-      const box = document.getElementById('pp-chat-box')
-      const close = document.getElementById('pp-chat-close')
-      const input = document.getElementById('pp-chat-input')
-      const send = document.getElementById('pp-chat-send')
-      const messages = document.getElementById('pp-chat-messages')
-      const history = []
-      btn.addEventListener('click', () => { box.classList.toggle('open'); if (box.classList.contains('open')) input.focus() })
-      close.addEventListener('click', () => box.classList.remove('open'))
-      input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage() } })
-      send.addEventListener('click', sendMessage)
-      function addMsg(role, text) {
-        const div = document.createElement('div')
-        div.className = 'pp-msg ' + role
-        div.textContent = text
-        messages.appendChild(div)
-        messages.scrollTop = messages.scrollHeight
-        return div
-      }
-      async function sendMessage() {
-        const text = input.value.trim()
-        if (!text) return
-        input.value = ''
-        send.disabled = true
-        addMsg('user', text)
-        history.push({ role: 'user', content: text })
-        const typing = addMsg('assistant typing', '...')
-        try {
-          const res = await fetch(WORKER_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ messages: history }),
-          })
-          const data = await res.json()
-          typing.remove()
-          const reply = data.response || 'Sorry, something went wrong. Try emailing matty@purepulse.one'
-          addMsg('assistant', reply)
-          history.push({ role: 'assistant', content: reply })
-        } catch {
-          typing.remove()
-          addMsg('assistant', 'Connection error. Please try again or email matty@purepulse.one')
-        }
-        send.disabled = false
-        input.focus()
-      }
-    </script>
-
 </body>
 </html>
-<!-- deploy Wed Aug 12 05:44:38 UTC 2026 -->
