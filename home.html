@@ -69,6 +69,11 @@ to   { width: 100%; }
      ══════════════════════════════════════════════════════════ -->
 <style>
 html.splashing > body > *:not(#pp-splash) { visibility: hidden; }
+
+/* Hide splash text before JS runs */
+html.splashing .logo-name, html.splashing .logo-tag,
+html.splashing .ln, html.splashing .lt, html.splashing .lw { opacity: 0; }
+
 #pp-splash { position: fixed; inset: 0; z-index: 99999; }
 #pp-splash.pp-exit { animation: ppSplashOut 0.85s cubic-bezier(0.76,0,0.24,1) forwards; pointer-events: none; }
 @keyframes ppSplashOut { to { opacity: 0; transform: scale(1.03); } }
@@ -366,7 +371,7 @@ nav{position:absolute;top:0;left:0;right:0;padding:2rem 2.5rem;display:flex;alig
 
 </style>
 
-<div id="pp-splash"></div>
+<div id="pp-splash" style="display:none"></div>
 
 <script>
 (function() {
@@ -374,6 +379,8 @@ nav{position:absolute;top:0;left:0;right:0;padding:2rem 2.5rem;display:flex;alig
   var VARIANT = Math.floor(Math.random() * 4); // 0=intro, 1=orbital, 2=gridwarp, 3=bloom
 
   document.documentElement.classList.add('splashing');
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
 
   // Global exit function all variants call
 
@@ -409,6 +416,8 @@ nav{position:absolute;top:0;left:0;right:0;padding:2rem 2.5rem;display:flex;alig
     setTimeout(function() {
       sp.remove();
       document.documentElement.classList.remove('splashing');
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     }, 950);
   };
 
@@ -422,7 +431,9 @@ nav{position:absolute;top:0;left:0;right:0;padding:2rem 2.5rem;display:flex;alig
 
   // Replace intro id with pp-splash content
   introHTML = introHTML.replace('id="intro"', 'id="pp-splash-inner"');
-  document.getElementById('pp-splash').innerHTML = introHTML;
+  var splashEl = document.getElementById('pp-splash');
+  splashEl.innerHTML = introHTML;
+  splashEl.style.display = '';
 
   // Variant JS — patch exit calls
   var scripts = [
@@ -1731,6 +1742,8 @@ nav{position:absolute;top:0;left:0;right:0;padding:2rem 2.5rem;display:flex;alig
   document.querySelector('.splash-msg').textContent = msg;
 
   document.documentElement.classList.add('splashing');
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
 
   window.addEventListener('load', function() {
     setTimeout(function() {
