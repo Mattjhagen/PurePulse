@@ -78,9 +78,11 @@ nav{position:absolute;top:0;left:0;right:0;padding:2rem 2.5rem;display:flex;alig
 
 <script>
 (function(){
-// Deep links (purepulse.one/#pricing etc.) skip the intro entirely
-if(location.hash&&location.hash.length>1){
-  location.replace('home.html'+location.hash);
+// Deep links (purepulse.one/#pricing etc.) and referral links
+// (purepulse.one/?ref=CODE) skip the intro entirely and forward the
+// full query string + hash on to home.html, where they're handled.
+if((location.hash&&location.hash.length>1)||location.search){
+  location.replace('home.html'+location.search+location.hash);
   return;
 }
 
