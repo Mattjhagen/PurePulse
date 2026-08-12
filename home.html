@@ -37,8 +37,129 @@
   font-display: swap;
   font-weight: 100 900;
   src: url("https://vercel.live/geist_mono.woff2") format("woff2");
-}</style></head>
+}</style><style>
+/* ── Splash Screen ── */
+html.splashing > body > *:not(#splash) { visibility: hidden; }
+
+#splash {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #07070D;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  transition: opacity 0.6s ease;
+}
+#splash.out { opacity: 0; pointer-events: none; }
+
+.splash-bg {
+  position: absolute; inset: 0; overflow: hidden;
+}
+.splash-orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); opacity: 0.5;
+  animation: orbFloat 4s ease-in-out infinite alternate;
+}
+.splash-orb-1 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, #7B2FFF, transparent);
+  top: -100px; left: -100px;
+}
+.splash-orb-2 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, #00D4FF, transparent);
+  bottom: -80px; right: -80px;
+  animation-delay: -2s;
+}
+@keyframes orbFloat {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, 20px) scale(1.1); }
+}
+
+.splash-content {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 1.5rem;
+  animation: splashIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes splashIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.splash-logo {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.25rem; font-weight: 800; letter-spacing: -0.04em;
+  background: linear-gradient(135deg, #A066FF, #00D4FF);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.splash-pulse {
+  width: 48px; height: 48px;
+  position: relative;
+}
+.splash-pulse::before, .splash-pulse::after {
+  content: ''; position: absolute; inset: 0;
+  border-radius: 50%; border: 2px solid #7B2FFF;
+  animation: pulseRing 1.5s ease-out infinite;
+}
+.splash-pulse::after { animation-delay: 0.5s; }
+.splash-pulse-dot {
+  position: absolute; inset: 0; margin: auto;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: linear-gradient(135deg, #7B2FFF, #00D4FF);
+}
+@keyframes pulseRing {
+  0%   { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.splash-msg {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem; font-weight: 500;
+  color: rgba(244,244,255,0.5);
+  letter-spacing: 0.02em;
+}
+
+.splash-bar {
+  width: 120px; height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px; overflow: hidden;
+}
+.splash-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7B2FFF, #00D4FF);
+  border-radius: 2px;
+  animation: barFill 1.8s ease forwards;
+}
+@keyframes barFill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+/* ECG line */
+.splash-ecg {
+  width: 200px; height: 40px;
+  opacity: 0.6;
+}
+</style>
+</head>
 <body>
+
+    
+<div id="splash">
+  <div class="splash-bg">
+    <div class="splash-orb splash-orb-1"></div>
+    <div class="splash-orb splash-orb-2"></div>
+  </div>
+  <div class="splash-content">
+    <div class="splash-pulse">
+      <div class="splash-pulse-dot"></div>
+    </div>
+    <div class="splash-logo">PurePulse</div>
+    <div class="splash-msg">Loading...</div>
+    <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+  </div>
+</div>
 
     <div class="ambient-bg"></div>
 
@@ -1306,4 +1427,32 @@
         input.focus()
       }
     </script>
+<script>
+(function() {
+  const MESSAGES = [
+    'Building the web, one pixel at a time.',
+    'Clean code. Fast sites. Real results.',
+    'Your site is our craft.',
+    'Designed to perform. Built to last.',
+    'Professional websites, without the headache.',
+    'The web deserves better design.',
+  ];
+
+  const msg = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
+  document.querySelector('.splash-msg').textContent = msg;
+
+  document.documentElement.classList.add('splashing');
+
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      const splash = document.getElementById('splash');
+      splash.classList.add('out');
+      setTimeout(function() {
+        splash.remove();
+        document.documentElement.classList.remove('splashing');
+      }, 650);
+    }, 1900);
+  });
+})();
+</script>
 </body></html><!-- deploy Wed Aug 12 05:44:38 UTC 2026 -->
