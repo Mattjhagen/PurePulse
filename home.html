@@ -376,6 +376,31 @@ nav{position:absolute;top:0;left:0;right:0;padding:2rem 2.5rem;display:flex;alig
   document.documentElement.classList.add('splashing');
 
   // Global exit function all variants call
+
+  // Random tagline messages on all splash variants
+  var PP_MESSAGES = [
+    'Building the web, one pixel at a time.',
+    'Clean code. Fast sites. Real results.',
+    'Your site is our craft.',
+    'Designed to perform. Built to last.',
+    'Professional websites, without the headache.',
+    'The web deserves better design.',
+  ];
+  
+  // Inject message after splash renders
+  setTimeout(function() {
+    var msg = PP_MESSAGES[Math.floor(Math.random() * PP_MESSAGES.length)];
+    var tagEl = document.getElementById('logoTag') || document.getElementById('tag');
+    if (tagEl && VARIANT !== 0) {
+      // For non-intro variants, add a subtitle message below tagline
+      var sub = document.createElement('div');
+      sub.style.cssText = 'margin-top:0.75rem;font-family:Inter,sans-serif;font-size:clamp(0.65rem,1.5vw,0.85rem);font-weight:300;letter-spacing:0.06em;color:rgba(244,244,255,0.3);opacity:0;transition:opacity 1s ease 2s;';
+      sub.textContent = msg;
+      tagEl.parentNode.insertBefore(sub, tagEl.nextSibling);
+      setTimeout(function() { sub.style.opacity = '1'; }, 100);
+    }
+  }, 300);
+
   window.__ppExit = function() {
     var sp = document.getElementById('pp-splash');
     if (!sp || sp._exited) return;
