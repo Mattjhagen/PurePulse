@@ -1483,3 +1483,42 @@ a[href*="login.purepulse"]:hover { opacity: 0.8; }
 @media (prefers-reduced-motion: reduce) {
     .btn-vibecodes::before { animation: none; background: var(--violet); }
 }
+
+/* ── Velour luxury glow button ─────────────────────────────────────────── */
+.btn-velour::before {
+    background: conic-gradient(
+        from var(--angle, 0deg),
+        transparent 0deg,
+        #FFB800 60deg,
+        #A066FF 150deg,
+        #7B2FFF 210deg,
+        transparent 270deg,
+        transparent 360deg
+    );
+}
+
+@keyframes velourGlowPulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(255,184,0,0.25), 0 0 28px rgba(123,47,255,0.2); }
+    50%       { box-shadow: 0 0 24px rgba(255,184,0,0.5),  0 0 52px rgba(160,102,255,0.4); }
+}
+
+.btn-velour {
+    animation: velourGlowPulse 2.4s ease-in-out infinite;
+}
+
+.btn-velour:hover {
+    box-shadow: 0 0 32px rgba(255,184,0,0.6), 0 0 64px rgba(123,47,255,0.45);
+}
+
+.btn-velour:hover::before {
+    background: conic-gradient(
+        from var(--angle, 0deg),
+        transparent 0deg,
+        #FFB800 90deg,
+        #A066FF 180deg,
+        #7B2FFF 270deg,
+        transparent 320deg,
+        transparent 360deg
+    );
+}
+
