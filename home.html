@@ -1474,7 +1474,8 @@ to   { width: 100%; }
     </div>
 
     <script>
-      const WORKER_URL = 'https://purepulse-chat.mattjhagen.workers.dev'
+      const CHAT_URL = 'https://login.purepulse.one/api/chat'
+      const FALLBACK_URL = 'https://purepulse-chat.mattjhagen.workers.dev'
       const btn = document.getElementById('pp-chat-btn')
       const box = document.getElementById('pp-chat-box')
       const close = document.getElementById('pp-chat-close')
@@ -1503,11 +1504,20 @@ to   { width: 100%; }
         history.push({ role: 'user', content: text })
         const typing = addMsg('assistant typing', '...')
         try {
-          const res = await fetch(WORKER_URL, {
+          let res = await fetch(CHAT_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ messages: history }),
-          })
+          }).catch(() => null)
+
+          if (!res || !res.ok) {
+            res = await fetch(FALLBACK_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ messages: history }),
+            })
+          }
+
           const data = await res.json()
           typing.remove()
           const reply = data.response || 'Sorry, something went wrong. Try emailing matty@purepulse.one'
